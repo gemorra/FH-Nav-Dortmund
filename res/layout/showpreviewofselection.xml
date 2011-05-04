@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:orientation="vertical" android:layout_width="fill_parent"
+ android:layout_height="fill_parent">
+
+<TextView android:id="@+id/TextView0a" 
+android:text="Veranstaltung hinzufügen" 
+android:layout_height="wrap_content" 
+android:layout_width="wrap_content" 
+android:textSize ="26sp"
+android:textColor = "#FF6000"
+android:layout_x="10dip" 
+android:layout_y="0dip"></TextView>
+
+ <ListView android:id="@+id/ListView01" android:layout_height="wrap_content"
+ android:layout_width="fill_parent">
+ </ListView>
+</LinearLayout>

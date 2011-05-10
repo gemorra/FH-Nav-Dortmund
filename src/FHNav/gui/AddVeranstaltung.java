@@ -24,7 +24,7 @@ public class AddVeranstaltung extends Activity {
 		spinner1.setAdapter(adapter1); 
 		
 		
-		
+		//Hallo
 		
 		Spinner spinner2 = (Spinner)this.findViewById(R.id.Spinner02);  
 		ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,  

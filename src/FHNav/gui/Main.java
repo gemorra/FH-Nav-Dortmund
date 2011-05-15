@@ -1,22 +1,29 @@
 package FHNav.gui;
 
+import java.nio.channels.FileChannel.MapMode;
+import java.util.Date;
+
+import controller.IOManager;
+import controller.MainApplicationManager;
+import FHNav.model.Raum;
+import FHNav.model.Stundenplan;
+import FHNav.model.Veranstaltung;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.util.Log;
 
 public class Main extends Activity {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		
+		MainApplicationManager.setCtx(getApplicationContext());
 		
 		
 		
@@ -57,7 +64,43 @@ public class Main extends Activity {
 		btn.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {
-				startActivity(new Intent(Main.this,MainMenu.class));
+				
+				//SpeichernTest
+//				Log.v("test", "test2");
+//				Date d1 = new Date();
+//				d1.setHours(12);
+//				d1.setMinutes(0);
+//				d1.setSeconds(0);
+//				Date d2 = new Date();
+//				d2.setHours(14);
+//				d2.setMinutes(0);
+//				d2.setSeconds(0);
+//				
+//				
+//				Raum r1 = new Raum('C', 'E', 21);
+//				Raum r2 = new Raum('C', 'E', 21);
+//				Veranstaltung v1 = new Veranstaltung("Sachweh", "SWT 2", 1, d1, d2, r1, "MI", 1);
+//				Veranstaltung v2 = new Veranstaltung("Sachweh", "SWT 1", 1, d1, d2, r2, "WI", 3);
+//				Stundenplan stundenplan = new Stundenplan();
+//				stundenplan.addVeranstaltung(v1);
+//				stundenplan.addVeranstaltung(v2);
+//				MainApplicationManager.setStundenplan(stundenplan);
+//				IOManager.saveStundenplan(stundenplan);				
+				
+				
+				//LadenTest
+//				MainApplicationManager.setStundenplan(IOManager.loadStundenplan());
+//				int i = 1;
+//				for(Veranstaltung ver: MainApplicationManager.getStundenplan().getVeranstaltungen())
+//				{
+//					
+//					Log.v("FHNAV",i + ".:" + ver.getName() + " bei " + ver.getDozent());
+//					i++;
+//				}
+				
+				
+				//Normal
+//				startActivity(new Intent(Main.this,MainMenu.class));
 				
 			}
 		});

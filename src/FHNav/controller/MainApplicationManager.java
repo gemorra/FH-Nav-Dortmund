@@ -1,4 +1,4 @@
-package controller;
+package FHNav.controller;
 
 import FHNav.model.Stundenplan;
 import android.app.Activity;

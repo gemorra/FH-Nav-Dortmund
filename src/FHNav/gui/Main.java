@@ -1,22 +1,13 @@
 package FHNav.gui;
 
-import java.nio.channels.FileChannel.MapMode;
-import java.util.Date;
-
-import controller.IOManager;
-import controller.MainApplicationManager;
-import FHNav.model.Raum;
-import FHNav.model.Stundenplan;
-import FHNav.model.Veranstaltung;
+import FHNav.controller.MainApplicationManager;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.util.Log;
 
 public class Main extends Activity {
 	

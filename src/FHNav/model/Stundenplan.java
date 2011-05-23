@@ -2,9 +2,14 @@ package FHNav.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class Stundenplan implements Serializable
 {	
+	public interface Listener {
+    void onModelStateUpdated(Stundenplan stundenplan);
+	}
 	/**
 	 * Generated serialVersionUID
 	 */
@@ -12,6 +17,7 @@ public class Stundenplan implements Serializable
 
 	private ArrayList<Veranstaltung> veranstaltungen = new ArrayList<Veranstaltung>();
 	
+	private final List<Listener> listeners = new ArrayList();
 	
 	public Stundenplan()
 	{
@@ -22,6 +28,7 @@ public class Stundenplan implements Serializable
 	{
 		if(! veranstaltungen.contains(veranstaltung))
 			veranstaltungen.add(veranstaltung);
+	
 	}
 	
 	public void removeVeranstaltung(Veranstaltung veranstaltung)

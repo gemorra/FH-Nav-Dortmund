@@ -1,7 +1,6 @@
 package FHNav.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Veranstaltung implements Serializable{
 	
@@ -11,25 +10,25 @@ public class Veranstaltung implements Serializable{
 	private static final long serialVersionUID = 2879848547456847640L;
 	private String dozent;
 	private String name;
-	private Date startzeit;
-	private Date endzeit;
+	private int start;
+	private int dauer;
 	private int wochentag;
 
-	private Raum raum;
+	private String raum;
 	private String studiengang;
-	private int semester;
+	private String semester;
 	
 	public Veranstaltung()
 	{		
 	}
 	
-	public Veranstaltung(String dozent, String name, int wochentag, Date startzeit,
-		Date endzeit, Raum raum, String studiengang, int semester) {
+	public Veranstaltung(String dozent, String name, int wochentag, int start,
+		int duration, String raum, String studiengang, String semester) {
 		setDozent(dozent);
 		setName(name);
 		setWochentag(wochentag);
-		setStartzeit(startzeit);
-		setEndzeit(endzeit);
+		setStart(start);
+		setDuration(duration);
 		setRaum(raum);
 		setStudiengang(studiengang);
 		setSemester(semester);
@@ -46,7 +45,7 @@ public class Veranstaltung implements Serializable{
 		{
 			Veranstaltung oVeranstaltung = (Veranstaltung) o;
 			if(raum.equals(oVeranstaltung.raum) && dozent.equals(oVeranstaltung.dozent) && name.equals(oVeranstaltung) 
-					&& startzeit.equals(oVeranstaltung.startzeit) && endzeit.equals(oVeranstaltung.endzeit) )
+					&& (start==oVeranstaltung.start) && (dauer==oVeranstaltung.dauer) )
 			{
 				return true;
 			}
@@ -66,6 +65,26 @@ public class Veranstaltung implements Serializable{
 		this.wochentag = wochentag;
 	}
 
+	public int getStart() {
+		return start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
+	}
+
+	public int getDuration() {
+		return dauer;
+	}
+
+	public void setDuration(int duration) {
+		this.dauer = duration;
+	}
+
+	public void setSemester(String semester) {
+		this.semester = semester;
+	}
+
 	public String getDozent() {
 		return dozent;
 	}
@@ -78,22 +97,11 @@ public class Veranstaltung implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getStartzeit() {
-		return startzeit;
-	}
-	public void setStartzeit(Date startzeit) {
-		this.startzeit = startzeit;
-	}
-	public Date getEndzeit() {
-		return endzeit;
-	}
-	public void setEndzeit(Date endzeit) {
-		this.endzeit = endzeit;
-	}
-	public Raum getRaum() {
+
+	public String getRaum() {
 		return raum;
 	}
-	public void setRaum(Raum raum) {
+	public void setRaum(String raum) {
 		this.raum = raum;
 	}
 	
@@ -105,11 +113,4 @@ public class Veranstaltung implements Serializable{
 		this.studiengang = studiengang;
 	}
 
-	public int getSemester() {
-		return semester;
-	}
-
-	public void setSemester(int semester) {
-		this.semester = semester;
-	}
 }

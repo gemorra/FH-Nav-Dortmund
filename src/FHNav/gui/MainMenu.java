@@ -12,22 +12,22 @@ import android.widget.Button;
 
 public class MainMenu extends Activity {
 
-	Intent wiz;
+	Intent show;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-		wiz = new Intent(MainMenu.this, ShowAgenda.class);
+		show = new Intent(MainMenu.this, ShowAgenda.class);
 		
-		if(pref.getBoolean("wizardDone2", false)){		
+		if(pref.getBoolean("wizardDone", false)){		
 		setContentView(R.layout.mainmenu);
 		getWindow().setBackgroundDrawableResource(R.drawable.logokloppo);
 		Button btn1;
 		btn1 = (Button) findViewById(R.id.Button01);
 		 btn1.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
-            	 startActivity(wiz);
+            	 startActivity(show);
 
              }
          });
@@ -36,7 +36,7 @@ public class MainMenu extends Activity {
 			btn4 = (Button) findViewById(R.id.Button04);
 			 btn4.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
-	            	 stopService(wiz);
+	            	 stopService(show);
 	            	 finish();
 	             }
 	         }); 

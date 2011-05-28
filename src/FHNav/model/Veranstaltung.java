@@ -13,7 +13,7 @@ public class Veranstaltung implements Serializable{
 	private int start;
 	private int dauer;
 	private int wochentag;
-
+	private String type;
 	private String raum;
 	private String studiengang;
 	private String semester;
@@ -23,7 +23,7 @@ public class Veranstaltung implements Serializable{
 	}
 	
 	public Veranstaltung(String dozent, String name, int wochentag, int start,
-		int duration, String raum, String studiengang, String semester) {
+		int duration, String raum, String studiengang, String semester, String type) {
 		setDozent(dozent);
 		setName(name);
 		setWochentag(wochentag);
@@ -32,6 +32,7 @@ public class Veranstaltung implements Serializable{
 		setRaum(raum);
 		setStudiengang(studiengang);
 		setSemester(semester);
+		setType(type);
 	}
 	
 	
@@ -57,6 +58,26 @@ public class Veranstaltung implements Serializable{
 		
 	}
 	
+	public int getDauer() {
+		return dauer;
+	}
+
+	public void setDauer(int dauer) {
+		this.dauer = dauer;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getSemester() {
+		return semester;
+	}
+
 	public int getWochentag() {
 		return wochentag;
 	}

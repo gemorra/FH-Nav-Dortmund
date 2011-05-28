@@ -24,6 +24,7 @@ public final class R {
         public static final int Button02=0x7f06000b;
         public static final int Button03=0x7f06000c;
         public static final int Button04=0x7f06000d;
+        public static final int ImageView01=0x7f060011;
         public static final int LinearLayout01=0x7f060006;
         public static final int ListView01=0x7f060010;
         public static final int OkButton=0x7f060007;
@@ -34,11 +35,11 @@ public final class R {
         public static final int TextView0a=0x7f060000;
         public static final int WizardOK=0x7f060005;
         public static final int bottomtext=0x7f06000f;
-        public static final int new_game=0x7f060011;
+        public static final int new_game=0x7f060012;
         public static final int picview=0x7f060009;
-        public static final int quit=0x7f060012;
+        public static final int quit=0x7f060013;
         public static final int toptext=0x7f06000e;
-        public static final int transfer=0x7f060013;
+        public static final int transfer=0x7f060014;
     }
     public static final class layout {
         public static final int addveranstaltung=0x7f030000;
@@ -57,8 +58,12 @@ public final class R {
     public static final class string {
         public static final int app_name=0x7f040001;
         public static final int hello=0x7f040000;
+        public static final int progess_dialog_message=0x7f040008;
         public static final int wizard_alert_message=0x7f040003;
         public static final int wizard_alert_positiveButton=0x7f040004;
         public static final int wizard_alert_title=0x7f040002;
+        public static final int wizard_error_message=0x7f040006;
+        public static final int wizard_error_positiveButton=0x7f040007;
+        public static final int wizard_error_title=0x7f040005;
     }
 }

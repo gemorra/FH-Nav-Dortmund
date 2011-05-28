@@ -2,6 +2,8 @@ package FHNav.gui;
 
 import java.util.ArrayList;
 
+import FHNav.controller.MainApplicationManager;
+import FHNav.model.Veranstaltung;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,8 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,25 +23,18 @@ import android.widget.TextView;
 public class ShowAgenda extends Activity {
 	/** Called when the activity is first created. */
 	ListView lv1;
-	private ArrayList<Order> m_orders = null;
-	public OrderAdapter m_adapter;
+	private ArrayList<Veranstaltung> m_orders = null;
+	public VeranstaltungAdapter m_adapter;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.showagenda);
-		getWindow().setBackgroundDrawableResource(R.drawable.bg2);
+//		getWindow().setBackgroundDrawableResource(R.drawable.bg2);
 		
-		m_orders = new ArrayList<Order>();
-		getOrders();
-		if (getIntent().getBooleanExtra("EXIT", false)) {
-			Order o = new Order();
-			o.setOrderName("11.1.2011 10:15 A.E.02");
-			o.setOrderStatus("Algebra 1 V");
-			m_orders.add(2, o);
-			}
+		m_orders = getVeranstaltungen();
 		
-		this.m_adapter = new OrderAdapter(this, R.layout.row, m_orders);
+		this.m_adapter = new VeranstaltungAdapter(this, R.layout.row, m_orders);
 		
 		lv1 = (ListView) findViewById(R.id.ListView01);
 		lv1.setAdapter(m_adapter);
@@ -75,51 +68,28 @@ public class ShowAgenda extends Activity {
 	    return true;
 	}
 	
-	private void getOrders() {
-		m_orders = new ArrayList<Order>();
-		Order o1 = new Order();
-		o1.setOrderName("10.1.2011 8:30 A.E.01");
-		o1.setOrderStatus("Softwaretechnik 1 V");
-		Order o2 = new Order();
-		o2.setOrderName("10.1.2011 10:15 A.1.01");
-		o2.setOrderStatus("DV-Infrastruktur V");
-		Order o3 = new Order();
-		o3.setOrderName("11.1.2011 10:15 A.E.02");
-		o3.setOrderStatus("Datenbanken 1 ");
-		Order o4 = new Order();
-		o4.setOrderName("11.1.2011 14:15 A.E.02");
-		o4.setOrderStatus("Statistik V");
-		Order o5 = new Order();
-		o5.setOrderName("13.1.2011 14:15 B.E.21");
-		o5.setOrderStatus("Technisches Englisch");
-		Order o6 = new Order();
-		o6.setOrderName("13.1.2011 10:15 A.1.01");
-		o6.setOrderStatus("Softwaretechnik 1 P");
-		Order o7 = new Order();
-		o7.setOrderName("14.1.2011 8:30 A.E.02");
-		o7.setOrderStatus("Präsentationstechniken");
-		Order o8 = new Order();
-		o8.setOrderName("14.1.2011 10:15 A.E.02");
-		o8.setOrderStatus("KEER");
-		Order o9 = new Order();
-		o9.setOrderName("14.1.2011 14:15 A.E.02");
-		o9.setOrderStatus("Mikro/Makro");
-		m_orders.add(o1);
-		m_orders.add(o2);
-//		m_orders.add(o3);
-		m_orders.add(o4);
-		m_orders.add(o6);
-//		m_orders.add(o7);
-//		m_orders.add(o8);
-//		m_orders.add(o9);
+	private ArrayList<Veranstaltung> getVeranstaltungen() {
+		m_orders = new ArrayList<Veranstaltung>();
+		
+		if(MainApplicationManager.getStundenplan().getVeranstaltungen().size()>990){		
+			for(int i=0; i<990; i++)
+			{
+				m_orders.add(MainApplicationManager.getStundenplan().getVeranstaltungen().get(i));
+			}
+			return m_orders;
+		}
+		else
+		return MainApplicationManager.getStundenplan().getVeranstaltungen();
+			
+		
 	}
 
-	private class OrderAdapter extends ArrayAdapter<Order> {
+	private class VeranstaltungAdapter extends ArrayAdapter<Veranstaltung> {
 
-		private ArrayList<Order> items;
+		private ArrayList<Veranstaltung> items;
 
-		public OrderAdapter(Context context, int textViewResourceId,
-				ArrayList<Order> items) {
+		public VeranstaltungAdapter(Context context, int textViewResourceId,
+				ArrayList<Veranstaltung> items) {
 			super(context, textViewResourceId, items);
 			this.items = items;
 		}
@@ -131,15 +101,15 @@ public class ShowAgenda extends Activity {
 				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				v = vi.inflate(R.layout.row, null);
 			}
-			Order o = items.get(position);
-			if (o != null) {
+			Veranstaltung ve = items.get(position);
+			if (ve != null) {
 				TextView tt = (TextView) v.findViewById(R.id.toptext);
 				TextView bt = (TextView) v.findViewById(R.id.bottomtext);
 				if (tt != null) {
-					tt.setText(o.getOrderName());
+					tt.setText(ve.getName()+"["+ve.getType()+"]");
 				}
 				if (bt != null) {
-					bt.setText(o.getOrderStatus());
+					bt.setText(ve.getRaum() + "  " + ve.getDozent());
 				}
 			}
 			return v;

@@ -5,4 +5,9 @@
     <string name="wizard_alert_title">Herzlich Willkommen</string>
     <string name="wizard_alert_message">Dieser Wizard wird sie durch die erste Einrichtung führen.</string>
     <string name="wizard_alert_positiveButton">Los gehts!</string>
+    <string name="wizard_error_title">Verbindungsfehler!</string>
+    <string name="wizard_error_message">Leider konnte keine Verbindung zum Server hergestellt werden.</string>
+    <string name="wizard_error_positiveButton">Schade</string>
+    <string name="progess_dialog_message">Herunterladen des Stundenplans...</string>
+    
 </resources>

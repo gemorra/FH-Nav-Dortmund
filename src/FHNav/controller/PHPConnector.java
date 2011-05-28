@@ -43,7 +43,7 @@ public class PHPConnector {
 			InputStream is = entity.getContent();
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					is, "iso-8859-1"), 8);
+					is, "UTF-8"), 8);
 
 			StringBuilder sb = new StringBuilder();
 
@@ -129,7 +129,8 @@ public class PHPConnector {
 				int wochentag = json_data.getInt("dayOfWeek");
 				int start = json_data.getInt("start");
 				int dauer = json_data.getInt("duration");
-				Veranstaltung veranstaltung = new Veranstaltung(dozent, name, wochentag, start, dauer, raum, studiengang, semester);
+				String type = json_data.getString("type");
+				Veranstaltung veranstaltung = new Veranstaltung(dozent, name, wochentag, start, dauer, raum, studiengang, semester,type);
 				stundenplan.addVeranstaltung(veranstaltung);
 			}
 		} catch (Exception e) {

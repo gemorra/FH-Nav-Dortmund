@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"  
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    
+    android:padding="2dip">
+    
+    <CheckBox
+        android:id="@+id/extenden_row_checkbox"
+        
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_marginRight="6dip"
+        android:focusable = "false"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+    
         android:layout_width="0dip"
         android:layout_weight="1"
         android:layout_height="fill_parent">
@@ -9,7 +24,7 @@
             android:layout_width="fill_parent"
             android:layout_height="40dip"
             android:layout_weight="1"
-            android:id = "@+id/normal_row_toptext"       
+            android:id = "@+id/extenden_row_toptext"       
             android:gravity="center_vertical" 
             android:textColor = "#FF6000"
             
@@ -20,8 +35,9 @@
             android:layout_height="25dip"
             android:layout_weight="1" 
             android:gravity="top"
-             android:id = "@+id/normal_row_bottomtext"   
+             android:id = "@+id/extenden_row_bottomtext"   
             android:singleLine="true"/>
             
     </LinearLayout>
 
+</LinearLayout>

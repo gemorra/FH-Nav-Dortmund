@@ -84,8 +84,8 @@ public class SoftwarePassionView extends ListActivity{
                 }
                 Order o = items.get(position);
                 if (o != null) {
-                        TextView tt = (TextView) v.findViewById(R.id.toptext);
-                        TextView bt = (TextView) v.findViewById(R.id.bottomtext);
+                        TextView tt = (TextView) v.findViewById(R.id.normal_row_toptext);
+                        TextView bt = (TextView) v.findViewById(R.id.normal_row_bottomtext);
                         if (tt != null) {
                               tt.setText("Name: "+o.getOrderName());                            }
                         if(bt != null){

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+  
+<Spinner android:id="@+id/Spinner1"
+	android:drawSelectorOnTop="true"
+	android:layout_width="270dip"
+	android:layout_height="50dip"
+	android:layout_x="20dip" 
+	android:layout_y="10dip"> </Spinner>
+
+<ListView
+	android:id="@+id/ListView01" 
+	android:layout_height="wrap_content"
+ 	android:layout_width="fill_parent"
+ 	android:cacheColorHint="#00000000">
+</ListView>
+
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical" >
+	
+<ImageButton android:id="@+id/add_button"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" 
+	android:text="Add"/>
+
+<ImageButton android:id="@+id/delete_button"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:text="Delete" />
+
+<ImageButton android:id="@+id/zurueck_button"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:text="Zurück" />
+</LinearLayout>
+
+</LinearLayout>

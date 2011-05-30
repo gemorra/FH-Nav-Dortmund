@@ -8,6 +8,9 @@ import FHNav.gui.helper.ExtendedListAdapter;
 import FHNav.gui.helper.NormalListAdapter;
 import FHNav.model.Veranstaltung;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +18,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MenuKloppo extends Activity {
 	
@@ -50,10 +54,33 @@ public class MenuKloppo extends Activity {
 			btn1 = (Button) findViewById(R.id.Button01);
 			btn1.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-//					startActivity(show);
+					final CharSequence[] items = {"Ansicht wechseln", "Bearbeiten", "Übertragen"};
 
+					AlertDialog.Builder builder = new AlertDialog.Builder(MenuKloppo.this);
+					builder.setTitle("Stundenplan anpassen");
+					builder.setItems(items, new DialogInterface.OnClickListener() {
+					    public void onClick(DialogInterface dialog, int item) {
+					    	if(items[item].equals("Bearbeiten")){
+					    	ExtendedListAdapter ead = new ExtendedListAdapter(MenuKloppo.this, veranstaltungen);
+					        lv1.setAdapter(ead);
+					        }
+					    }
+					});
+					AlertDialog alert = builder.create();
+					alert.show();
 				}
 			});
+
+
+			Button btn2;
+			btn2 = (Button) findViewById(R.id.Button02);
+			btn2.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					stopService(wizard);
+					finish();
+				}
+			});
+			
 
 			Button btn3;
 			btn3 = (Button) findViewById(R.id.Button03);
@@ -65,15 +92,6 @@ public class MenuKloppo extends Activity {
 					editor.commit();
 					startActivity(wizard);
 
-				}
-			});
-
-			Button btn2;
-			btn2 = (Button) findViewById(R.id.Button02);
-			btn2.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					stopService(wizard);
-					finish();
 				}
 			});
 		} else {

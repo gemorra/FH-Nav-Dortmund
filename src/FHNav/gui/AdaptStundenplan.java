@@ -19,11 +19,11 @@ public class AdaptStundenplan extends Activity{
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			s1.setAdapter(adapter);
 			
-		ImageButton im1 = (ImageButton) this.findViewById(R.id.add_button);
+		Button im1 = (Button) this.findViewById(R.id.add_button);
 		//im1.setImageResource(R.drawable)
-		ImageButton im2 = (ImageButton) this.findViewById(R.id.delete_button);
+		Button im2 = (Button) this.findViewById(R.id.delete_button);
 		//im2.setImageResource(R.drawable)
-		ImageButton im3 = (ImageButton) this.findViewById(R.id.zurueck_button);
+		Button im3 = (Button) this.findViewById(R.id.zurueck_button);
 		//im3.setImageResource(R.drawable)
 	}
 }

@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
 import FHNav.gui.helper.ExtendedListAdapter;
+import FHNav.gui.helper.NormalListAdapter;
 import FHNav.model.Veranstaltung;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -22,7 +22,7 @@ public class MenuKloppo extends Activity {
 	Intent wizard;
 	SharedPreferences pref;
 	private ArrayList<Veranstaltung> veranstaltungen;
-	public ExtendedListAdapter extendedListAdapter;
+	public NormalListAdapter normalListAdapter;
 	ListView lv1;
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,10 +41,10 @@ public class MenuKloppo extends Activity {
 			
 			veranstaltungen = getVeranstaltungen();
 
-			this.extendedListAdapter = new ExtendedListAdapter(this, veranstaltungen);
+			this.normalListAdapter = new NormalListAdapter(this, veranstaltungen);
 //			
 			lv1 = (ListView) findViewById(R.id.listView1);
-			lv1.setAdapter(extendedListAdapter);
+			lv1.setAdapter(normalListAdapter);
 		
 			Button btn1;
 			btn1 = (Button) findViewById(R.id.Button01);

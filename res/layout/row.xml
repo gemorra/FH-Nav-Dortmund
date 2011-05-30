@@ -6,6 +6,7 @@
         android:layout_height="fill_parent">
 
         <TextView
+        android:paddingLeft="5dip"
             android:layout_width="fill_parent"
             android:layout_height="40dip"
             android:layout_weight="1"
@@ -16,6 +17,7 @@
             />
             
         <TextView  
+        android:paddingLeft="5dip"
             android:layout_width="fill_parent"
             android:layout_height="25dip"
             android:layout_weight="1" 

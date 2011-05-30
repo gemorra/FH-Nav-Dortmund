@@ -3,15 +3,14 @@
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
 	android:orientation="vertical">
 
-		<TextView android:layout_width="fill_parent"
-			android:layout_height="35dip" android:text="ainmenue"
-			android:layout_weight="0" 
-			android:background="@drawable/ic_tab_template"/>
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="35dip" android:text="ainmenue"
+		android:layout_weight="0" android:background="@drawable/ic_tab_template" />
 
 
-		<ListView android:layout_height="wrap_content"
-		android:layout_weight="1"
-			android:layout_width="match_parent" android:id="@+id/listView1"></ListView>
+	<ListView android:layout_height="wrap_content"
+		android:layout_weight="1" android:layout_width="match_parent"
+		android:id="@+id/listView1" android:cacheColorHint="#00000000"></ListView>
 
 
 	<LinearLayout android:id="@+id/linearLayout3"

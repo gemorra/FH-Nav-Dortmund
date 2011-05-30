@@ -1,6 +1,9 @@
 package FHNav.controller;
 
+import java.util.ArrayList;
+
 import FHNav.model.Stundenplan;
+import FHNav.model.Veranstaltung;
 import android.app.Activity;
 import android.content.Context;
 
@@ -29,5 +32,19 @@ public class MainApplicationManager {
 		MainApplicationManager.stundenplan = stundenplan;
 	}
 	
-
+	public static ArrayList<Veranstaltung> getVeranstaltungen() {
+		ArrayList<Veranstaltung> m_orders = new ArrayList<Veranstaltung>();
+		
+		if(MainApplicationManager.getStundenplan().getVeranstaltungen().size()>990){		
+			for(int i=0; i<990; i++)
+			{
+				m_orders.add(MainApplicationManager.getStundenplan().getVeranstaltungen().get(i));
+			}
+			return m_orders;
+		}
+		else
+		return MainApplicationManager.getStundenplan().getVeranstaltungen();
+			
+		
+	}
 }

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent" android:layout_height="match_parent"
 	android:orientation="vertical">
-
-	<Spinner android:id="@+id/Spinner1" android:drawSelectorOnTop="true"
-		android:layout_height="50dip" android:layout_x="20dip"
-		android:layout_y="10dip" android:layout_weight="0"
-		android:layout_width="match_parent">
-	</Spinner>
 
 	<ListView android:id="@+id/ListView01" android:layout_height="wrap_content"
 		android:layout_width="fill_parent" android:cacheColorHint="#00000000"
@@ -21,10 +17,10 @@
 		<Button android:id="@+id/add_button" android:text="Anpassen"
 			android:layout_width="50dip" android:layout_weight="1"
 			android:layout_gravity="bottom" android:layout_height="69dip"></Button>
-		<Button android:id="@+id/delete_button"
+		<Button android:id="@+id/delete_button" android:text="Löschen"
 			android:layout_width="50dip" android:layout_weight="1"
 			android:layout_height="69dip"></Button>
-		<Button android:id="@+id/zurueck_button"
+		<Button android:id="@+id/zurueck_button" android:text="Zurück"
 			android:layout_width="50dip" android:layout_weight="1"
 			android:layout_height="69dip"></Button>
 	</LinearLayout>

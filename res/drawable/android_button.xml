@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:drawable="@drawable/ic_tab_template" android:state_pressed="true" />
-	<item android:drawable="@drawable/image19" android:state_focused="true" />
-	<item android:drawable="@drawable/ic_tab_template" android:state_selected="false"
-		android:state_pressed="false" android:state_focused="false" />
+	<item android:drawable="@drawable/ic_tab_template2" android:state_pressed="true" />
+	<item android:drawable="@drawable/ic_tab_template2" android:state_focused="true" />
+	<item android:drawable="@drawable/ic_tab_template" />
 </selector>

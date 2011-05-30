@@ -36,7 +36,7 @@ public final class R {
         public static final int Button02=0x7f060014;
         public static final int Button03=0x7f060015;
         public static final int Button04=0x7f060016;
-        public static final int ImageView01=0x7f06001c;
+        public static final int ImageView01=0x7f06001b;
         public static final int LinearLayout01=0x7f06000c;
         public static final int ListView01=0x7f060001;
         public static final int OkButton=0x7f06000d;
@@ -53,15 +53,14 @@ public final class R {
         public static final int extenden_row_checkbox=0x7f06000e;
         public static final int extenden_row_toptext=0x7f06000f;
         public static final int linearLayout1=0x7f060002;
-        public static final int linearLayout2=0x7f060017;
-        public static final int linearLayout3=0x7f060019;
-        public static final int listView1=0x7f060018;
-        public static final int new_game=0x7f06001d;
-        public static final int normal_row_bottomtext=0x7f06001b;
-        public static final int normal_row_toptext=0x7f06001a;
+        public static final int linearLayout3=0x7f060018;
+        public static final int listView1=0x7f060017;
+        public static final int new_game=0x7f06001c;
+        public static final int normal_row_bottomtext=0x7f06001a;
+        public static final int normal_row_toptext=0x7f060019;
         public static final int picview=0x7f060012;
-        public static final int quit=0x7f06001e;
-        public static final int transfer=0x7f06001f;
+        public static final int quit=0x7f06001d;
+        public static final int transfer=0x7f06001e;
         public static final int zurueck_button=0x7f060005;
     }
     public static final class layout {

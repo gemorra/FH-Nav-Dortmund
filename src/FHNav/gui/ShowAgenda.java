@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import FHNav.controller.MainApplicationManager;
 import FHNav.gui.helper.ExtendedListAdapter;
-import FHNav.gui.helper.NormalListAdapter;
 import FHNav.model.Veranstaltung;
 import android.app.Activity;
 import android.content.Intent;

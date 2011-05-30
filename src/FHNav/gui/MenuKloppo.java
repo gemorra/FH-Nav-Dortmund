@@ -35,8 +35,8 @@ public class MenuKloppo extends Activity {
 			.getDefaultSharedPreferences(this);
 
 		if (pref.getBoolean("wizardDone", false)) {
-			setContentView(R.layout.mainmenu);
-			getWindow().setBackgroundDrawableResource(R.drawable.logokloppo);
+			setContentView(R.layout.menukloppo);
+			getWindow().setBackgroundDrawableResource(R.drawable.bg2);
 			MainApplicationManager.setStundenplan(IOManager.loadStundenplan());
 			
 			veranstaltungen = getVeranstaltungen();
@@ -68,9 +68,9 @@ public class MenuKloppo extends Activity {
 				}
 			});
 
-			Button btn4;
-			btn4 = (Button) findViewById(R.id.Button04);
-			btn4.setOnClickListener(new View.OnClickListener() {
+			Button btn2;
+			btn2 = (Button) findViewById(R.id.Button02);
+			btn2.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					stopService(wizard);
 					finish();

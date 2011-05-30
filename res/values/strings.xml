@@ -9,5 +9,7 @@
     <string name="wizard_error_message">Leider konnte keine Verbindung zum Server hergestellt werden.</string>
     <string name="wizard_error_positiveButton">Schade</string>
     <string name="progess_dialog_message">Herunterladen des Stundenplans...</string>
-    
+    <string name="button_add_label">Hinzufügen</string>
+    <string name="button_delete_label">Löschen</string>
+    <string name="button_back_label">Zurück</string>
 </resources>

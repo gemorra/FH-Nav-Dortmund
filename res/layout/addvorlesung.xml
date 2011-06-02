@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+
+	<Spinner android:id="@+id/Spinner01" android:layout_width="270dip"
+		android:layout_height="50dip" android:layout_x="20dip"
+		android:layout_y="180dip">></Spinner>
+
+	<ListView android:layout_height="wrap_content"
+		android:layout_weight="1" android:layout_width="match_parent"
+		android:id="@+id/addvorlesung_list" android:cacheColorHint="#00000000"></ListView>
+
+	<LinearLayout android:layout_height="wrap_content"
+		android:layout_width="match_parent" android:layout_weight="0"
+		android:layout_gravity="bottom" android:orientation="horizontal">
+		
+		<Button android:layout_weight="1"
+		android:layout_width="50dip" 
+		android:text="@string/button_add_label" 
+		android:drawableTop="@android:drawable/ic_menu_add" 
+		android:layout_height="69dip" 
+		android:id="@+id/addveranstaltung_add" 
+		android:layout_gravity="bottom" 
+		android:background="@drawable/android_button"></Button>
+		<Button android:layout_weight="1" 
+		android:layout_width="50dip" 
+		android:text="@string/button_back_label" 
+		android:drawableTop="@android:drawable/ic_menu_revert" 
+		android:layout_height="69dip"
+		android:id="@+id/adaptstundenplan_back"
+		android:layout_gravity="bottom" 
+		android:background="@drawable/android_button"></Button>
+
+	</LinearLayout>
+</LinearLayout>

@@ -130,7 +130,7 @@ public class Wizard extends Activity implements Runnable {
 				editor.putBoolean("wizardDone", true);
 				editor.commit();
 
-				startActivity(new Intent(Wizard.this, MenuKloppo.class));
+				startActivity(new Intent(Wizard.this, Menu.class));
 				
 			}
 			dialog.dismiss();

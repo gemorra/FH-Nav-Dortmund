@@ -16,15 +16,15 @@
 	<LinearLayout android:id="@+id/linearLayout3"
 		android:layout_height="wrap_content" android:layout_width="match_parent"
 		android:layout_weight="0" android:layout_gravity="bottom">
-		<Button android:text="Anpassen" android:layout_height="69dip"
+		<Button android:text="@string/menu_edit_button" android:layout_height="69dip"
 			android:id="@+id/Button01" android:background="@drawable/android_button"
 			android:layout_width="50dip" android:layout_weight="1"
 			android:drawableTop="@drawable/ic_customize" android:layout_gravity="bottom"></Button>
-		<Button android:text="Navigation" android:layout_height="69dip"
+		<Button android:text="@string/menu_navigation_button" android:layout_height="69dip"
 			android:id="@+id/Button02" android:background="@drawable/android_button"
 			android:layout_width="50dip" android:layout_weight="1"
 			android:drawableTop="@drawable/ic_navigate" android:layout_gravity="bottom"></Button>
-		<Button android:text="Einstellungen" android:layout_height="69dip"
+		<Button android:text="@string/menu_settings_button" android:layout_height="69dip"
 			android:id="@+id/Button03" android:background="@drawable/android_button"
 			android:layout_width="50dip" android:layout_weight="1"
 			android:drawableTop="@drawable/ic_settings" android:layout_gravity="bottom"></Button>

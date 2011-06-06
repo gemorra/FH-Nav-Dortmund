@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, Main!</string>
-    <string name="app_name">FHNavi</string>
+	<string name="app_name">FH-Nav</string>
+	<string name="menu_edit_button">Anpassen</string>
+	<string name="menu_navigation_button">Navigation</string>
+	<string name="menu_settings_button">Einstellung</string>
     <string name="wizard_alert_title">Herzlich Willkommen</string>
     <string name="wizard_alert_message">Dieser Wizard wird sie durch die erste Einrichtung führen.</string>
     <string name="wizard_alert_positiveButton">Los gehts!</string>

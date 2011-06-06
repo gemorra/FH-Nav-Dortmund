@@ -18,9 +18,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class MenuKloppo extends Activity {
+public class Menu extends Activity {
 	
-	Intent show;
 	Intent wizard;
 	Intent adaptstundenplan;
 	SharedPreferences pref;
@@ -42,16 +41,16 @@ public class MenuKloppo extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		MainApplicationManager.setCtx(getApplicationContext());
-		show = new Intent(MenuKloppo.this, ShowAgenda.class);
-		adaptstundenplan = new Intent(MenuKloppo.this, AdaptStundenplan.class);
-		wizard = new Intent(MenuKloppo.this, Wizard.class);
+
+		adaptstundenplan = new Intent(Menu.this, AdaptStundenplan.class);
+		wizard = new Intent(Menu.this, Wizard.class);
 		pref = PreferenceManager
 			.getDefaultSharedPreferences(this);
 		PHPConnector.setPathToFile(pref.getString("pathToFile", "http://gemorra.de/test.php"));
 		
 				
 		if (pref.getBoolean("wizardDone", false)) {
-			setContentView(R.layout.menukloppo);
+			setContentView(R.layout.menu);
 			getWindow().setBackgroundDrawableResource(R.drawable.bg2);
 			MainApplicationManager.setStundenplan(IOManager.loadStundenplan());
 			
@@ -67,7 +66,7 @@ public class MenuKloppo extends Activity {
 				public void onClick(View v) {
 					final CharSequence[] items = {"Ansicht wechseln", "Neu", "Löschen", "Übertragen"};
 
-					AlertDialog.Builder builder = new AlertDialog.Builder(MenuKloppo.this);
+					AlertDialog.Builder builder = new AlertDialog.Builder(Menu.this);
 					builder.setTitle("Stundenplan anpassen");
 					builder.setItems(items, new DialogInterface.OnClickListener() {
 					    public void onClick(DialogInterface dialog, int item) {
@@ -109,7 +108,7 @@ public class MenuKloppo extends Activity {
 				}
 			});
 		} else {
-			startActivity(new Intent(MenuKloppo.this, Wizard.class));
+			startActivity(new Intent(Menu.this, Wizard.class));
 		}
 
 	}

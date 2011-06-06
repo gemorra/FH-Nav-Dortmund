@@ -1,7 +1,6 @@
 package FHNav.gui;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -37,7 +36,7 @@ public class AddVeranstaltung extends Activity {
 		btn.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {
-				startActivity(new Intent(AddVeranstaltung.this,ShowPreviewOfSelection.class));			
+							
 			}
 		});
 		

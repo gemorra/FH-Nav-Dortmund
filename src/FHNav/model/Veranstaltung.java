@@ -3,10 +3,8 @@ package FHNav.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import android.util.Log;
+public class Veranstaltung implements Serializable, Comparable<Veranstaltung> {
 
-public class Veranstaltung implements Serializable{
-	
 	/**
 	 * Generated serialVersionUID
 	 */
@@ -21,16 +19,15 @@ public class Veranstaltung implements Serializable{
 	private String studiengang;
 	private String semester;
 	private String studentSet;
-	
+
 	private Date startTime;
 	private Date endTime;
-	
-	public Veranstaltung()
-	{		
+
+	public Veranstaltung() {
 	}
-	
-	public Veranstaltung(String dozent, String name, int wochentag, int start,
-		int duration, String raum, String studiengang, String semester, String type,String studentSet) {
+
+	public Veranstaltung(String dozent, String name, int wochentag, int start, int duration, String raum, String studiengang, String semester, String type,
+			String studentSet) {
 		setDozent(dozent);
 		setName(name);
 		setWochentag(wochentag);
@@ -41,28 +38,48 @@ public class Veranstaltung implements Serializable{
 		setSemester(semester);
 		setType(type);
 		setStudentSet(studentSet);
-		
-		
+
 	}
-	
-	public void refresh()
-	{
+
+	public int compareTo(Veranstaltung ver) {
+		final int BEFORE = -1;
+		final int EQUAL = 0;
+		final int AFTER = 1;
+
+		if (this == ver)
+			return EQUAL;
+		else {
+			if (this.wochentag < ver.wochentag)
+				return BEFORE;
+			else if (this.wochentag > ver.wochentag)
+				return AFTER;
+			else if (this.wochentag == ver.wochentag) {
+				if (this.start <= ver.start)
+					return BEFORE;
+				else
+					return AFTER;
+			}
+		}
+
+		return EQUAL;
+
+	}
+
+	public void refresh() {
 		setStartTime(getStartDateFromInt(start));
-		setEndTime(getEndDateFromInt(start,dauer));
+		setEndTime(getEndDateFromInt(start, dauer));
 	}
-	
-	public static Date getEndDateFromInt(int value, int duration)
-	{
+
+	public static Date getEndDateFromInt(int value, int duration) {
 		Date dt;
-		value+=(duration-1);
+		value += (duration - 1);
 		dt = getStartDateFromInt(value);
-		dt.setMinutes(dt.getMinutes()+45);
+		dt.setMinutes(dt.getMinutes() + 45);
 		return dt;
-		
+
 	}
-	
-	public static Date getStartDateFromInt(int value)
-	{
+
+	public static Date getStartDateFromInt(int value) {
 		value++;
 		Date dt = new Date();
 		switch (value) {
@@ -109,7 +126,7 @@ public class Veranstaltung implements Serializable{
 		case 11:
 			dt.setHours(17);
 			dt.setMinutes(45);
-			break;			
+			break;
 		case 12:
 			dt.setHours(18);
 			dt.setMinutes(35);
@@ -117,35 +134,25 @@ public class Veranstaltung implements Serializable{
 		}
 		return dt;
 	}
-	
-	
-	
-	
-	
+
 	/**
 	 * Erstmal ohne Semester und Studiengang
 	 */
 	@Override
-	public boolean equals(Object o)
-	{	
-		if(o != null && o instanceof Veranstaltung)
-		{
+	public boolean equals(Object o) {
+		if (o != null && o instanceof Veranstaltung) {
 			Veranstaltung oVeranstaltung = (Veranstaltung) o;
-			if(raum.equals(oVeranstaltung.raum) && dozent.equals(oVeranstaltung.dozent) 
-					&& name.equals(oVeranstaltung.name) && studiengang.equals(oVeranstaltung.studiengang)
-					&& (type.equals(oVeranstaltung.type)) && (studentSet.equals(oVeranstaltung.studentSet)) 
-					&& (wochentag == oVeranstaltung.wochentag) && semester.equals(oVeranstaltung.semester))
-			{
+			if (raum.equals(oVeranstaltung.raum) && dozent.equals(oVeranstaltung.dozent) && name.equals(oVeranstaltung.name)
+					&& studiengang.equals(oVeranstaltung.studiengang) && (type.equals(oVeranstaltung.type)) && (studentSet.equals(oVeranstaltung.studentSet))
+					&& (wochentag == oVeranstaltung.wochentag) && semester.equals(oVeranstaltung.semester)) {
 				return true;
-			}
-			else
+			} else
 				return false;
-		}
-		else 
+		} else
 			return false;
-		
+
 	}
-	
+
 	public String getStudentSet() {
 		return studentSet;
 	}
@@ -205,12 +212,15 @@ public class Veranstaltung implements Serializable{
 	public String getDozent() {
 		return dozent;
 	}
+
 	public void setDozent(String dozent) {
 		this.dozent = dozent;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -218,10 +228,11 @@ public class Veranstaltung implements Serializable{
 	public String getRaum() {
 		return raum;
 	}
+
 	public void setRaum(String raum) {
 		this.raum = raum;
 	}
-	
+
 	public String getStudiengang() {
 		return studiengang;
 	}

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
 import FHNav.controller.PHPConnector;
-import FHNav.gui.helper.ExtendedListAdapter;
 import FHNav.gui.helper.NormalListAdapter;
 import FHNav.model.Veranstaltung;
 import android.app.Activity;
@@ -28,6 +27,16 @@ public class MenuKloppo extends Activity {
 	private ArrayList<Veranstaltung> veranstaltungen;
 	public NormalListAdapter normalListAdapter;
 	ListView lv1;
+	
+	public void onResume()
+	{
+		super.onResume();
+		if(normalListAdapter!=null)
+		{
+			normalListAdapter.notifyDataSetChanged();
+		}
+	}
+	
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

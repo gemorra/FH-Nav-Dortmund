@@ -4,15 +4,10 @@ import java.util.ArrayList;
 
 import FHNav.controller.MainApplicationManager;
 import FHNav.gui.helper.ExtendedListAdapter;
-import FHNav.gui.helper.NormalListAdapter;
 import FHNav.model.Veranstaltung;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 

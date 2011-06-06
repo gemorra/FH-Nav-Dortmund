@@ -15,6 +15,7 @@ package FHNav.gui.helper;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import FHNav.gui.R;
@@ -47,40 +48,42 @@ public class ExtendedListAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
 	ArrayList<Veranstaltung> items;
 	ArrayList<Boolean> checked;
-	
+	String pattern = "HH:mm";
+	SimpleDateFormat sdf = new SimpleDateFormat();
+	ArrayList<Veranstaltung> itemsToManipulate = new ArrayList<Veranstaltung>();
+
+	@SuppressWarnings("unused")
 	public ExtendedListAdapter(Context context, ArrayList<Veranstaltung> items) {
 
 		mInflater = LayoutInflater.from(context);
 		this.items = items;
 		checked = new ArrayList<Boolean>();
-
-		for(Veranstaltung v:items)
-		{
+		sdf.applyPattern(pattern);
+		for (Veranstaltung v : items) {
 			checked.add(false);
 		}
 	}
-	
-	public void deselectAll()
-	{
+
+	@SuppressWarnings("unused")
+	public void deselectAll() {
 		checked.clear();
-		for(Veranstaltung v:items)
-		{
+		for (Veranstaltung v : items) {
 			checked.add(false);
 		}
-		
+
 		notifyDataSetChanged();
 	}
-	public void selectAll()
-	{
+
+	@SuppressWarnings("unused")
+	public void selectAll() {
 		checked.clear();
-		for(Veranstaltung v:items)
-		{
+		for (Veranstaltung v : items) {
 			checked.add(true);
 		}
-		
+
 		notifyDataSetChanged();
 	}
-	
+
 	/**
 	 * Make a view to hold each row.
 	 * 
@@ -104,18 +107,26 @@ public class ExtendedListAdapter extends BaseAdapter {
 			holder.checkbox = (CheckBox) convertView.findViewById(R.id.extenden_row_checkbox);
 			convertView.setTag(holder);
 		} else {
-			holder = (ViewHolder) convertView.getTag();		
+			holder = (ViewHolder) convertView.getTag();
 		}
-		
+
 		final int pos = position;
 		Veranstaltung ve = items.get(position);
 		// Bind the data efficiently with the holder.
-		holder.bottomtext.setText(ve.getRaum());
-		holder.toptext.setText(ve.getName());
+		String topText = ve.getName();
+		if (ve.getType().length() > 0)
+			topText += " [" + ve.getType() + "]";
+
+		String bottomText = sdf.format(ve.getStartTime()) + "-" + sdf.format(ve.getEndTime()) + " " + ve.getRaum();
+
+		bottomText += " (" + ve.getStudentSet() + ")";
+
+		holder.bottomtext.setText(bottomText);
+		holder.toptext.setText(topText);
 		holder.checkbox.setChecked(checked.get(position));
-		//Für Click auf Box
+		// Für Click auf Box
 		holder.checkbox.setOnClickListener(new View.OnClickListener() {
-			
+
 			public void onClick(View v) {
 				Log.e("", "klickBox");
 				boolean tmp = checked.get(pos);
@@ -123,9 +134,9 @@ public class ExtendedListAdapter extends BaseAdapter {
 				holder.checkbox.setChecked(!tmp);
 			}
 		});
-		//Für Click in Zeile
+		// Für Click in Zeile
 		convertView.setOnClickListener(new View.OnClickListener() {
-			
+
 			public void onClick(View v) {
 				Log.e("", "klick");
 				boolean tmp = checked.get(pos);
@@ -136,6 +147,7 @@ public class ExtendedListAdapter extends BaseAdapter {
 
 		return convertView;
 	}
+
 	/**
 	 * The number of items in the list is determined by the number of speeches
 	 * in our array.
@@ -166,28 +178,21 @@ public class ExtendedListAdapter extends BaseAdapter {
 		return position;
 	}
 
-
-
 	public ArrayList<Veranstaltung> getItems() {
 		return items;
 	}
-
 
 	public void setItems(ArrayList<Veranstaltung> items) {
 		this.items = items;
 	}
 
-
 	public ArrayList<Boolean> getChecked() {
 		return checked;
 	}
 
-
 	public void setChecked(ArrayList<Boolean> checked) {
 		this.checked = checked;
 	}
-
-
 
 	static class ViewHolder {
 		TextView bottomtext;

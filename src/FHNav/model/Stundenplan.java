@@ -2,7 +2,6 @@ package FHNav.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class Stundenplan implements Serializable
@@ -17,7 +16,7 @@ public class Stundenplan implements Serializable
 
 	private ArrayList<Veranstaltung> veranstaltungen = new ArrayList<Veranstaltung>();
 	
-	private final List<Listener> listeners = new ArrayList();
+//	private final List<Listener> listeners = new ArrayList();
 	
 	public Stundenplan()
 	{

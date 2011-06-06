@@ -7,6 +7,7 @@ import FHNav.controller.MainApplicationManager;
 import FHNav.controller.PHPConnector;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,8 +18,10 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 public class Wizard extends Activity implements Runnable {
@@ -85,11 +88,30 @@ public class Wizard extends Activity implements Runnable {
 			dialog.dismiss();
 			if(spinnerContent.size()<1)
 			{
-				AlertDialog.Builder adb = new AlertDialog.Builder(Wizard.this);
-				adb.setTitle(R.string.wizard_error_title);
-				adb.setMessage(R.string.wizard_error_message);
-				adb.setPositiveButton(R.string.wizard_error_positiveButton, null);
-				adb.show();
+				//Verbindungsfehler Dialog:
+				final Dialog error_dialog = new Dialog(Wizard.this);
+
+				error_dialog.setContentView(R.layout.alert_dialog_connection_problem);
+				error_dialog.setTitle(R.string.alert_dialog_connection_problem_title);
+				final EditText et = (EditText)error_dialog.findViewById(R.id.alert_dialog_connection_problem_editText);
+				Button btn = (Button)error_dialog.findViewById(R.id.alert_dialog_connection_problem_button);
+				et.setText(PHPConnector.getPathToFile());
+				btn.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						SharedPreferences.Editor editor = preferences.edit();
+						editor.putString("pathToFile", et.getText().toString());
+						editor.commit();
+						PHPConnector.setPathToFile(preferences.getString("pathToFile", "http://gemorra.de/test.php"));
+						error_dialog.dismiss();
+						loadSpinner = true;
+						dialog = ProgressDialog.show(Wizard.this, "", "Download...", true);
+						Thread t1 = new Thread(Wizard.this);
+						t1.start();
+					}
+				});
+				
+				error_dialog.show();
 			}
 		}
 	};

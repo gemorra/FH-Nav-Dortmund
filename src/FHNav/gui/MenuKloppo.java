@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
+import FHNav.controller.PHPConnector;
 import FHNav.gui.helper.ExtendedListAdapter;
 import FHNav.gui.helper.NormalListAdapter;
 import FHNav.model.Veranstaltung;
@@ -37,7 +38,9 @@ public class MenuKloppo extends Activity {
 		wizard = new Intent(MenuKloppo.this, Wizard.class);
 		pref = PreferenceManager
 			.getDefaultSharedPreferences(this);
-
+		PHPConnector.setPathToFile(pref.getString("pathToFile", "http://gemorra.de/test.php"));
+		
+				
 		if (pref.getBoolean("wizardDone", false)) {
 			setContentView(R.layout.menukloppo);
 			getWindow().setBackgroundDrawableResource(R.drawable.bg2);
@@ -53,15 +56,19 @@ public class MenuKloppo extends Activity {
 			btn1 = (Button) findViewById(R.id.Button01);
 			btn1.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					final CharSequence[] items = {"Ansicht wechseln", "Bearbeiten", "Übertragen"};
+					final CharSequence[] items = {"Ansicht wechseln", "Neu", "Löschen", "Übertragen"};
 
 					AlertDialog.Builder builder = new AlertDialog.Builder(MenuKloppo.this);
 					builder.setTitle("Stundenplan anpassen");
 					builder.setItems(items, new DialogInterface.OnClickListener() {
 					    public void onClick(DialogInterface dialog, int item) {
-					    	if(items[item].equals("Bearbeiten")){
+					    	if(items[item].equals("Löschen")){
 					    		startActivity(adaptstundenplan);
 					        }
+					    	if(items[item].equals("Neu")){
+					    		startActivity(adaptstundenplan);
+					        }
+					    	
 					    }
 					});
 					AlertDialog alert = builder.create();

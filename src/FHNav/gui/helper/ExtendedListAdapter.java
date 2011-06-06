@@ -60,7 +60,27 @@ public class ExtendedListAdapter extends BaseAdapter {
 		}
 	}
 	
-
+	public void deselectAll()
+	{
+		checked.clear();
+		for(Veranstaltung v:items)
+		{
+			checked.add(false);
+		}
+		
+		notifyDataSetChanged();
+	}
+	public void selectAll()
+	{
+		checked.clear();
+		for(Veranstaltung v:items)
+		{
+			checked.add(true);
+		}
+		
+		notifyDataSetChanged();
+	}
+	
 	/**
 	 * Make a view to hold each row.
 	 * 

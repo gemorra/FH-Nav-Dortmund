@@ -37,8 +37,7 @@ public class AddVeranstaltung extends Activity {
 		btn.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {
-				startActivity(new Intent(AddVeranstaltung.this,ShowPreviewOfSelection.class));
-				
+				startActivity(new Intent(AddVeranstaltung.this,ShowPreviewOfSelection.class));			
 			}
 		});
 		

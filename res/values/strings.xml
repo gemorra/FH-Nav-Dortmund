@@ -6,10 +6,17 @@
     <string name="wizard_alert_message">Dieser Wizard wird sie durch die erste Einrichtung führen.</string>
     <string name="wizard_alert_positiveButton">Los gehts!</string>
     <string name="wizard_error_title">Verbindungsfehler!</string>
-    <string name="wizard_error_message">Leider konnte keine Verbindung zum Server hergestellt werden.</string>
     <string name="wizard_error_positiveButton">Schade</string>
     <string name="progess_dialog_message">Herunterladen des Stundenplans...</string>
     <string name="button_add_label">Hinzufügen</string>
+    <string name="button_select_all_label">Alle auswählen</string>
+    <string name="button_deselect_all_label">Alle abwählen</string>
     <string name="button_delete_label">Löschen</string>
     <string name="button_back_label">Zurück</string>
+    <string name="add_vorlesung_title">Veranstaltung hinzufügen</string>
+    <string name="alert_dialog_connection_problem_title">Verbindungsfehler!</string>
+    <string name="alert_dialog_connection_problem_msg">Leider konnte keine Verbindung zum Server hergestellt werden.</string>
+    <string name="alert_dialog_connection_problem_msg2">Anderen Serveradresse eingeben:</string>
+    
+    
 </resources>

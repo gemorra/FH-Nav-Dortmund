@@ -4,44 +4,48 @@ import java.util.ArrayList;
 
 import FHNav.controller.MainApplicationManager;
 import FHNav.gui.helper.ExtendedListAdapter;
-import FHNav.gui.helper.NormalListAdapter;
 import FHNav.model.Veranstaltung;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Spinner;
 
-public class AdaptStundenplan extends Activity{
-	
+public class AdaptStundenplan extends Activity {
+
 	private ArrayList<Veranstaltung> veranstaltungen;
 	public ExtendedListAdapter extendedListAdapter;
 	ListView lv1;
-	
-	
+	Button btn_select_all;
+	boolean select = true;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	
+
 		setContentView(R.layout.adaptstundenplan);
-		
+
 		veranstaltungen = MainApplicationManager.getVeranstaltungen();
 
-		extendedListAdapter = new ExtendedListAdapter(this, veranstaltungen);			
+		extendedListAdapter = new ExtendedListAdapter(this, veranstaltungen);
 		lv1 = (ListView) findViewById(R.id.adaptstundenplan_list);
 		lv1.setAdapter(extendedListAdapter);
-		
-		
-		
-//		Spinner s1=(Spinner) findViewById(R.id.);
-//		ArrayAdapter<String>adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,
-//			new String[] {"Agenda Ansicht", "Stundenplan Ansicht"});
-//			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//			s1.setAdapter(adapter);
-			
 
+		btn_select_all = (Button) findViewById(R.id.adaptstundenplan_select_all);
+
+		btn_select_all.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				ExtendedListAdapter ex = (ExtendedListAdapter) (lv1
+						.getAdapter());
+				if (select) {
+					ex.selectAll();
+					select = false;
+					btn_select_all.setText(R.string.button_deselect_all_label);
+				} else {
+					ex.deselectAll();
+					select = true;
+					btn_select_all.setText(R.string.button_select_all_label);
+				}
+			}
+		});
 	}
 }

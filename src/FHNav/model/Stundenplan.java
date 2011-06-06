@@ -24,6 +24,14 @@ public class Stundenplan implements Serializable
 		
 	}
 
+	public void refresh()
+	{
+		for(Veranstaltung ver:veranstaltungen)
+		{
+			ver.refresh();
+		}
+	}
+	
 	public void addVeranstaltung(Veranstaltung veranstaltung)
 	{
 		if(! veranstaltungen.contains(veranstaltung))

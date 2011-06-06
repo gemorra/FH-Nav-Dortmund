@@ -1,5 +1,6 @@
 package FHNav.gui.helper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import FHNav.gui.R;
@@ -15,11 +16,15 @@ public class NormalListAdapter extends BaseAdapter {
 
 	private LayoutInflater mInflater;
 	private ArrayList<Veranstaltung> items;
+	String pattern = "HH:mm";
+	SimpleDateFormat sdf = new SimpleDateFormat();
+	
 	
 	public NormalListAdapter(Context ctx,ArrayList<Veranstaltung> items)
 	{
 		mInflater = LayoutInflater.from(ctx);
 		this.items = items;
+		sdf.applyPattern(pattern);
 	}
 
 
@@ -41,8 +46,17 @@ public class NormalListAdapter extends BaseAdapter {
 		}
 
 		Veranstaltung ve = items.get(position);
-		holder.bottomtext.setText(ve.getRaum());
-		holder.toptext.setText(ve.getName());
+		
+		String topText = ve.getName();
+		if(ve.getType().length()>0)
+			topText += " ["+ve.getType()+"]";
+		
+		String bottomText = sdf.format(ve.getStartTime()) + "-"+ sdf.format(ve.getEndTime()) + " "+ ve.getRaum();
+		
+		bottomText += " (" + ve.getStudentSet() + ")";
+		
+		holder.bottomtext.setText(bottomText);
+		holder.toptext.setText(topText);
 
 		return convertView;
 	}

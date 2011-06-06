@@ -23,8 +23,8 @@ import android.util.Log;
 
 public class PHPConnector {
 
-	private static String pathToFile ="http://gemorra.de/test.php";
-	
+	private static String pathToFile = "http://gemorra.de/test.php";
+
 	public static String getPathToFile() {
 		return pathToFile;
 	}
@@ -114,7 +114,6 @@ public class PHPConnector {
 
 	public static Stundenplan getStundenplanFromMysql(String s) {
 
-
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
 		nameValuePairs.add(new BasicNameValuePair("type", "getDetailOfBranch"));
@@ -122,30 +121,77 @@ public class PHPConnector {
 
 		Stundenplan stundenplan = new Stundenplan();
 
-		Log.e("", "Josen");
+//		Log.e("", "Josen");
 		JSONArray jArray = getJSONArray(nameValuePairs);
-		Log.e("", "Josen2");
-		
+//		Log.e("", "Josen2");
+
 		try {
 			for (int i = 0; i < jArray.length(); i++) {
-				
+
 				JSONObject json_data = jArray.getJSONObject(i);
-				Log.e("asd",json_data.getString("name") ) ;
+//				Log.e("asd", json_data.getString("name"));
 				String dozent = json_data.getString("staff");
 				String name = json_data.getString("name");
 				String raum = json_data.getString("location");
 				String studiengang = json_data.getString("pos");
 				String semester = json_data.getString("semester");
+				String studentSet = json_data.getString("studentSet");
 				int wochentag = json_data.getInt("dayOfWeek");
 				int start = json_data.getInt("start");
 				int dauer = json_data.getInt("duration");
 				String type = json_data.getString("type");
-				Veranstaltung veranstaltung = new Veranstaltung(dozent, name, wochentag, start, dauer, raum, studiengang, semester,type);
+				Veranstaltung veranstaltung = new Veranstaltung(dozent, name,
+						wochentag, start, dauer, raum, studiengang, semester,
+						type, studentSet);
+				
+				
+				if(stundenplan.getVeranstaltungen().contains(veranstaltung))
+				{
+					int index = stundenplan.getVeranstaltungen().indexOf(veranstaltung);
+					Veranstaltung tmpVeranstaltung = stundenplan.getVeranstaltungen().get(index);
+					tmpVeranstaltung.setDauer(stundenplan.getVeranstaltungen().get(index).getDauer()+1);
+					if(tmpVeranstaltung.getStart()>veranstaltung.getStart())
+					{
+						tmpVeranstaltung.setStart(veranstaltung.getStart());
+					}
+				}
+				else
 				stundenplan.addVeranstaltung(veranstaltung);
+				
+				
 			}
 		} catch (Exception e) {
 		}
-		return stundenplan;
+
+		// Stunden zusammenfassen
+		
+//		boolean parse = true;
+//		if (parse) {
+//			Stundenplan newPlan = new Stundenplan();
+//			for (int i = 0; i < stundenplan.getVeranstaltungen().size(); i++) {
+//				if (!newPlan.getVeranstaltungen().contains(
+//						stundenplan.getVeranstaltungen().get(i))) {
+//					Veranstaltung tmpVer = stundenplan.getVeranstaltungen().get(i);
+//					for (int j = i+1; j < stundenplan.getVeranstaltungen().size(); j++) {
+//						if (tmpVer.equals(stundenplan.getVeranstaltungen().get(j))) {
+//							tmpVer.setDauer(tmpVer.getDauer()+1);
+//						}
+//					}
+//					newPlan.addVeranstaltung(tmpVer);
+//				}
+//				else
+//				{
+//					
+//				}
+//			}
+//			System.out.println("test");
+//			return newPlan;
+//		}
+//		else
+		stundenplan.refresh();
+			return stundenplan;
+
+		
 
 	}
 }

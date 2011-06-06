@@ -1,6 +1,9 @@
 package FHNav.model;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import android.util.Log;
 
 public class Veranstaltung implements Serializable{
 	
@@ -17,13 +20,17 @@ public class Veranstaltung implements Serializable{
 	private String raum;
 	private String studiengang;
 	private String semester;
+	private String studentSet;
+	
+	private Date startTime;
+	private Date endTime;
 	
 	public Veranstaltung()
 	{		
 	}
 	
 	public Veranstaltung(String dozent, String name, int wochentag, int start,
-		int duration, String raum, String studiengang, String semester, String type) {
+		int duration, String raum, String studiengang, String semester, String type,String studentSet) {
 		setDozent(dozent);
 		setName(name);
 		setWochentag(wochentag);
@@ -33,7 +40,86 @@ public class Veranstaltung implements Serializable{
 		setStudiengang(studiengang);
 		setSemester(semester);
 		setType(type);
+		setStudentSet(studentSet);
+		
+		
 	}
+	
+	public void refresh()
+	{
+		setStartTime(getStartDateFromInt(start));
+		setEndTime(getEndDateFromInt(start,dauer));
+	}
+	
+	public static Date getEndDateFromInt(int value, int duration)
+	{
+		Date dt;
+		value+=(duration-1);
+		dt = getStartDateFromInt(value);
+		dt.setMinutes(dt.getMinutes()+45);
+		return dt;
+		
+	}
+	
+	public static Date getStartDateFromInt(int value)
+	{
+		value++;
+		Date dt = new Date();
+		switch (value) {
+		case 1:
+			dt.setHours(8);
+			dt.setMinutes(30);
+			break;
+		case 2:
+			dt.setHours(9);
+			dt.setMinutes(20);
+			break;
+		case 3:
+			dt.setHours(10);
+			dt.setMinutes(15);
+			break;
+		case 4:
+			dt.setHours(11);
+			dt.setMinutes(5);
+			break;
+		case 5:
+			dt.setHours(12);
+			dt.setMinutes(0);
+			break;
+		case 6:
+			dt.setHours(12);
+			dt.setMinutes(50);
+			break;
+		case 7:
+			dt.setHours(14);
+			dt.setMinutes(15);
+			break;
+		case 8:
+			dt.setHours(15);
+			dt.setMinutes(5);
+			break;
+		case 9:
+			dt.setHours(16);
+			dt.setMinutes(0);
+			break;
+		case 10:
+			dt.setHours(16);
+			dt.setMinutes(50);
+			break;
+		case 11:
+			dt.setHours(17);
+			dt.setMinutes(45);
+			break;			
+		case 12:
+			dt.setHours(18);
+			dt.setMinutes(35);
+			break;
+		}
+		return dt;
+	}
+	
+	
+	
 	
 	
 	/**
@@ -45,8 +131,10 @@ public class Veranstaltung implements Serializable{
 		if(o != null && o instanceof Veranstaltung)
 		{
 			Veranstaltung oVeranstaltung = (Veranstaltung) o;
-			if(raum.equals(oVeranstaltung.raum) && dozent.equals(oVeranstaltung.dozent) && name.equals(oVeranstaltung) 
-					&& (start==oVeranstaltung.start) && (dauer==oVeranstaltung.dauer) )
+			if(raum.equals(oVeranstaltung.raum) && dozent.equals(oVeranstaltung.dozent) 
+					&& name.equals(oVeranstaltung.name) && studiengang.equals(oVeranstaltung.studiengang)
+					&& (type.equals(oVeranstaltung.type)) && (studentSet.equals(oVeranstaltung.studentSet)) 
+					&& (wochentag == oVeranstaltung.wochentag) && semester.equals(oVeranstaltung.semester))
 			{
 				return true;
 			}
@@ -58,6 +146,14 @@ public class Veranstaltung implements Serializable{
 		
 	}
 	
+	public String getStudentSet() {
+		return studentSet;
+	}
+
+	public void setStudentSet(String studentSet) {
+		this.studentSet = studentSet;
+	}
+
 	public int getDauer() {
 		return dauer;
 	}
@@ -132,6 +228,22 @@ public class Veranstaltung implements Serializable{
 
 	public void setStudiengang(String studiengang) {
 		this.studiengang = studiengang;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 }

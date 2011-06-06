@@ -1,38 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="FHNav.gui"
-      android:versionCode="2"
-      android:versionName="1.1"
-      android:debuggable = "true"
-      >
-      
-    <uses-permission android:name="android.permission.INTERNET" />
-    <application android:icon="@drawable/icon" android:label="@string/app_name" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
-        <activity android:name=".Wizard"
-                  android:label="@string/app_name">
-           
-        </activity>
-        
-     <activity android:name="Menu" android:label="@string/app_name">
-      <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-      </activity>   
-      <activity android:name=".MainMenu" android:label="@string/app_name">
-      </activity>  
-      <activity android:name=".AdaptStundenplan" android:label="@string/app_name">
-      </activity> 
-      <activity android:name=".AddVeranstaltung" android:label="@string/app_name">
-      </activity>  
-      <activity android:name=".ShowPlan" android:label="@string/app_name">
-      </activity>  
-      <activity android:name=".ShowPreviewOfSelection" android:label="@string/app_name">
-      </activity>  
-      <activity android:name=".ShowAgenda" android:label="@string/app_name">
-      </activity>
-    </application>
-    <uses-sdk android:minSdkVersion="8" />
+	package="FHNav.gui" android:versionCode="2" android:versionName="1.1"
+	android:debuggable="true">
+
+	<uses-permission android:name="android.permission.INTERNET" />
+	<application android:icon="@drawable/icon" android:label="@string/app_name"
+		android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+		
+		<activity android:name="Menu" android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+
+
+		<activity android:name=".Wizard" android:label="@string/app_name"></activity>
+		<activity android:name=".MainMenu" android:label="@string/app_name"></activity>
+		<activity android:name=".AdaptStundenplan" android:label="@string/app_name"></activity>
+		<activity android:name=".AddVorlesung" android:label="@string/app_name"></activity>
+
+	</application>
+	<uses-sdk android:minSdkVersion="8" />
 
 
 

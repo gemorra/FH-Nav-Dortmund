@@ -4,6 +4,9 @@
 	<string name="menu_edit_button">Anpassen</string>
 	<string name="menu_navigation_button">Navigation</string>
 	<string name="menu_settings_button">Einstellung</string>
+	
+	<string name="wizard_study_course">Studiengang</string>
+	<string name="wizard_ok_button">Stundenplan laden</string>
     <string name="wizard_alert_title">Herzlich Willkommen</string>
     <string name="wizard_alert_message">Dieser Wizard wird sie durch die erste Einrichtung führen.</string>
     <string name="wizard_alert_positiveButton">Los gehts!</string>

@@ -52,16 +52,13 @@ public class ExtendedListAdapter extends BaseAdapter {
 	SimpleDateFormat sdf = new SimpleDateFormat();
 	ArrayList<Veranstaltung> itemsToManipulate = new ArrayList<Veranstaltung>();
 
-	@SuppressWarnings("unused")
+
 	public ExtendedListAdapter(Context context, ArrayList<Veranstaltung> items) {
 
 		mInflater = LayoutInflater.from(context);
 		this.items = items;
-		checked = new ArrayList<Boolean>();
 		sdf.applyPattern(pattern);
-		for (Veranstaltung v : items) {
-			checked.add(false);
-		}
+
 	}
 
 	@SuppressWarnings("unused")
@@ -198,5 +195,14 @@ public class ExtendedListAdapter extends BaseAdapter {
 		TextView bottomtext;
 		TextView toptext;
 		CheckBox checkbox;
+	}
+
+	@SuppressWarnings("unused")
+	public void refresh() {
+		checked = new ArrayList<Boolean>();
+
+		for (Veranstaltung v : items) {
+			checked.add(false);
+		}
 	}
 }

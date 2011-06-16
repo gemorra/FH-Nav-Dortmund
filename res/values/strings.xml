@@ -3,7 +3,7 @@
 	<string name="app_name">FH-Nav</string>
 	<string name="menu_edit_button">Anpassen</string>
 	<string name="menu_navigation_button">Navigation</string>
-	<string name="menu_settings_button">Einstellung</string>
+	<string name="menu_settings_button">Einstellungen</string>
 	<string name="menu_empty_list">Keine Veranstaltung</string>
 
 	<string name="wizard_study_course">Studiengang</string>
@@ -46,4 +46,17 @@
 	<string name="friday">Freitag</string>
 	<string name="saturday">Samstag</string>
 	<string name="sunday">Sonntag</string>
+	
+	<string name="settings_restart_wizard">Wizard neu starten</string>
+	<string name="settings_text_size">Textgröße</string>
+	<string name="settings_test_size_0">Klein</string>
+	<string name="settings_test_size_1">Mittel</string>
+	<string name="settings_test_size_2">Groß</string>
+
+	<string name="settings_lecture_details">Veranstaltungsdetails</string>
+	<string name="settings_lecture_details_groupletter">Gruppenbuchstaben</string>
+	<string name="settings_lecture_details_lecturer">Dozent</string>
+	<string name="settings_lecture_details_type">Typ</string>
+	
+	<string name="settings_pathToFile_label">Serveradresse</string>
 </resources>

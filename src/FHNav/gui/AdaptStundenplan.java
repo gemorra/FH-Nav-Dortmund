@@ -3,6 +3,7 @@ package FHNav.gui;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
 import FHNav.controller.Tools;
 import FHNav.gui.helper.ExtendedListAdapter;
@@ -22,7 +23,9 @@ public class AdaptStundenplan extends Activity {
 	public SeparatedListAdapter separatedListAdapter;
 	ListView lv1;
 	Button btn_select_all;
-	boolean select = true;
+	Button btn_delete;
+	Button btn_back;
+	boolean select = false;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,6 +35,14 @@ public class AdaptStundenplan extends Activity {
 		veranstaltungen = MainApplicationManager.getVeranstaltungen();
 		Collections.sort(veranstaltungen);
 		build_list();
+
+		btn_back = (Button) findViewById(R.id.adaptstundenplan_back);
+		btn_back.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View v) {
+				onBackPressed();
+			}
+		});
 
 		btn_select_all = (Button) findViewById(R.id.adaptstundenplan_select_all);
 		btn_select_all.setOnClickListener(new View.OnClickListener() {
@@ -44,29 +55,33 @@ public class AdaptStundenplan extends Activity {
 			}
 		});
 
-		Button btn_delete = (Button) findViewById(R.id.adaptstundenplan_delete);
+		btn_delete = (Button) findViewById(R.id.adaptstundenplan_delete);
 		btn_delete.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
 				ArrayList<Veranstaltung> tmpArr = new ArrayList<Veranstaltung>();
-				int sizebefore = veranstaltungen.size();
+				int count = 0;
 				for (int i = 0; i < separatedListAdapter.sections.size(); i++) {
 					ExtendedListAdapter el = (ExtendedListAdapter) (separatedListAdapter.sections.values().toArray()[i]);
 					for (int j = 0; j < el.getChecked().size(); j++) {
 						if (el.getChecked().get(j) == true) {
 							tmpArr.add(el.getItems().get(j));
+							count++;
 						}
 					}
 
 				}
 				for (Veranstaltung ver : tmpArr)
 					veranstaltungen.remove(ver);
-				deselect_all();
-				build_list();
-				int count = sizebefore - veranstaltungen.size();
-				Toast t = Toast.makeText(getApplicationContext(), getString(R.string.adaptstundenplan_toast_text_1a) + " " + count + " "
-						+ getString(R.string.adaptstundenplan_toast_text_1b), Toast.LENGTH_SHORT);
-				t.show();
+				if (count > 0) {
+					IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+
+					deselect_all();
+					build_list();
+					Toast t = Toast.makeText(getApplicationContext(), getString(R.string.adaptstundenplan_toast_text_1a) + " " + count + " "
+							+ getString(R.string.adaptstundenplan_toast_text_1b), Toast.LENGTH_SHORT);
+					t.show();
+				}
 			}
 		});
 
@@ -117,5 +132,4 @@ public class AdaptStundenplan extends Activity {
 
 	}
 
-	
 }

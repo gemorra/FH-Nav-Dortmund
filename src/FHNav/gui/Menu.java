@@ -7,7 +7,7 @@ import java.util.Date;
 
 import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
-import FHNav.controller.PHPConnector;
+import FHNav.controller.SettingsManager;
 import FHNav.controller.Tools;
 import FHNav.gui.helper.NormalListAdapter;
 import FHNav.gui.helper.SeparatedListAdapter;
@@ -16,9 +16,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.BaseAdapter;
@@ -27,34 +25,39 @@ import android.widget.ListView;
 
 public class Menu extends Activity {
 
-	Intent wizard;
+	Intent settings;
 	Intent adaptstundenplan;
 	Intent addVorlesung;
-	SharedPreferences pref;
+	Intent wizard;
+	
 	private ArrayList<Veranstaltung> veranstaltungen;
 	BaseAdapter listAdapter;
-	boolean agenda = true;
+	boolean agenda = false;
 	ListView lv1;
 
 	public void onResume() {
 		super.onResume();
-		refresListView();
+		Log.e("Menu", "Resume");
 	}
 
+	public void onStart() {
+		super.onStart();
+		Log.e("Menu", "Start");
+		refresListView();
+	}
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		Log.e("Menu", "Create");
+		SettingsManager.loadSettings(this);
 		MainApplicationManager.setCtx(getApplicationContext());
 		addVorlesung = new Intent(Menu.this, AddVorlesung.class);
 		adaptstundenplan = new Intent(Menu.this, AdaptStundenplan.class);
+		settings = new Intent(Menu.this, Settings.class);
 		wizard = new Intent(Menu.this, Wizard.class);
-		pref = PreferenceManager.getDefaultSharedPreferences(this);
-
-		PHPConnector.setPathToFile(pref.getString("pathToFile", "http://gemorra.de/test.php"));
-
-		if (pref.getBoolean("wizardDone", false)) {
+		
+		if (SettingsManager.isWizardDone()) {
 			setContentView(R.layout.menu);
-			// getWindow().setBackgroundDrawableResource(R.drawable.bg2);
 			MainApplicationManager.setStundenplan(IOManager.loadStundenplan());
 
 			veranstaltungen = MainApplicationManager.getVeranstaltungen();
@@ -82,7 +85,6 @@ public class Menu extends Activity {
 							if (item == 1) {
 								startActivity(addVorlesung);
 							}
-
 						}
 					});
 					AlertDialog alert = builder.create();
@@ -94,8 +96,16 @@ public class Menu extends Activity {
 			btn2 = (Button) findViewById(R.id.Button02);
 			btn2.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					stopService(wizard);
-					finish();
+					AlertDialog.Builder adb = new AlertDialog.Builder(Menu.this);
+					adb.setTitle("Navigation");
+					adb.setMessage("Comming soon...");
+					adb.setPositiveButton("  OK  ", new DialogInterface.OnClickListener() {
+	
+
+						public void onClick(DialogInterface dialog2, int which) {
+							}
+						});
+					adb.show();
 				}
 			});
 
@@ -104,15 +114,12 @@ public class Menu extends Activity {
 			btn3.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 
-					SharedPreferences.Editor editor = pref.edit();
-					editor.putBoolean("wizardDone", false);
-					editor.commit();
-					startActivity(wizard);
+					startActivity(settings);
 
 				}
 			});
 		} else {
-			startActivity(new Intent(Menu.this, Wizard.class));
+			startActivity(wizard);
 		}
 
 	}
@@ -160,8 +167,7 @@ public class Menu extends Activity {
 				dt2.setDate(dt.getDate());
 				dt2.setHours(ver.getEndTime().getHours());
 				dt2.setMinutes(ver.getEndTime().getMinutes());
-				Log.e("Ende:", dt2.toLocaleString());
-				Log.e("Aktuell:", dt.toLocaleString());
+
 				if (dt2.after(dt)) {
 					els[ver.getWochentag() - currentday].getItems().add(ver);
 				} else {
@@ -192,9 +198,16 @@ public class Menu extends Activity {
 			listAdapter = build_agenda(veranstaltungen);
 		else
 			listAdapter = build_normal(veranstaltungen);
-		
+
 		lv1 = (ListView) findViewById(R.id.listView1);
 		lv1.setAdapter(listAdapter);
 		lv1.setEmptyView(findViewById(R.id.empty));
 	}
+ 
+	@Override
+	public void onBackPressed()
+	{
+		Log.e("Menu","Back");
+	}
+	
 }

@@ -3,8 +3,10 @@ package FHNav.gui;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
 import FHNav.controller.PHPConnector;
+import FHNav.controller.SettingsManager;
 import FHNav.controller.Tools;
 import FHNav.gui.helper.ExtendedListAdapter;
 import FHNav.gui.helper.SeparatedListAdapter;
@@ -13,11 +15,9 @@ import FHNav.model.Veranstaltung;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,16 +39,15 @@ public class AddVorlesung extends Activity implements Runnable {
 	boolean loadSpinner = true;
 	Spinner spinner1;
 	ArrayList<String> spinnerContent;
-	SharedPreferences preferences;
 	Button btn_select_all;
 	Button btn_add;
+	Button btn_back;
 	boolean select = false;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.addvorlesung);
-		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		btn_select_all = (Button) findViewById(R.id.addveranstaltung_select_all);
 		btn_select_all.setOnClickListener(new View.OnClickListener() {
@@ -61,8 +60,17 @@ public class AddVorlesung extends Activity implements Runnable {
 			}
 		});
 
-		Button add_delete = (Button) findViewById(R.id.addveranstaltung_add);
-		add_delete.setOnClickListener(new OnClickListener() {
+		btn_back = (Button) findViewById(R.id.addveranstaltung_back);
+		btn_back.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View v) {
+				onBackPressed();
+			}
+		});
+		
+		
+		btn_add = (Button) findViewById(R.id.addveranstaltung_add);
+		btn_add.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
 				ArrayList<Veranstaltung> tmpArr = new ArrayList<Veranstaltung>();
@@ -83,8 +91,10 @@ public class AddVorlesung extends Activity implements Runnable {
 
 				int count = s.getVeranstaltungen().size() - sizebefore;
 
+				
+				
 				if (count > 0) {
-
+					IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
 					Toast t = Toast.makeText(getApplicationContext(), getString(R.string.addveranstaltung_toast_text_1a) + " " + count + " "
 							+ getString(R.string.addveranstaltung_toast_text_1b), Toast.LENGTH_SHORT);
 					t.show();
@@ -145,14 +155,11 @@ public class AddVorlesung extends Activity implements Runnable {
 					error_dialog.setTitle(R.string.alert_dialog_connection_problem_title);
 					final EditText et = (EditText) error_dialog.findViewById(R.id.alert_dialog_connection_problem_editText);
 					Button btn = (Button) error_dialog.findViewById(R.id.alert_dialog_connection_problem_button);
-					et.setText(PHPConnector.getPathToFile());
+					et.setText(SettingsManager.getPathToFile());
 					btn.setOnClickListener(new OnClickListener() {
 
 						public void onClick(View v) {
-							SharedPreferences.Editor editor = preferences.edit();
-							editor.putString("pathToFile", et.getText().toString());
-							editor.commit();
-							PHPConnector.setPathToFile(preferences.getString("pathToFile", "http://gemorra.de/test.php"));
+							SettingsManager.setPathToFile(et.getText().toString());
 							error_dialog.dismiss();
 							loadSpinner = true;
 							dialog = ProgressDialog.show(AddVorlesung.this, "", "Download...", true);

@@ -6,5 +6,5 @@
     <TextView android:id="@+id/alert_dialog_connection_problem_text1" android:text="@string/alert_dialog_connection_problem_msg" android:layout_width="wrap_content" android:layout_gravity="center_horizontal" android:layout_height="wrap_content"></TextView>
     <TextView android:id="@+id/alert_dialog_connection_problem_text2" android:text="@string/alert_dialog_connection_problem_msg2" android:layout_width="wrap_content" android:layout_gravity="center_horizontal" android:layout_height="wrap_content"></TextView>
     <EditText android:layout_height="wrap_content" android:text="" android:id="@+id/alert_dialog_connection_problem_editText" android:layout_width="match_parent" ></EditText>
-    <Button android:layout_height="wrap_content" android:text="Ok" android:layout_width="wrap_content" android:id="@+id/alert_dialog_connection_problem_button" android:layout_gravity="center"></Button>
+    <Button android:layout_height="wrap_content" android:text="Ok" android:layout_width="140dip" android:id="@+id/alert_dialog_connection_problem_button" android:layout_gravity="center"></Button>
 </LinearLayout>

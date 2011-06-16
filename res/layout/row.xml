@@ -13,7 +13,7 @@
             android:id = "@+id/normal_row_toptext"       
             android:gravity="center_vertical" 
             android:textColor = "#FF6000"
-            
+            android:textSize = "15sp"
             />
             
         <TextView  
@@ -22,7 +22,8 @@
             android:layout_height="25dip"
             android:layout_weight="1" 
             android:gravity="top"
-             android:id = "@+id/normal_row_bottomtext"   
+            android:id = "@+id/normal_row_bottomtext"  
+            android:textSize = "15sp" 
             android:singleLine="true"/>
             
     </LinearLayout>

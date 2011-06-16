@@ -44,7 +44,7 @@
 			android:layout_gravity="bottom" android:background="@drawable/android_button"></Button>
 		<Button android:layout_weight="1" android:layout_width="50dip"
 			android:text="@string/button_back_label" android:drawableTop="@android:drawable/ic_menu_revert"
-			android:layout_height="69dip" android:id="@+id/adaptstundenplan_back"
+			android:layout_height="69dip" android:id="@+id/addveranstaltung_back"
 			android:layout_gravity="bottom" android:background="@drawable/android_button"></Button>
 
 	</LinearLayout>

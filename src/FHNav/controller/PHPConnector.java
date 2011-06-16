@@ -23,15 +23,7 @@ import android.util.Log;
 
 public class PHPConnector {
 
-	private static String pathToFile = "http://gemorra.de/test.php";
-
-	public static String getPathToFile() {
-		return pathToFile;
-	}
-
-	public static void setPathToFile(String pathToFile) {
-		PHPConnector.pathToFile = pathToFile;
-	}
+	
 
 	public static JSONArray getJSONArray(ArrayList<NameValuePair> nvp) {
 		String result = "";
@@ -42,7 +34,7 @@ public class PHPConnector {
 
 			HttpClient httpclient = new DefaultHttpClient();
 
-			HttpPost httppost = new HttpPost(pathToFile);
+			HttpPost httppost = new HttpPost(SettingsManager.getPathToFile());
 
 			httppost.setEntity(new UrlEncodedFormEntity(nvp));
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" android:layout_height="match_parent"
+	android:orientation="vertical">
+    
+  	<TextView android:id="@+id/editText"
+		android:textSize="25dip" android:text="@string/menu_settings_button" android:textColor="#FF6000"
+		android:layout_gravity="center" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_marginTop="10dip" android:layout_marginBottom="10dip"></TextView>  
+    
+
+
+	<TextView android:layout_height="wrap_content" android:id="@+id/outDetails"
+		android:textSize="20dip" android:text="@string/settings_lecture_details"
+		android:textColor="#FFFFFF" android:layout_width="match_parent"></TextView>
+		
+	<TextView android:layout_height="wrap_content" android:id="@+id/editText"
+		android:textSize="15dip" android:text="@string/settings_text_size" android:textColor="#FFFFFF" android:layout_width="wrap_content"></TextView>
+	<Spinner android:id="@+id/settings_text_size_spinner" android:layout_height="50dip" android:layout_width="180dip"></Spinner>
+
+
+	<CheckBox android:id="@+id/settings_lecture_details_groupletter_checkbox" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="@string/settings_lecture_details_groupletter" />
+	<CheckBox android:id="@+id/settings_lecture_details_lecturer_checkbox" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="@string/settings_lecture_details_lecturer" />
+	<CheckBox android:id="@+id/settings_lecture_details_type_checkbox" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="@string/settings_lecture_details_type" />
+
+	<TextView android:layout_height="wrap_content" android:id="@+id/editServer01"
+		android:textSize="25dip" android:text="@string/settings_pathToFile_label"
+		android:textColor="#FF6000" android:layout_width="match_parent"></TextView>
+	<EditText android:layout_height="50dip" android:id="@+id/settings_pathToFile_edit_text"
+		android:text="" android:layout_width="match_parent" android:singleLine="true"></EditText>
+
+    <Button android:layout_height="wrap_content" android:id="@+id/settings_restart_wizard_button" 
+    		android:text="@string/settings_restart_wizard" android:layout_width="wrap_content" android:layout_gravity="center_horizontal"></Button>
+</LinearLayout>

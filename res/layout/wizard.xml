@@ -7,7 +7,7 @@
 android:text="Wizard" 
 android:layout_height="wrap_content" 
 android:layout_width="wrap_content" 
-android:textSize ="60sp"
+android:textSize ="60dip"
 android:textColor = "#FF6000"
 android:layout_x="130dip" 
 android:layout_y="0dip"></TextView>
@@ -16,7 +16,7 @@ android:layout_y="0dip"></TextView>
 android:text="@string/wizard_study_course" 
 android:layout_height="wrap_content" 
 android:layout_width="wrap_content" 
-android:textSize ="30sp"
+android:textSize ="30dip"
 android:layout_x="20dip" 
 android:layout_y="140dip"></TextView>
 

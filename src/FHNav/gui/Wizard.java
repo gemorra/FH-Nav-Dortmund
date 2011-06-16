@@ -5,17 +5,16 @@ import java.util.ArrayList;
 import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
 import FHNav.controller.PHPConnector;
+import FHNav.controller.SettingsManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,17 +26,19 @@ import android.widget.Spinner;
 public class Wizard extends Activity implements Runnable {
 
 	public static final String PREFS_NAME = "settings";
-	SharedPreferences preferences;
 	ArrayList<String> spinnerContent;
 	Spinner spinner1;
 	ProgressDialog dialog;
 	boolean loadSpinner = true;
 
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
+		super.onCreate(savedInstanceState);		
+		Log.e("Wizard","Create");
+		
+		SettingsManager.loadSettings(this);
+//		SettingsManager.setPathToFile("www.gemorra.de/fhnav/connec.php");
 		// Vorbereitungen und Dialog anzeigen
-		preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
 		setContentView(R.layout.wizard);
 		getWindow().setBackgroundDrawableResource(R.drawable.b2obenunten);
 		AlertDialog.Builder adb = new AlertDialog.Builder(Wizard.this);
@@ -57,7 +58,7 @@ public class Wizard extends Activity implements Runnable {
 		});
 		adb.show();
 
-		//Bestätigungsbutton => Laden des Stundenplans...
+		// Bestätigungsbutton => Laden des Stundenplans...
 		Button btn = (Button) this.findViewById(R.id.WizardOK);
 		btn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -82,14 +83,11 @@ public class Wizard extends Activity implements Runnable {
 				error_dialog.setTitle(R.string.alert_dialog_connection_problem_title);
 				final EditText et = (EditText) error_dialog.findViewById(R.id.alert_dialog_connection_problem_editText);
 				Button btn = (Button) error_dialog.findViewById(R.id.alert_dialog_connection_problem_button);
-				et.setText(PHPConnector.getPathToFile());
+				et.setText(SettingsManager.getPathToFile());
 				btn.setOnClickListener(new OnClickListener() {
-					//Anderen Pfad angeben und neuer Versuch:
+					// Anderen Pfad angeben und neuer Versuch:
 					public void onClick(View v) {
-						SharedPreferences.Editor editor = preferences.edit();
-						editor.putString("pathToFile", et.getText().toString());
-						editor.commit();
-						PHPConnector.setPathToFile(preferences.getString("pathToFile", "http://gemorra.de/test.php"));
+						SettingsManager.setPathToFile(et.getText().toString());
 						error_dialog.dismiss();
 						loadSpinner = true;
 						dialog = ProgressDialog.show(Wizard.this, "", "Download...", true);
@@ -97,7 +95,7 @@ public class Wizard extends Activity implements Runnable {
 						t1.start();
 					}
 				});
-
+				dialog.dismiss();
 				error_dialog.show();
 			} else { // H1 Spinner laden
 				spinner1 = (Spinner) Wizard.this.findViewById(R.id.Spinner01);
@@ -112,15 +110,11 @@ public class Wizard extends Activity implements Runnable {
 	public void run() {
 		if (!loadSpinner) {
 			MainApplicationManager.setStundenplan(PHPConnector.getStundenplanFromMysql((String) (spinner1.getSelectedItem())));
-
 			if (MainApplicationManager.getStundenplan().getVeranstaltungen().size() > 0) {
 				IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
-				SharedPreferences.Editor editor = preferences.edit();
-				editor.putBoolean("wizardDone", true);
-				editor.commit();
-
+				SettingsManager.setWizardDone(true);		
 				startActivity(new Intent(Wizard.this, Menu.class));
-
+				dialog.dismiss();
 			}
 			dialog.dismiss();
 		} else {
@@ -131,5 +125,11 @@ public class Wizard extends Activity implements Runnable {
 			handler.sendMessage(msg);
 
 		}
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		Log.e("Wizard","Back");
 	}
 }

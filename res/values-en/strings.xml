@@ -47,5 +47,17 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
 	<string name="sunday">Sunday</string>
-    
+	
+    <string name="settings_restart_wizard">Restart Wizard</string>
+	<string name="settings_text_size">Textsize</string>
+	<string name="settings_test_size_0">Small</string>
+	<string name="settings_test_size_1">Normal</string>
+	<string name="settings_test_size_2">Big</string>
+
+	<string name="settings_lecture_details">Lecture Details</string>
+	<string name="settings_lecture_details_groupletter">Show Groupletters</string>
+	<string name="settings_lecture_details_lecturer">Show Lecturer</string>
+	<string name="settings_lecture_details_type">Show Type</string>
+	
+	<string name="settings_pathToFile_label">Server URL</string>
 </resources>

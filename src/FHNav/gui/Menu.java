@@ -43,6 +43,7 @@ public class Menu extends Activity {
 	public void onStart() {
 		super.onStart();
 		Log.e("Menu", "Start");
+		if(SettingsManager.isWizardDone())
 		refresListView();
 	}
 	

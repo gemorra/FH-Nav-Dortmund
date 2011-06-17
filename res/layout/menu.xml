@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical" android:background="@drawable/background">
+	android:orientation="vertical" android:background="@drawable/basicbackground">
 
 	<TextView android:layout_height="35dip" android:textColor="#FF6000"
 		android:text="@string/add_hauptmenue_title" android:layout_weight="0"
@@ -10,31 +10,34 @@
 		android:layout_width="match_parent" />
 
 	<ListView android:layout_height="wrap_content"
-		android:background="@drawable/background" android:layout_weight="1"
+		 android:layout_weight="1"
 		android:layout_width="match_parent" android:id="@+id/listView1"
 		android:cacheColorHint="#00000000"></ListView>
 	<TextView android:id="@+id/empty" android:layout_width="match_parent"
-		android:layout_height="wrap_content" android:background="@drawable/background"
+		android:layout_height="wrap_content" 
 		android:layout_weight="1" android:gravity="center" android:text="No data"
 		android:textColor="#FF6000" />
 	<LinearLayout android:id="@+id/linearLayout3"
 		android:layout_height="wrap_content" android:layout_width="match_parent"
 		android:layout_weight="0" android:layout_gravity="bottom">
-		<Button android:text="@string/menu_edit_button"
-			android:layout_height="69dip" android:id="@+id/Button01"
-			android:background="@drawable/android_button" android:layout_width="50dip"
-			android:layout_weight="1" android:drawableTop="@drawable/ic_customize"
+		
+		<Button android:id="@+id/Button01"
+			android:text="@string/menu_edit_button" android:drawableTop="@android:drawable/ic_menu_edit"
+			android:background="@drawable/android_button" android:layout_height="69dip"
+			android:layout_width="50dip" android:layout_weight="1"
 			android:layout_gravity="bottom"></Button>
-		<Button android:text="@string/menu_navigation_button"
-			android:layout_height="69dip" android:id="@+id/Button02"
-			android:background="@drawable/android_button" android:layout_width="50dip"
-			android:layout_weight="1" android:drawableTop="@drawable/ic_navigate"
+		<Button android:id="@+id/Button02" android:text="@string/menu_navigation_button"
+			android:drawableTop="@android:drawable/ic_menu_directions"
+			android:background="@drawable/android_button" android:layout_height="69dip"
+			android:layout_width="50dip" android:layout_weight="1"
 			android:layout_gravity="bottom"></Button>
-		<Button android:text="@string/menu_settings_button"
-			android:layout_height="69dip" android:id="@+id/Button03"
-			android:background="@drawable/android_button" android:layout_width="50dip"
-			android:layout_weight="1" android:drawableTop="@drawable/ic_settings"
+		<Button android:id="@+id/Button03" android:text="@string/menu_settings_button"
+			android:drawableTop="@android:drawable/ic_menu_preferences"
+			android:background="@drawable/android_button" android:layout_height="69dip"
+			android:layout_width="50dip" android:layout_weight="1"
 			android:layout_gravity="bottom"></Button>
+			
+			
 	</LinearLayout>
 
 </LinearLayout>

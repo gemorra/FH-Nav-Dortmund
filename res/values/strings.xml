@@ -20,7 +20,7 @@
 	<string name="button_deselect_all_label">Alle abwählen</string>
 	<string name="button_delete_label">Löschen</string>
 	<string name="button_back_label">Zurück</string>
-	<string name="add_vorlesung_title">Veranstaltung hinzufügen</string>
+	
 	<string name="alert_dialog_connection_problem_title">Verbindungsfehler!</string>
 	<string name="alert_dialog_connection_problem_msg">Leider konnte keine Verbindung zum Server
 		hergestellt werden.</string>
@@ -59,4 +59,10 @@
 	<string name="settings_lecture_details_type">Typ</string>
 	
 	<string name="settings_pathToFile_label">Serveradresse</string>
+	
+	<string name="add_hauptmenue_title">Hauptmenü</string>
+	<string name="add_vorlesung_title">Veranstaltung hinzufügen</string>
+	<string name="add_adaptstundenplan_title">Veranstaltung löschen</string>
+	<string name="add_settings_title">Einstellungen</string>
+	<string name="add_wizard_title">Wizard</string>
 </resources>

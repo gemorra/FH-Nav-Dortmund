@@ -20,7 +20,6 @@
     <string name="button_deselect_all_label">Deselect All</string>
     <string name="button_delete_label">Delete</string>
     <string name="button_back_label">Back</string>
-    <string name="add_vorlesung_title">Add Lesson</string>
     <string name="alert_dialog_connection_problem_title">Connection_Error!</string>
     <string name="alert_dialog_connection_problem_msg">Couldn\'t connect to the Server.</string>
     <string name="alert_dialog_connection_problem_msg2">Enter an alternative Server-URL:</string>
@@ -60,4 +59,10 @@
 	<string name="settings_lecture_details_type">Show Type</string>
 	
 	<string name="settings_pathToFile_label">Server URL</string>
+	
+	<string name="add_menue_title">Main menu</string>
+	<string name="add_vorlesung_title">Add lesson</string>
+	<string name="add_adaptstundenplan_title">Delete lesson</string>
+	<string name="add_settings_title">Settings</string>
+	<string name="add_wizard_title">Wizard</string>
 </resources>

@@ -3,6 +3,7 @@ package FHNav.gui;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 import FHNav.controller.IOManager;
@@ -195,6 +196,7 @@ public class Menu extends Activity {
 	}
 
 	public void refresListView() {
+		Collections.sort(veranstaltungen);
 		if (agenda)
 			listAdapter = build_agenda(veranstaltungen);
 		else

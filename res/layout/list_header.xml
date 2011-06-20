@@ -3,4 +3,6 @@
 	android:id="@+id/list_header_title" android:layout_width="fill_parent"
 	android:layout_height="wrap_content" android:paddingTop="2dip"
 	android:paddingBottom="2dip" android:paddingLeft="5dip"
-	android:background="@android:color/transparent"	/> 
+	android:background="#333333"	
+	android:textColor ="#FFFFFF"
+	/> 

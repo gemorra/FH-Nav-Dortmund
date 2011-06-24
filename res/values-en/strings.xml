@@ -60,7 +60,7 @@
 	
 	<string name="settings_pathToFile_label">Server URL</string>
 	
-	<string name="add_menue_title">Main menu</string>
+	<string name="add_hauptmenue_title">Main menu</string>
 	<string name="add_vorlesung_title">Add lesson</string>
 	<string name="add_adaptstundenplan_title">Delete lesson</string>
 	<string name="add_settings_title">Settings</string>

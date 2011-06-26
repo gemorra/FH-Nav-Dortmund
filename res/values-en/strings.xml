@@ -67,7 +67,7 @@
 	<string name="add_wizard_title">Wizard</string>
 	
 	<string name="error">Error</string>
-	<string name="error_calendar">Transfer failed. (Maybe no calendar ist installed?)</string>
+	<string name="error_calendar">Transfer failed. (Maybe no calendar is installed?)</string>
 	
 	
 </resources>

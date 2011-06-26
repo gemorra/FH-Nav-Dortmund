@@ -43,6 +43,7 @@ public class AddVorlesung extends Activity implements Runnable {
 	Button btn_add;
 	Button btn_back;
 	boolean select = false;
+	boolean click = false;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -106,11 +107,11 @@ public class AddVorlesung extends Activity implements Runnable {
 
 		});
 
+		click = false;
 		spinner1 = (Spinner) AddVorlesung.this.findViewById(R.id.Spinner01);
 		spinner1.setOnItemSelectedListener(new OnItemSelectedListener() {
-
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				if (spinnerContent.size() >= 1) {
+				if (spinnerContent.size() >= 1 && click) {
 
 					Log.e("inhalt", (String) (spinner1.getSelectedItem()));
 
@@ -119,6 +120,7 @@ public class AddVorlesung extends Activity implements Runnable {
 					Thread t = new Thread(AddVorlesung.this);
 					t.start();
 				}
+				click = true;
 			}
 
 			public void onNothingSelected(AdapterView<?> arg0) {

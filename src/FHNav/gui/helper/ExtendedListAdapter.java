@@ -18,6 +18,7 @@ package FHNav.gui.helper;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import FHNav.controller.SettingsManager;
 import FHNav.gui.R;
 import FHNav.model.Veranstaltung;
 import android.content.Context;
@@ -25,6 +26,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -102,6 +104,36 @@ public class ExtendedListAdapter extends BaseAdapter {
 			holder.bottomtext = (TextView) convertView.findViewById(R.id.extenden_row_bottomtext);
 			holder.toptext = (TextView) convertView.findViewById(R.id.extenden_row_toptext);
 			holder.checkbox = (CheckBox) convertView.findViewById(R.id.extenden_row_checkbox);
+			LayoutParams paramsTop = holder.toptext.getLayoutParams();
+			LayoutParams paramsBottom = holder.bottomtext.getLayoutParams();
+			
+			if(SettingsManager.getText_size()==1)
+			{
+				Log.e("asd", "1");
+				holder.bottomtext.setTextSize(15);
+				holder.toptext.setTextSize(15);
+				paramsBottom.height = 25;
+				paramsTop.height = 40;
+			}
+			else if(SettingsManager.getText_size()==2)
+			{
+				Log.e("asd", "2");
+				holder.bottomtext.setTextSize(20);
+				holder.toptext.setTextSize(20);
+				paramsBottom.height = 30;
+				paramsTop.height = 50;
+			}
+			else if(SettingsManager.getText_size()==0)
+			{
+				holder.bottomtext.setTextSize(10);
+				holder.toptext.setTextSize(10);
+				paramsBottom.height = 20;
+				paramsTop.height = 30;
+			}
+			holder.toptext.setLayoutParams(paramsTop);
+			holder.bottomtext.setLayoutParams(paramsBottom);
+			
+			
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();

@@ -11,6 +11,8 @@
 	<string name="wizard_alert_title">Herzlich Willkommen</string>
 	<string name="wizard_alert_message">Dieser Wizard wird sie durch die erste Einrichtung
 		führen.</string>
+	<string name="error">Fehler</string>
+	<string name="error_calendar">Beim Übertragen in den Kalender ist ein Fehler aufgetreten. (Vielleicht haben sie keinen Kalender eingerichtet?)</string>
 	<string name="wizard_alert_positiveButton">Los gehts!</string>
 	<string name="wizard_error_title">Verbindungsfehler!</string>
 	<string name="wizard_error_positiveButton">Schade</string>
@@ -29,7 +31,7 @@
 	<string name="addveranstaltung_toast_text_0">Ist bereits im Stundenplan!</string>
 	<string name="addveranstaltung_toast_text_1a">Es wurde(n) </string>
 	<string name="addveranstaltung_toast_text_1b">Veranstaltung(en) hinzugefügt.</string>
-
+	<string name="calendar_transfer_toast_text_1b">Veranstaltung(en) dem Kalender hinzugefügt.</string>
 
 	<string name="adaptstundenplan_toast_text_1a">Es wurde(n) </string>
 	<string name="adaptstundenplan_toast_text_1b">Veranstaltung(en) gelöscht.</string>

@@ -29,7 +29,7 @@
     <string name="addveranstaltung_toast_text_0">Already exists!</string>
     <string name="addveranstaltung_toast_text_1a"></string>
     <string name="addveranstaltung_toast_text_1b">lesson(s) added</string>
-    
+    <string name="calendar_transfer_toast_text_1b">lesson(s) transfered to the calendar.</string>
     
     <string name="adaptstundenplan_toast_text_1a"></string>
     <string name="adaptstundenplan_toast_text_1b">lesson(s) deleted</string>
@@ -65,4 +65,9 @@
 	<string name="add_adaptstundenplan_title">Delete lesson</string>
 	<string name="add_settings_title">Settings</string>
 	<string name="add_wizard_title">Wizard</string>
+	
+	<string name="error">Error</string>
+	<string name="error_calendar">Transfer failed. (Maybe no calendar ist installed?)</string>
+	
+	
 </resources>

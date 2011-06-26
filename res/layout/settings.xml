@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent" android:layout_height="match_parent"
-	android:orientation="vertical" android:background="@drawable/basicbackground">
+	android:orientation="vertical" android:background="@drawable/bgwizard">
 
 	<TextView android:id="@+id/editText" android:textSize="20dip"
 		android:background="@drawable/ic_tab_template" android:text="@string/add_settings_title"

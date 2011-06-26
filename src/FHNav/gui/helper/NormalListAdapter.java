@@ -90,7 +90,8 @@ public class NormalListAdapter extends BaseAdapter {
 		
 		if(SettingsManager.isLecture_details_groupletter())
 		bottomText += " (" + ve.getStudentSet() + ")";
-		
+		if(SettingsManager.isLecture_details_lecturer())
+			bottomText += " " + ve.getDozent();
 		holder.bottomtext.setText(bottomText);
 		holder.toptext.setText(topText);
 

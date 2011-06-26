@@ -143,12 +143,16 @@ public class ExtendedListAdapter extends BaseAdapter {
 		Veranstaltung ve = items.get(position);
 		// Bind the data efficiently with the holder.
 		String topText = ve.getName();
-		if (ve.getType().length() > 0)
-			topText += " [" + ve.getType() + "]";
-
-		String bottomText = sdf.format(ve.getStartTime()) + "-" + sdf.format(ve.getEndTime()) + " " + ve.getRaum();
-
-		bottomText += " (" + ve.getStudentSet() + ")";
+		if(SettingsManager.isLecture_details_type())
+			if(ve.getType().length()>0)
+				topText += " ["+ve.getType()+"]";
+			
+			String bottomText = sdf.format(ve.getStartTime()) + "-"+ sdf.format(ve.getEndTime()) + " "+ ve.getRaum();
+			
+			if(SettingsManager.isLecture_details_groupletter())
+			bottomText += " (" + ve.getStudentSet() + ")";
+			if(SettingsManager.isLecture_details_lecturer())
+				bottomText += " " + ve.getDozent();
 
 		holder.bottomtext.setText(bottomText);
 		holder.toptext.setText(topText);

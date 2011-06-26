@@ -102,45 +102,10 @@ public class Menu extends Activity {
 								startActivity(addVorlesung);
 							}
 							if (item == 3) {
-								build_calendar_dialog();
+
 								try {
-									
-
-									// CalendarAdapter ca = new
-									// CalendarAdapter();
-									Date s = new Date();
-									Date e = new Date(s.getTime() + 1000 * 60 * 60 * 24);
-
-									// Dialog calendarDialog = new
-									// Dialog(getApplicationContext());
-									//
-									// calendarDialog.setContentView(R.layout.calendardialog);
-									// calendarDialog.setTitle("Custom Dialog");
-									//
-									// TextView text = (TextView)
-									// calendarDialog.findViewById(R.id.dateDisplayFrom);
-									// text.setText("15.8.2011");
-									//
-									// TextView text2 = (TextView)
-									// calendarDialog.findViewById(R.id.dateDisplayTo);
-									// text2.setText("28.2.2012");
-									// calendarDialog.show();
-
-									// Von bis Dialog mit zwei Date Pickern +
-									// Calendarpicker
-									// Daten standardmäßig von Vorlesungsbeginn
-									// bis Ende eintragen...
-									// Nach WS => Daten für SS; Nach SS => Daten
-									// für WS ... //Einstellungen?
-									// ca.addRecEventToCalendar(veranstaltungen.get(0),
-									// s, e);
-									// ca.setSelectedid(2);
-									// ca.addEventToCalendar();
-									// ca.getEvent();
-								}
-
-								// Toast Message
-								catch (Exception e) {
+									build_calendar_dialog();
+								} catch (Exception e) {
 									AlertDialog.Builder adb = new AlertDialog.Builder(Menu.this);
 									adb.setTitle(R.string.error);
 									adb.setMessage(R.string.error_calendar);
@@ -268,8 +233,7 @@ public class Menu extends Activity {
 		lv1.setEmptyView(findViewById(R.id.empty));
 	}
 
-	public void build_calendar_dialog()
-	{
+	public void build_calendar_dialog() {
 		final CalendarAdapter ca = new CalendarAdapter();
 		ca.setSelectedid(0);
 		AlertDialog.Builder builder;
@@ -288,34 +252,30 @@ public class Menu extends Activity {
 		int tDay = 28;
 		Date frd = new Date(c.getTime().getYear(), 2, 15);
 		Date tod = new Date(c.getTime().getYear(), 9, 1);
-		
-		if(c.getTime().after(frd)&&c.getTime().before(tod))
-		{
-			fYear = c.getTime().getYear()+1900;
+
+		if (c.getTime().after(frd) && c.getTime().before(tod)) {
+			fYear = c.getTime().getYear() + 1900;
 			fMonth = 3;
 			fDay = 1;
-			
-			tYear = c.getTime().getYear()+1900;
+
+			tYear = c.getTime().getYear() + 1900;
 			tMonth = 7;
 			tDay = 15;
-		}else
-		{
-			fYear = c.getTime().getYear()+1900;
+		} else {
+			fYear = c.getTime().getYear() + 1900;
 			fMonth = 9;
 			fDay = 15;
-			
-			tYear = fYear+1;
+
+			tYear = fYear + 1;
 			tMonth = 2;
 			tDay = 10;
 		}
 
-
-		
 		final TextView textFrom = (TextView) layout.findViewById(R.id.dateDisplayFrom);
 		textFrom.setText(fDay + "." + fMonth + "." + fYear);
 		final TextView textTo = (TextView) layout.findViewById(R.id.dateDisplayTo);
 		textTo.setText(tDay + "." + tMonth + "." + tYear);
-		
+
 		final DatePickerDialog.OnDateSetListener fDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -349,8 +309,7 @@ public class Menu extends Activity {
 			}
 		});
 		Spinner spin1 = (Spinner) layout.findViewById(R.id.calendarSpinner);
-		ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(Menu.this, android.R.layout.simple_dropdown_item_1line, ca
-				.getCalendarNames());
+		ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(Menu.this, android.R.layout.simple_dropdown_item_1line, ca.getCalendarNames());
 		adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spin1.setAdapter(adapter1);
 		spin1.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -366,42 +325,39 @@ public class Menu extends Activity {
 		builder = new AlertDialog.Builder(Menu.this);
 		builder.setView(layout);
 		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-			
+
 			public void onClick(DialogInterface dialog, int which) {
-				SimpleDateFormat sdfToDate = new SimpleDateFormat(
-                "dd.MM.yyyy");
-				
+				SimpleDateFormat sdfToDate = new SimpleDateFormat("dd.MM.yyyy");
+
 				Date from;
 				Date to;
 				try {
 					from = sdfToDate.parse((String) textFrom.getText());
-					to = sdfToDate.parse((String)textTo.getText());
+					to = sdfToDate.parse((String) textTo.getText());
 					to.setHours(23);
 					to.setMinutes(59);
-//					Log.e("from",from.toLocaleString());
-//					Log.e("to",to.toLocaleString());
+					// Log.e("from",from.toLocaleString());
+					// Log.e("to",to.toLocaleString());
 					int count = 0;
-					for(Veranstaltung ver: MainApplicationManager.getStundenplan().getVeranstaltungen())
-					{
+					for (Veranstaltung ver : MainApplicationManager.getStundenplan().getVeranstaltungen()) {
 						ca.addRecEventToCalendar(ver, from, to);
 						count++;
-					}		
+					}
 					Toast t = Toast.makeText(getApplicationContext(), getString(R.string.addveranstaltung_toast_text_1a) + " " + count + " "
 							+ getString(R.string.calendar_transfer_toast_text_1b), Toast.LENGTH_SHORT);
 					t.show();
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				
+
 			}
 		});
 		builder.setNegativeButton("Cancel", null);
 		alertDialog = builder.create();
 		builder.show();
 	}
-	
-	
+
 	@Override
 	public void onBackPressed() {
 		Log.e("Menu", "Back");

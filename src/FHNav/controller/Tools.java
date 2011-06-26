@@ -32,4 +32,34 @@ public class Tools {
 		}
 		return ret;
 	}
+	
+	public static String getShortWeekday(int day) {
+		String ret = "";
+		switch (day) {
+		case 1:
+			ret = "MO";
+			break;
+		case 2:
+			ret = "TU";
+			break;
+		case 3:
+			ret = "WE";
+			break;
+		case 4:
+			ret = "TH";
+			break;
+		case 5:
+			ret = "FR";
+			break;
+		case 6:
+			ret = "SA";
+			break;
+		case 7:
+			ret = "SU";
+			break;
+		
+		}
+		return ret;
+	}
+	
 }

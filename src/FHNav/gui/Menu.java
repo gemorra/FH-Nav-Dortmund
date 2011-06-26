@@ -1,11 +1,13 @@
 package FHNav.gui;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
+import FHNav.controller.CalendarAdapter;
 import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
 import FHNav.controller.SettingsManager;
@@ -15,14 +17,26 @@ import FHNav.gui.helper.SeparatedListAdapter;
 import FHNav.model.Veranstaltung;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class Menu extends Activity {
 
@@ -30,7 +44,7 @@ public class Menu extends Activity {
 	Intent adaptstundenplan;
 	Intent addVorlesung;
 	Intent wizard;
-	
+
 	private ArrayList<Veranstaltung> veranstaltungen;
 	BaseAdapter listAdapter;
 	boolean agenda = false;
@@ -44,10 +58,10 @@ public class Menu extends Activity {
 	public void onStart() {
 		super.onStart();
 		Log.e("Menu", "Start");
-		if(SettingsManager.isWizardDone())
-		refresListView();
+		if (SettingsManager.isWizardDone())
+			refresListView();
 	}
-	
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.e("Menu", "Create");
@@ -57,7 +71,7 @@ public class Menu extends Activity {
 		adaptstundenplan = new Intent(Menu.this, AdaptStundenplan.class);
 		settings = new Intent(Menu.this, Settings.class);
 		wizard = new Intent(Menu.this, Wizard.class);
-		
+
 		if (SettingsManager.isWizardDone()) {
 			setContentView(R.layout.menu);
 			MainApplicationManager.setStundenplan(IOManager.loadStundenplan());
@@ -87,6 +101,53 @@ public class Menu extends Activity {
 							if (item == 1) {
 								startActivity(addVorlesung);
 							}
+							if (item == 3) {
+								build_calendar_dialog();
+								try {
+									
+
+									// CalendarAdapter ca = new
+									// CalendarAdapter();
+									Date s = new Date();
+									Date e = new Date(s.getTime() + 1000 * 60 * 60 * 24);
+
+									// Dialog calendarDialog = new
+									// Dialog(getApplicationContext());
+									//
+									// calendarDialog.setContentView(R.layout.calendardialog);
+									// calendarDialog.setTitle("Custom Dialog");
+									//
+									// TextView text = (TextView)
+									// calendarDialog.findViewById(R.id.dateDisplayFrom);
+									// text.setText("15.8.2011");
+									//
+									// TextView text2 = (TextView)
+									// calendarDialog.findViewById(R.id.dateDisplayTo);
+									// text2.setText("28.2.2012");
+									// calendarDialog.show();
+
+									// Von bis Dialog mit zwei Date Pickern +
+									// Calendarpicker
+									// Daten standardmäßig von Vorlesungsbeginn
+									// bis Ende eintragen...
+									// Nach WS => Daten für SS; Nach SS => Daten
+									// für WS ... //Einstellungen?
+									// ca.addRecEventToCalendar(veranstaltungen.get(0),
+									// s, e);
+									// ca.setSelectedid(2);
+									// ca.addEventToCalendar();
+									// ca.getEvent();
+								}
+
+								// Toast Message
+								catch (Exception e) {
+									AlertDialog.Builder adb = new AlertDialog.Builder(Menu.this);
+									adb.setTitle(R.string.error);
+									adb.setMessage(R.string.error_calendar);
+									adb.setPositiveButton("  OK  ", null);
+									adb.show();
+								}
+							}
 						}
 					});
 					AlertDialog alert = builder.create();
@@ -98,15 +159,15 @@ public class Menu extends Activity {
 			btn2 = (Button) findViewById(R.id.Button02);
 			btn2.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
+
 					AlertDialog.Builder adb = new AlertDialog.Builder(Menu.this);
 					adb.setTitle("Navigation");
 					adb.setMessage("Comming soon...");
 					adb.setPositiveButton("  OK  ", new DialogInterface.OnClickListener() {
-	
 
 						public void onClick(DialogInterface dialog2, int which) {
-							}
-						});
+						}
+					});
 					adb.show();
 				}
 			});
@@ -206,11 +267,144 @@ public class Menu extends Activity {
 		lv1.setAdapter(listAdapter);
 		lv1.setEmptyView(findViewById(R.id.empty));
 	}
- 
-	@Override
-	public void onBackPressed()
+
+	public void build_calendar_dialog()
 	{
-		Log.e("Menu","Back");
+		final CalendarAdapter ca = new CalendarAdapter();
+		ca.setSelectedid(0);
+		AlertDialog.Builder builder;
+		AlertDialog alertDialog;
+
+		Context mContext = Menu.this;
+		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+		View layout = inflater.inflate(R.layout.calendardialog, (ViewGroup) findViewById(R.id.layout_root));
+
+		final Calendar c = Calendar.getInstance();
+		int fYear = 2011;
+		int fMonth = 10;
+		int fDay = 28;
+		int tYear = 2012;
+		int tMonth = 10;
+		int tDay = 28;
+		Date frd = new Date(c.getTime().getYear(), 2, 15);
+		Date tod = new Date(c.getTime().getYear(), 9, 1);
+		
+		if(c.getTime().after(frd)&&c.getTime().before(tod))
+		{
+			fYear = c.getTime().getYear()+1900;
+			fMonth = 3;
+			fDay = 1;
+			
+			tYear = c.getTime().getYear()+1900;
+			tMonth = 7;
+			tDay = 15;
+		}else
+		{
+			fYear = c.getTime().getYear()+1900;
+			fMonth = 9;
+			fDay = 15;
+			
+			tYear = fYear+1;
+			tMonth = 2;
+			tDay = 10;
+		}
+
+
+		
+		final TextView textFrom = (TextView) layout.findViewById(R.id.dateDisplayFrom);
+		textFrom.setText(fDay + "." + fMonth + "." + fYear);
+		final TextView textTo = (TextView) layout.findViewById(R.id.dateDisplayTo);
+		textTo.setText(tDay + "." + tMonth + "." + tYear);
+		
+		final DatePickerDialog.OnDateSetListener fDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+				textFrom.setText(dayOfMonth + "." + monthOfYear + "." + year);
+			}
+		};
+		final DatePickerDialog.OnDateSetListener tDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+				textTo.setText(dayOfMonth + "." + monthOfYear + "." + year);
+			}
+		};
+
+		final DatePickerDialog dpdf = new DatePickerDialog(Menu.this, fDateSetListener, fYear, fMonth, fDay);
+		final DatePickerDialog dpdt = new DatePickerDialog(Menu.this, tDateSetListener, tYear, tMonth, tDay);
+
+		Button btnFrom = (Button) layout.findViewById(R.id.pickDateFrom);
+		btnFrom.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				dpdf.show();
+
+			}
+		});
+		Button btnTo = (Button) layout.findViewById(R.id.pickDateTo);
+		btnTo.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				dpdt.show();
+
+			}
+		});
+		Spinner spin1 = (Spinner) layout.findViewById(R.id.calendarSpinner);
+		ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(Menu.this, android.R.layout.simple_dropdown_item_1line, ca
+				.getCalendarNames());
+		adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spin1.setAdapter(adapter1);
+		spin1.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				ca.setSelectedid(arg2);
+			}
+
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+
+		builder = new AlertDialog.Builder(Menu.this);
+		builder.setView(layout);
+		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			
+			public void onClick(DialogInterface dialog, int which) {
+				SimpleDateFormat sdfToDate = new SimpleDateFormat(
+                "dd.MM.yyyy");
+				
+				Date from;
+				Date to;
+				try {
+					from = sdfToDate.parse((String) textFrom.getText());
+					to = sdfToDate.parse((String)textTo.getText());
+					to.setHours(23);
+					to.setMinutes(59);
+//					Log.e("from",from.toLocaleString());
+//					Log.e("to",to.toLocaleString());
+					int count = 0;
+					for(Veranstaltung ver: MainApplicationManager.getStundenplan().getVeranstaltungen())
+					{
+						ca.addRecEventToCalendar(ver, from, to);
+						count++;
+					}		
+					Toast t = Toast.makeText(getApplicationContext(), getString(R.string.addveranstaltung_toast_text_1a) + " " + count + " "
+							+ getString(R.string.calendar_transfer_toast_text_1b), Toast.LENGTH_SHORT);
+					t.show();
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		builder.setNegativeButton("Cancel", null);
+		alertDialog = builder.create();
+		builder.show();
 	}
 	
+	
+	@Override
+	public void onBackPressed() {
+		Log.e("Menu", "Back");
+	}
+
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="fill_parent" android:layout_width="match_parent" android:background="@drawable/background">
+	android:layout_height="fill_parent" android:layout_width="match_parent" android:background="@drawable/basicbackground">
 
 	<TextView android:layout_height="35dip" android:textColor="#FF6000"
 		android:text="@string/add_wizard_title" android:layout_weight="0"

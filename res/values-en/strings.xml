@@ -4,7 +4,7 @@
 	<string name="menu_edit_button">Edit</string>
 	<string name="menu_navigation_button">Navigation</string>
 	<string name="menu_settings_button">Settings</string>
-	<string name="menu_empty_list">Keine Veranstaltung</string>
+	<string name="menu_empty_list">No Event</string>
 	
 	<string name="wizard_study_course">Study Course</string>
 	<string name="wizard_ok_button">Load Timetable</string>
@@ -12,25 +12,24 @@
     <string name="wizard_alert_message">This Wizard will guide you through the installation.</string>
     <string name="wizard_alert_positiveButton">Start!</string>
     <string name="wizard_error_title">Connection_Problem!</string>
-    <string name="wizard_error_positiveButton">Damn</string>
+    <string name="wizard_error_positiveButton">Sorry</string>
     
-    <string name="progess_dialog_message">Download..</string>
+    <string name="progess_dialog_message">Downloading...</string>
     <string name="button_add_label">Add</string>
     <string name="button_select_all_label">Select All</string>
     <string name="button_deselect_all_label">Deselect All</string>
     <string name="button_delete_label">Delete</string>
     <string name="button_back_label">Back</string>
     <string name="alert_dialog_connection_problem_title">Connection_Error!</string>
-    <string name="alert_dialog_connection_problem_msg">Couldn\'t connect to the Server.</string>
+    <string name="alert_dialog_connection_problem_msg">Could not connect to the Server.</string>
     <string name="alert_dialog_connection_problem_msg2">Enter an alternative Server-URL:</string>
         
     <string name="addvorlesung_spinner_text">Select Study Course</string>
-    
-    <string name="addveranstaltung_toast_text_0">Already exists!</string>
+    <string name="addveranstaltung_toast_text_0">The course already exists!</string>
     <string name="addveranstaltung_toast_text_1a"></string>
     <string name="addveranstaltung_toast_text_1b">lesson(s) added</string>
     <string name="calendar_transfer_toast_text_1b">lesson(s) transfered to the calendar.</string>
-    
+        
     <string name="adaptstundenplan_toast_text_1a"></string>
     <string name="adaptstundenplan_toast_text_1b">lesson(s) deleted</string>
     
@@ -50,10 +49,10 @@
     <string name="settings_restart_wizard">Restart Wizard</string>
 	<string name="settings_text_size">Textsize</string>
 	<string name="settings_test_size_0">Small</string>
-	<string name="settings_test_size_1">Normal</string>
-	<string name="settings_test_size_2">Big</string>
+	<string name="settings_test_size_1">Medium</string>
+	<string name="settings_test_size_2">Large</string>
 
-	<string name="settings_lecture_details">Lecture Details</string>
+	<string name="settings_lecture_details">Details of the lectures</string>
 	<string name="settings_lecture_details_groupletter">Show Groupletters</string>
 	<string name="settings_lecture_details_lecturer">Show Lecturer</string>
 	<string name="settings_lecture_details_type">Show Type</string>

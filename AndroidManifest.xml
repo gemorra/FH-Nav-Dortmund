@@ -16,7 +16,7 @@
 			</intent-filter>
 		</activity>
 
-
+		<activity android:name=".ShowExtras" android:label="@string/app_name"></activity>
 		<activity android:name=".Wizard" android:label="@string/app_name"></activity>
 		<activity android:name=".AdaptStundenplan" android:label="@string/app_name"></activity>
 		<activity android:name=".AddVorlesung" android:label="@string/app_name"></activity>

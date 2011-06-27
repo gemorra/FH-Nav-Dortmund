@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import FHNav.controller.CalendarAdapter;
+import FHNav.controller.CanteenBeanTest;
 import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
 import FHNav.controller.SettingsManager;
@@ -124,16 +125,17 @@ public class Menu extends Activity {
 			btn2 = (Button) findViewById(R.id.Button02);
 			btn2.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-
-					AlertDialog.Builder adb = new AlertDialog.Builder(Menu.this);
-					adb.setTitle("Navigation");
-					adb.setMessage("Comming soon...");
-					adb.setPositiveButton("  OK  ", new DialogInterface.OnClickListener() {
-
-						public void onClick(DialogInterface dialog2, int which) {
-						}
-					});
-					adb.show();
+					startActivity(new Intent(Menu.this,ShowExtras.class));
+//
+//					AlertDialog.Builder adb = new AlertDialog.Builder(Menu.this);
+//					adb.setTitle("Navigation");
+//					adb.setMessage("Comming soon...");
+//					adb.setPositiveButton("  OK  ", new DialogInterface.OnClickListener() {
+//
+//						public void onClick(DialogInterface dialog2, int which) {
+//						}
+//					});
+//					adb.show();
 				}
 			});
 

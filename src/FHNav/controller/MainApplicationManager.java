@@ -6,12 +6,14 @@ import FHNav.model.Stundenplan;
 import FHNav.model.Veranstaltung;
 import android.app.Activity;
 import android.content.Context;
+import android.widget.BaseAdapter;
 
 public class MainApplicationManager {
 
 	private static Context ctx;
 	private static Activity currentAcctivity;
 	private static Stundenplan stundenplan;
+	
 	
 	public static Context getCtx() {
 		return ctx;

@@ -49,7 +49,12 @@ public class AddVorlesung extends Activity implements Runnable {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.addvorlesung);
-
+		
+		dialog = ProgressDialog.show(AddVorlesung.this, "", "Download...", true);
+		loadSpinner = true;
+		Thread t1 = new Thread(AddVorlesung.this);
+		t1.start();
+		
 		btn_select_all = (Button) findViewById(R.id.addveranstaltung_select_all);
 		btn_select_all.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -129,10 +134,7 @@ public class AddVorlesung extends Activity implements Runnable {
 			}
 		});
 
-		dialog = ProgressDialog.show(AddVorlesung.this, "", "Download...", true);
-		loadSpinner = true;
-		Thread t1 = new Thread(AddVorlesung.this);
-		t1.start();
+		
 
 		veranstaltungen = MainApplicationManager.getVeranstaltungen();
 

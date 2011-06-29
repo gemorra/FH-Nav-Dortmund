@@ -14,7 +14,14 @@ public class MainApplicationManager {
 	private static Activity currentAcctivity;
 	private static Stundenplan stundenplan;
 	
+	private static BreadthFirstSearchTest bfst;
 	
+	public static BreadthFirstSearchTest getBfst() {
+		return bfst;
+	}
+	public static void setBfst(BreadthFirstSearchTest bfst) {
+		MainApplicationManager.bfst = bfst;
+	}
 	public static Context getCtx() {
 		return ctx;
 	}

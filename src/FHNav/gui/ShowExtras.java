@@ -11,6 +11,7 @@ import FHNav.model.CanteenMenu;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -64,6 +65,7 @@ public class ShowExtras extends Activity implements Runnable {
 		    if(mWebView.getUrl()==null)
 		    	mWebView.loadUrl("http://www.fh-dortmund.de/de/fb/4/isc/aktuelles/index.php");
 //		    mWebView.setBackgroundColor(0);
+//		    mWebView.getZoomControls().
 		}
 
 	}
@@ -83,16 +85,7 @@ public class ShowExtras extends Activity implements Runnable {
 		btn2 = (Button) findViewById(R.id.Button02);
 		btn2.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				// AlertDialog.Builder adb = new AlertDialog.Builder(Menu.this);
-				// adb.setTitle("Navigation");
-				// adb.setMessage("Comming soon...");
-				// adb.setPositiveButton("  OK  ", new
-				// DialogInterface.OnClickListener() {
-				//
-				// public void onClick(DialogInterface dialog2, int which) {
-				// }
-				// });
-				// adb.show();
+				startActivity(new Intent(ShowExtras.this,Navigation.class));
 			}
 		});
 

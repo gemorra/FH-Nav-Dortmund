@@ -3,5 +3,10 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="lib" path="kobjects-j2me-0.0-SNAPSHOT-20040926-2.jar"/>
+	<classpathentry kind="lib" path="ksoap2-android-2.5.4.jar"/>
+	<classpathentry kind="lib" path="ksoap2-base-2.5.4.jar"/>
+	<classpathentry kind="lib" path="ksoap2-j2se-2.5.4.jar"/>
+	<classpathentry kind="lib" path="kxml-2.2.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

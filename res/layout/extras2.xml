@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical" android:background="@drawable/basicbackground">
+	android:orientation="vertical" android:background="#FFFFFF">
 	<LinearLayout android:layout_width="fill_parent" android:background="@drawable/ic_tab_template"
 		android:layout_height="40dip" android:orientation="horizontal">
 		<TextView android:layout_height="35dip" android:textColor="#FF6000"
@@ -13,7 +13,7 @@
 			android:layout_height="40dip"></Spinner>
 	</LinearLayout>
 	<WebView android:id="@+id/webView1" android:layout_width="match_parent"
-		android:layout_height="wrap_content" android:layout_weight="1"
+		android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginLeft="5dip"
 		android:background="#FFFFFF"></WebView>
 
 

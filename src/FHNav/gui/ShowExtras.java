@@ -69,16 +69,16 @@ public class ShowExtras extends Activity implements Runnable, OnItemSelectedList
 			refreshButtons();
 			btn1.setText(R.string.extras_button1b);
 			mWebView = (WebView) findViewById(R.id.webView1);
-//			mWebView.setLayoutParams(params);
-			
-			mWebView.getSettings().setJavaScriptEnabled(false);
+			// mWebView.setLayoutParams(params);
+
+			mWebView.getSettings().setJavaScriptEnabled(true);
 			mWebView.setWebViewClient(new HelloWebViewClient());
 			mWebView.setBackgroundColor(0);
 
 			sp = (Spinner) findViewById(R.id.spinner1);
 			ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new String[] {
 					getString(R.string.page_name_news), getString(R.string.page_name_news_W), getString(R.string.page_name_mensa),
-					getString(R.string.page_name_mensa_kostbar) });
+					getString(R.string.page_name_mensa_kostbar), getString(R.string.page_name_pplan), getString(R.string.page_name_lplan) });
 			sp.setPromptId(R.string.page_select_header);
 			sp.setAdapter(adapter2);
 			sp.setOnItemSelectedListener(this);
@@ -208,38 +208,32 @@ public class ShowExtras extends Activity implements Runnable, OnItemSelectedList
 			for (int i = 0; i < tds.size(); i++) {
 				ret += "<div class=\"g10\">";
 				ret += tds.get(i).html();
-				// ret += "<br />" + tds2.get(i).html();
 				ret += "</div>";
 				ret += "<hr size=\"1\" noshade>";
 			}
 			ret += "</body></html>";
 			System.out.println(ret);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// String test
-		// =" <style type=\"text/css\">hr{color:#f00; background-color:#f00; border:0; height:5px;} .spann {font-size:20em; color:#444444; background-color:#FFFFFF; } .g10 { font-size:10em; }</style>";
-		// ret+=test;
-		// ret+="<span class=\"spann\">Test</span> <br /> test <br/> <hr class=\"hrr\"> <h1>ads</h1>";
 		return ret;
 	}
 
 	protected void setWebViewContent() {
-		if (choose == 1) {
+		if (choose.equals(getString(R.string.page_name_news_W))) {
 			// mWebView.loadData(dataAktuellesW, "text/html", "utf-8");
 			mWebView.loadDataWithBaseURL("http://www.fh-dortmund.de/de/studi/fb/9/studieng/400/aktuelles_stud.php", dataAktuellesW, "text/html", "utf-8", null);
-		}
-		if (choose == 0) {
-			mWebView.setPadding(5, 0, 0, 0);
+		} else if (choose.equals(getString(R.string.page_name_news))) {
 			mWebView.loadUrl("http://www.fh-dortmund.de/de/fb/4/isc/aktuelles/index.php");
-		}
-		if (choose == 3) {
-
+		} else if (choose.equals(getString(R.string.page_name_mensa_kostbar))) {
 			mWebView.loadData(dataKostBar, "text/html", "utf-8");
-
 		}
-
+		if (choose.equals(getString(R.string.page_name_pplan))) {
+			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.inf.fh-dortmund.de/~pa_data/pplan.pdf");
+		}
+		if (choose.equals(getString(R.string.page_name_lplan))) {
+			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.inf.fh-dortmund.de/tmp/lageplan_uni.pdf");
+		}
 	}
 
 	public static String parseMensaKostBar() {
@@ -260,26 +254,25 @@ public class ShowExtras extends Activity implements Runnable, OnItemSelectedList
 		return ret;
 	}
 
-	int choose;
+	String choose;
+	int choose2;
 	String dataAktuellesW;
 	String dataMensa;
 	String dataKostBar;
 
 	public void initWebViewContent() {
-		int arg2 = choose;
-
-		if (arg2 == 1) {
-			dataAktuellesW = parseNewsW();
-
-		}
-		if (arg2 == 3) {
-			dataKostBar = parseMensaKostBar();
+		if (choose.equals(getString(R.string.page_name_news_W))) {
+			if (dataAktuellesW == null)
+				dataAktuellesW = parseNewsW();
+		} else if (choose.equals(getString(R.string.page_name_mensa_kostbar))) {
+			if (dataKostBar == null)
+				dataKostBar = parseMensaKostBar();
 
 		}
 	}
 
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		choose = arg2;
+		choose = (String) arg0.getItemAtPosition(arg2);
 		Thread t1 = new Thread(ShowExtras.this);
 		t1.start();
 	}

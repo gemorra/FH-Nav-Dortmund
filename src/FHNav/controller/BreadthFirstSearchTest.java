@@ -21,9 +21,18 @@ public class BreadthFirstSearchTest {
 			this.y = y;
 		}
 		
+		public Node(String name,float x, float y, List l) {
+			this.name = name;
+			neighbors = new LinkedList();
+			this.x = x;
+			this.y = y;
+			l.add(this);
+		}
+		
 		public void addNeighbor(Node n)
 		{
 			neighbors.add(n);
+			n.neighbors.add(this);
 		}
 		
 		public String toString() {
@@ -45,6 +54,7 @@ public class BreadthFirstSearchTest {
 		
 	}
 
+	List nodes;
 	Node Eingang;
 	Node Eingangshalle;
 	Node CE31;
@@ -63,14 +73,19 @@ public class BreadthFirstSearchTest {
 
 	public void initGraph() {
 		// Eingangshalle
-		Eingang = new Node("Eingang",160,950);	
-		Eingangshalle = new Node("Eingangshalle",430,950);
-		CE31 = new Node("C.E.31",470,600);
+		nodes = new LinkedList<Node>();
+		Eingang = new Node("Eingang",160,950,nodes);	
+		Eingangshalle = new Node("Eingangshalle",430,950,nodes);
+		CE31 = new Node("C.E.31",470,600,nodes);
 		CE31f = new Node("C.E.31Flur",430,600);
 		
 		Eingang.addNeighbor(Eingangshalle);
+		
 		Eingangshalle.addNeighbor(CE31f);
 		CE31f.addNeighbor(CE31);
+		
+		
+		
 		
 		path = search(Eingang, CE31);
 		

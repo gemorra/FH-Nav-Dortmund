@@ -69,7 +69,7 @@
 	<string name="error_calendar">Transfer failed. (Maybe no calendar is installed?)</string>
 	<string name="menu_extras_button">Extras</string>
 	<string name="extras_title">Extras</string>
-	<string name="extras_button1a">News</string>
+	<string name="extras_button1a">Page:</string>
 	<string name="extras_button1b">Mensa</string>
 	<string name="extras_button2">Navigation</string>
 	<string name="extras_button3">Back</string>

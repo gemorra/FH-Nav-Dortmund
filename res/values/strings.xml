@@ -71,9 +71,18 @@
 	<string name="add_wizard_title">Wizard</string>
 	<string name="menu_extras_button">Extras</string>
 	<string name="extras_title">Extras</string>
-	<string name="extras_button1a">Aktuelles</string>
+	<string name="extras_button1a">Seite:</string>
 	<string name="extras_button1b">Speiseplan</string>
 	<string name="extras_button2">Navigation</string>
 	<string name="extras_button3">Zurück</string>
 	<string name="canteenSpezialHeader">Spezialangebote der Woche</string>
+	
+	<string name="page_select_header">Bitte wählen</string>
+	<string name="page_name_news">Aktuelles</string>
+	<string name="page_name_mensa">Speiseplan Mensa</string>
+	<string name="page_name_news_W">Aktuelles(Wirtschaft)</string>
+	<string name="page_name_mensa_kostbar">Speiseplan Kostbar</string>
+	
+	
+	
 </resources>

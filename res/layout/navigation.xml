@@ -6,7 +6,8 @@ android:id="@+id/linearLayout1"
   android:layout_height="match_parent"
   android:orientation="vertical">
     <LinearLayout android:layout_height="40dip" android:layout_width="match_parent"  android:orientation="horizontal" android:layout_gravity="center" android:baselineAligned="true">
-        <Button android:layout_height="30dip" android:text="Button" android:id="@+id/button1" android:layout_width="wrap_content" android:layout_gravity="top"></Button>
+        <Spinner android:id="@+id/spinnerFromRoom" android:layout_width="160dip" android:layout_height="40dip"></Spinner>
+        <Spinner android:id="@+id/spinnerToRoom" android:layout_width="160dip" android:layout_height="40dip"></Spinner>
     
     </LinearLayout>
     

@@ -69,6 +69,14 @@ public class BreadthFirstSearchTest {
 	List path;
 	
 	
+	public List getNodes() {
+		return nodes;
+	}
+
+	public void setNodes(List nodes) {
+		this.nodes = nodes;
+	}
+
 	public List getPath() {
 		return path;
 	}
@@ -122,10 +130,10 @@ public class BreadthFirstSearchTest {
 		
 		//Hörsäle
 		Node AE01 = new Node("A.E.01",220,1110,nodes);
-		Node AE01T1 = new Node("A.E.43Flur",435,230);
-		Node AE01T1f = new Node("A.E.43Flur",435,230);
-		Node AE01T2 = new Node("A.E.43Flur",435,230);
-		Node AE01T2f = new Node("A.E.43Flur",435,230);
+		Node AE01T1 = new Node("A.E.01T1",220,990);
+		Node AE01T1f = new Node("A.E.01T1Flur",220,950);
+		Node AE01T2 = new Node("A.E.01T2",400,435);
+		Node AE01T2f = new Node("A.E.01T2Flur",435,230);
 		
 		
 		Node AE02 = new Node("A.E.02",400,185,nodes);

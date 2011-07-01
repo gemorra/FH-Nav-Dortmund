@@ -115,9 +115,9 @@ public class BreadthFirstSearchTest {
 //		float y_b_flur=1260;
 //		float y_b_re=1295;
 		
-		float x_c_li=370;
+		float x_c_li=350;
 		float x_c_flur=435;
-		float x_c_re=500;
+		float x_c_re=520;
 		
 		float y_b_li=1225;
 		float y_b_flur=1260;
@@ -223,27 +223,74 @@ public class BreadthFirstSearchTest {
 		Node CE45 = new Node("C.E.45",x_c_li,50,nodes);
 		Node CE45f = new Node("C.E.45Flur",x_c_flur,50);
 		
-		//Neighbors
-		Eingang.addNeighbor(AE03T1f);
 //		Eingang.addNeighbor(Eingangshalle);
+		//Neighbors
+		Eingang.addNeighbor(AE01T1f);
 		AE01T1f.addNeighbor(AE02T1f);
+		AE01T1f.addNeighbor(AE01T1);
+		AE01T1.addNeighbor(AE01);
+		AE01.addNeighbor(AE01T2);
+		AE01T2.addNeighbor(AE02T2f);
 		AE01T2f.addNeighbor(FlurSued);
+		
 		AE02T1f.addNeighbor(Eingangshalle);
+		AE02T1f.addNeighbor(AE02T1);
+		AE02T1.addNeighbor(AE02);
+		AE02.addNeighbor(AE02T2);
+		AE02T2.addNeighbor(AE02T2f);
 		AE02T2f.addNeighbor(AE03T2f);
+		
 		AE03T2f.addNeighbor(CE40f);
 		Eingangshalle.addNeighbor(AE01T2f);
 		Eingangshalle.addNeighbor(AE02T2f);
 		Eingangshalle.addNeighbor(AE03T1f);
+		AE03T1f.addNeighbor(AE03T1);
+		AE03T1.addNeighbor(AE03);
+		AE03.addNeighbor(AE03T2);
+		AE03T2.addNeighbor(AE03T2f);
 		
 		CE40f.addNeighbor(CE31f);
+		CE40f.addNeighbor(CE40);
+		
 		CE31f.addNeighbor(CE41f);
-		CE41f.addNeighbor(CE312);
+		CE31f.addNeighbor(CE31);
+		
+		CE41f.addNeighbor(CE312f);
+		CE41f.addNeighbor(CE41);
+		
 		CE312f.addNeighbor(CE42f);
+		CE312f.addNeighbor(CE312);
+		
 		CE42f.addNeighbor(CE32f);
+		CE42f.addNeighbor(CE42);
+		
 		CE32f.addNeighbor(CE43f);
+		CE32f.addNeighbor(CE32);
+		
 		CE43f.addNeighbor(CE44f);
+		CE43f.addNeighbor(CE43);
+		
 		CE44f.addNeighbor(CE321f);
+		CE44f.addNeighbor(CE44);
+		
 		CE321f.addNeighbor(CE45f);
+		CE321f.addNeighbor(CE321);
+		
+		CE45f.addNeighbor(CE45);
+		
+		FlurSued.addNeighbor(BE01f);
+		BE01f.addNeighbor(BE02f);
+		BE02f.addNeighbor(BE20f);
+		BE20f.addNeighbor(BE03f);
+		BE03f.addNeighbor(BE04f);
+		BE04f.addNeighbor(BE21f);
+		BE21f.addNeighbor(BE06f);
+		BE06f.addNeighbor(BE07f);
+		BE07f.addNeighbor(BE08f);
+		BE08f.addNeighbor(BE23f);
+		BE23f.addNeighbor(BE09f);
+		BE09f.addNeighbor(BE24f);
+		BE24f.addNeighbor(BE10f);
 		
 		
 
@@ -352,47 +399,47 @@ public class BreadthFirstSearchTest {
 //		Node node29 = new Node("Treppenhaus.E");
 
 //		BreadthFirstSearchTest bfs = new BreadthFirstSearchTest();
-		
-		String test = (String) path.toString();
-		System.out.println("From BE10 to CE41: " + test);
-		System.out.println();
-		// String myString = test;
-		
-		char[] myCharArray = test.toCharArray();
-		int y = 0;
-		for (int i = 0; i < myCharArray.length; i++) {
-			if (myCharArray[i] == '[' | myCharArray[i] == ','
-					| myCharArray[i] == ']') {
-				y++;
-
-			}
-		}
-
-		char[] raum = new char[test.length() - y];
-		int z = 0;
-
-		for (int i = 1; i < myCharArray.length - 1; i++) {
-			if (myCharArray[i] != ',') {
-				raum[z] = myCharArray[i];
-				// System.out.print(myCharArray[i]);
-				z++;
-			}
-		}
-		String raeume = new String(raum);
-		String[] route = new String[path.size()];
-		StringTokenizer tokenizer;
-		tokenizer = new StringTokenizer(raeume);
-		int t = 0;
-		while (tokenizer.hasMoreTokens()) {
-			// System.out.println(tokenizer.nextToken());
-			//System.out.println(route[t] = tokenizer.nextToken());
-			route[t] = tokenizer.nextToken();
-			t++;
-		}
-		System.out.println();
-		for (int i = 0; i < route.length; i++) {
-			System.out.println(route[i]);
-		}
+//		
+//		String test = (String) path.toString();
+//		System.out.println("From BE10 to CE41: " + test);
+//		System.out.println();
+//		// String myString = test;
+//		
+//		char[] myCharArray = test.toCharArray();
+//		int y = 0;
+//		for (int i = 0; i < myCharArray.length; i++) {
+//			if (myCharArray[i] == '[' | myCharArray[i] == ','
+//					| myCharArray[i] == ']') {
+//				y++;
+//
+//			}
+//		}
+//
+//		char[] raum = new char[test.length() - y];
+//		int z = 0;
+//
+//		for (int i = 1; i < myCharArray.length - 1; i++) {
+//			if (myCharArray[i] != ',') {
+//				raum[z] = myCharArray[i];
+//				// System.out.print(myCharArray[i]);
+//				z++;
+//			}
+//		}
+//		String raeume = new String(raum);
+//		String[] route = new String[path.size()];
+//		StringTokenizer tokenizer;
+//		tokenizer = new StringTokenizer(raeume);
+//		int t = 0;
+//		while (tokenizer.hasMoreTokens()) {
+//			// System.out.println(tokenizer.nextToken());
+//			//System.out.println(route[t] = tokenizer.nextToken());
+//			route[t] = tokenizer.nextToken();
+//			t++;
+//		}
+//		System.out.println();
+//		for (int i = 0; i < route.length; i++) {
+//			System.out.println(route[i]);
+//		}
 
 	}
 

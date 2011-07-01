@@ -10,6 +10,12 @@ public class BreadthFirstSearchTest {
 		float x;
 		float y;
 
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
 		public Node(String name) {
 			this.name = name;
 			neighbors = new LinkedList();
@@ -72,42 +78,61 @@ public class BreadthFirstSearchTest {
 	}
 
 	public void initGraph() {
-		// Eingangshalle
+
+		float x_c_li=400;
+		float x_c_flur=435;
+		float x_c_re=470;
+
 		nodes = new LinkedList<Node>();
+		// Eingangshalle
 		Eingang = new Node("Eingang",160,950,nodes);	
 		Eingangshalle = new Node("Eingangshalle",435,950,nodes);
 		
 		//Räume rechts C-Trakt
-		CE31 = new Node("C.E.31",470,600,nodes);
-		CE31f = new Node("C.E.31Flur",435,600);
+		CE31 = new Node("C.E.31",x_c_re,600,nodes);
+		CE31f = new Node("C.E.31Flur",x_c_flur,600);
 		
-		Node CE312 = new Node("C.E.31.2",470,390,nodes);
-		Node CE312f = new Node("C.E.31.2Flur",435,390);
+		Node CE312 = new Node("C.E.31.2",x_c_re,390,nodes);
+		Node CE312f = new Node("C.E.31.2Flur",x_c_flur,390);
 
-		Node CE32 = new Node("C.E.32",470,320,nodes);
-		Node CE32f = new Node("C.E.32Flur",435,320);
+		Node CE32 = new Node("C.E.32",x_c_re,320,nodes);
+		Node CE32f = new Node("C.E.32Flur",x_c_flur,320);
 				
-		Node CE321 = new Node("C.E.32.1",470,105,nodes);
-		Node CE321f = new Node("C.E.32.1Flur",435,105);
+		Node CE321 = new Node("C.E.32.1",x_c_re,105,nodes);
+		Node CE321f = new Node("C.E.32.1Flur",x_c_flur,105);
 
 		//Räume links C-Trakt
-		Node CE40 = new Node("C.E.40",400,620,nodes);
-		Node CE40f = new Node("C.E.40Flur",435,620);
+		Node CE40 = new Node("C.E.40",x_c_li,620,nodes);
+		Node CE40f = new Node("C.E.40Flur",x_c_flur,620);
 		
-		Node CE41 = new Node("C.E.41",400,500,nodes);
-		Node CE41f = new Node("C.E.41Flur",435,500);
+		Node CE41 = new Node("C.E.41",x_c_li,500,nodes);
+		Node CE41f = new Node("C.E.41Flur",x_c_flur,500);
 
-		Node CE42 = new Node("C.E.42",400,350,nodes);
-		Node CE42f = new Node("C.E.42Flur",435,350);
+		Node CE42 = new Node("C.E.42",x_c_li,350,nodes);
+		Node CE42f = new Node("C.E.42Flur",x_c_flur,350);
 				
-		Node CE43 = new Node("C.E.43",400,230,nodes);
-		Node CE43f = new Node("C.E.43Flur",435,230);
+		Node CE43 = new Node("C.E.43",x_c_li,230,nodes);
+		Node CE43f = new Node("C.E.43Flur",x_c_flur,230);
 		
-		Node CE44 = new Node("C.E.44",400,185,nodes);
-		Node CE44f = new Node("C.E.44Flur",435,185);
+		Node CE44 = new Node("C.E.44",x_c_li,185,nodes);
+		Node CE44f = new Node("C.E.44Flur",x_c_flur,185);
 		
-		Node CE45 = new Node("C.E.45",400,50,nodes);
-		Node CE45f = new Node("C.E.45Flur",435,50);
+		Node CE45 = new Node("C.E.45",x_c_li,50,nodes);
+		Node CE45f = new Node("C.E.45Flur",x_c_flur,50);
+		
+		//Hörsäle
+		Node AE01 = new Node("A.E.01",220,1110,nodes);
+		Node AE01T1 = new Node("A.E.43Flur",435,230);
+		Node AE01T1f = new Node("A.E.43Flur",435,230);
+		Node AE01T2 = new Node("A.E.43Flur",435,230);
+		Node AE01T2f = new Node("A.E.43Flur",435,230);
+		
+		
+		Node AE02 = new Node("A.E.02",400,185,nodes);
+		Node AE02f = new Node("A.E.02Flur",435,185);
+		
+		Node AE03 = new Node("A.E.03",400,50,nodes);
+		Node AE03f = new Node("A.E.03Flur",435,50);
 		
 		
 		Eingang.addNeighbor(Eingangshalle);

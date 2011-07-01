@@ -284,17 +284,42 @@ public class BreadthFirstSearchTest {
 		
 		FlurSued.addNeighbor(BE01f);
 		BE01f.addNeighbor(BE02f);
+		BE01f.addNeighbor(BE01);
+		
 		BE02f.addNeighbor(BE20f);
+		BE02f.addNeighbor(BE02);
+		
 		BE20f.addNeighbor(BE03f);
+		BE20f.addNeighbor(BE20);
+		
 		BE03f.addNeighbor(BE04f);
+		BE03f.addNeighbor(BE03);
+		
 		BE04f.addNeighbor(BE21f);
+		BE04f.addNeighbor(BE04);
+		
 		BE21f.addNeighbor(BE06f);
+		BE21f.addNeighbor(BE21);
+		
 		BE06f.addNeighbor(BE07f);
+		BE06f.addNeighbor(BE06);
+		
 		BE07f.addNeighbor(BE08f);
+		BE07f.addNeighbor(BE07);
+		
 		BE08f.addNeighbor(BE23f);
+		BE08f.addNeighbor(BE08);
+		
 		BE23f.addNeighbor(BE09f);
+		BE23f.addNeighbor(BE23);
+		
 		BE09f.addNeighbor(BE24f);
+		BE09f.addNeighbor(BE09);
+		
 		BE24f.addNeighbor(BE10f);
+		BE24f.addNeighbor(BE24);
+		
+		BE10f.addNeighbor(BE10);
 		
 		
 

@@ -1,6 +1,5 @@
 package FHNav.gui;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,7 +7,6 @@ import java.util.Collections;
 import java.util.Date;
 
 import FHNav.controller.CalendarAdapter;
-import FHNav.controller.CanteenBeanTest;
 import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
 import FHNav.controller.SettingsManager;

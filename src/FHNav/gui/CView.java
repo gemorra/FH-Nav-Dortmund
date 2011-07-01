@@ -20,6 +20,7 @@ public class CView extends View {
 
 	Paint mpaint = new Paint();
 	Bitmap bmp;
+	Bitmap ziel;
 	float x_scale_mapping;
 	float y_scale_mapping;
 	private View _view;
@@ -38,9 +39,14 @@ public class CView extends View {
 		super(context);
 		BitmapFactory.Options opt = new BitmapFactory.Options();
 		opt.inScaled = false;
-		bmp = BitmapFactory.decodeResource(MainApplicationManager.getCtx().getResources(), R.drawable.egfertig2, opt);
+		bmp = BitmapFactory.decodeResource(MainApplicationManager.getCtx()
+				.getResources(), R.drawable.egfertig2, opt);
 		x_start = bmp.getWidth() / 2;
 		y_start = bmp.getHeight() / 2;
+		
+		ziel = BitmapFactory.decodeResource(MainApplicationManager.getCtx()
+				.getResources(), R.drawable.ziel, opt);
+		
 		_view = this;
 		this.setOnTouchListener(touchListener);
 	}
@@ -63,47 +69,64 @@ public class CView extends View {
 		matrix.postScale(1 / x_scale_zoom, 1 / y_scale_zoom, x_start, y_start);
 		matrix.mapRect(srcF);
 
-		src = new Rect((int) srcF.left, (int) srcF.top, (int) srcF.right, (int) srcF.bottom);
-		System.out.println("DRAW");
-
+		src = new Rect((int) srcF.left, (int) srcF.top, (int) srcF.right,
+				(int) srcF.bottom);
 
 		canvas.drawBitmap(bmp, src, dst, mpaint);
 
-		//Mapping Scale
+		// Mapping Scale
 		x_scale_mapping = (float) (this.getWidth()) / (float) (bmp.getWidth());
-		y_scale_mapping = (float) (this.getHeight()) / (float) (bmp.getHeight());
-
+		y_scale_mapping = (float) (this.getHeight())
+				/ (float) (bmp.getHeight());
 
 		BreadthFirstSearchTest bfst = MainApplicationManager.getBfst();
 
 		mpaint.setColor(Color.RED);
 		mpaint.setStrokeWidth(4 * x_scale_zoom);
+		try {
+			for (int i = 0; i < bfst.getPath().size(); i++) {
+				Node n = (Node) bfst.getPath().get(i);
 
-		for (int i = 0; i < bfst.getPath().size(); i++) {
-			Node n = (Node) bfst.getPath().get(i);
+				if (i != 0) {
+					Node n_1 = (Node) bfst.getPath().get(i - 1);
+					n = (Node) bfst.getPath().get(i);
 
-			if (i != 0) {
-				Node n_1 = (Node) bfst.getPath().get(i - 1);
-				n = (Node) bfst.getPath().get(i);
+					float n_x = n.getX();
+					float n_y = n.getY();
+					float n1_x = n_1.getX();
+					float n1_y = n_1.getY();
 
-				float n_x = n.getX();
-				float n_y = n.getY();
-				float n1_x = n_1.getX();
-				float n1_y = n_1.getY();
-
-				float[] pn = { n_x, n_y };
-				float[] pn1 = { n1_x, n1_y };
-				Matrix matrix2 = new Matrix();
-				matrix2.postScale(x_scale_zoom, y_scale_zoom, x_start, y_start);
-				matrix2.mapPoints(pn);
-				matrix2.mapPoints(pn1);
-				canvas.drawLine(pn1[0] * x_scale_mapping, pn1[1] * y_scale_mapping, pn[0] * x_scale_mapping, pn[1] * y_scale_mapping, mpaint);
-
-
+					float[] pn = { n_x, n_y };
+					float[] pn1 = { n1_x, n1_y };
+					Matrix matrix2 = new Matrix();
+					matrix2.postScale(x_scale_zoom, y_scale_zoom, x_start,
+							y_start);
+					matrix2.mapPoints(pn);
+					matrix2.mapPoints(pn1);
+					canvas.drawLine(pn1[0] * x_scale_mapping, pn1[1]
+							* y_scale_mapping, pn[0] * x_scale_mapping, pn[1]
+							* y_scale_mapping, mpaint);
+				if(i==bfst.getPath().size()-1)
+				{
+					float side_x = (ziel.getWidth()/2 /5)*x_scale_zoom;
+					float side_y = (ziel.getHeight()/2 /5)*y_scale_zoom;
+					pn[0]+=40;
+					
+					int left = (int)(pn[0] * x_scale_mapping-side_x);
+					int top = (int)(pn[1] * y_scale_mapping-side_y);
+					int right = (int)(pn[0] * x_scale_mapping+side_x);
+					int bottom = (int)(pn[1] * y_scale_mapping+side_y);
+					
+					Rect dst2 = new Rect(left, top, right, bottom);
+					canvas.drawBitmap(ziel, null, dst2, mpaint);
+				
+				}
+				}
+				
 			}
+		} catch (Exception e) {
+
 		}
-
-
 
 	}
 
@@ -120,13 +143,15 @@ public class CView extends View {
 	float x_old, y_old;
 	private long switch_time;
 	private long mLastGestureTime;
-	protected float x1, x2, y1, y2, x1_pre, y1_pre, x1_pre2, y1_pre2, dist_curr = -1, dist_pre = -1, dist_delta;
+	protected float x1, x2, y1, y2, x1_pre, y1_pre, x1_pre2, y1_pre2,
+			dist_curr = -1, dist_pre = -1, dist_delta;
 
 	protected OnTouchListener touchListener = new OnTouchListener() {
 		public boolean onTouch(View v, MotionEvent event) {
 
 			_view.onTouchEvent(event);
-			int action = event.getAction() & MotionEvent.ACTION_MASK, p_count = event.getPointerCount();
+			int action = event.getAction() & MotionEvent.ACTION_MASK, p_count = event
+					.getPointerCount();
 			long now = android.os.SystemClock.uptimeMillis();
 			switch (action) {
 			case MotionEvent.ACTION_MOVE:
@@ -143,7 +168,8 @@ public class CView extends View {
 					y2 = event.getY(1);
 
 					// distance between
-					dist_curr = (float) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+					dist_curr = (float) Math.sqrt(Math.pow(x2 - x1, 2)
+							+ Math.pow(y2 - y1, 2));
 					dist_delta = dist_curr - dist_pre;
 
 					if (now - mLastGestureTime > 100) {
@@ -154,7 +180,8 @@ public class CView extends View {
 						float view_mid = (_view.getWidth() / 2) / x_scale_zoom;
 						System.out.println(view_mid);
 
-						int mode = dist_delta > 0 ? GROW : (dist_curr == dist_pre ? 2 : SHRINK);
+						int mode = dist_delta > 0 ? GROW
+								: (dist_curr == dist_pre ? 2 : SHRINK);
 						switch (mode) {
 						case GROW: // grow
 							if (x_scale_zoom + ZOOM < MAX_SCALE) {
@@ -177,7 +204,6 @@ public class CView extends View {
 							}
 							break;
 						}
-
 
 						switch_time = now;
 						mLastGestureTime = now;
@@ -204,28 +230,26 @@ public class CView extends View {
 						y_moved *= SPEED;
 						System.out.println("xm: " + x_moved + "ym: " + y_moved);
 
-						System.out.println("Before: " + " xs: " + x_start + "ys: " + y_start);
+						System.out.println("Before: " + " xs: " + x_start
+								+ "ys: " + y_start);
 						if (x_start - x_moved < 0)
 							x_start = 0;
-						else if(x_start - (x_moved) > bmp.getWidth())
-						{
+						else if (x_start - (x_moved) > bmp.getWidth()) {
 							x_start = bmp.getWidth();
-						}
-						else
+						} else
 							x_start -= x_moved;
 						if (y_start - y_moved < 0)
 							y_start = 0;
-						else if(y_start - (y_moved) > bmp.getHeight())
-						{
+						else if (y_start - (y_moved) > bmp.getHeight()) {
 							y_start = bmp.getHeight();
-						}
-						else
+						} else
 							y_start -= y_moved;
 
-						System.out.println("After: " + "xs: " + x_start + "ys: " + y_start);
+						System.out.println("After: " + "xs: " + x_start
+								+ "ys: " + y_start);
 
 						_view.invalidate();
-						
+
 						x1_pre2 = x1;
 						y1_pre2 = y1;
 					}
@@ -233,7 +257,6 @@ public class CView extends View {
 				break;
 			case MotionEvent.ACTION_DOWN:
 
-				
 				x1_pre2 = event.getX();
 				y1_pre2 = event.getY();
 				break;
@@ -241,7 +264,6 @@ public class CView extends View {
 				// point 1 coords
 				x2 = event.getX(1);
 				y2 = event.getY(1);
-
 
 				x1_pre = event.getX(0);
 				y1_pre = event.getY(0);

@@ -68,7 +68,27 @@ public class BreadthFirstSearchTest {
 	
 	List path;
 	
+	Node from;
+	Node to;
 	
+	
+	
+	public Node getFrom() {
+		return from;
+	}
+
+	public void setFrom(Node from) {
+		this.from = from;
+	}
+
+	public Node getTo() {
+		return to;
+	}
+
+	public void setTo(Node to) {
+		this.to = to;
+	}
+
 	public List getNodes() {
 		return nodes;
 	}
@@ -132,12 +152,14 @@ public class BreadthFirstSearchTest {
 		Node AE01 = new Node("A.E.01",220,1110,nodes);
 		Node AE01T1 = new Node("A.E.01T1",220,990);
 		Node AE01T1f = new Node("A.E.01T1Flur",220,950);
-		Node AE01T2 = new Node("A.E.01T2",400,435);
-		Node AE01T2f = new Node("A.E.01T2Flur",435,230);
-		
-		
-		Node AE02 = new Node("A.E.02",400,185,nodes);
-		Node AE02f = new Node("A.E.02Flur",435,185);
+		Node AE01T2 = new Node("A.E.01T2",400,1110);
+		Node AE01T2f = new Node("A.E.01T2Flur",435,1110);
+
+		Node AE02 = new Node("A.E.02",280,770,nodes);
+		Node AE02T1 = new Node("A.E.02T1",280,915);
+		Node AE02T1f = new Node("A.E.02T1Flur",280,950);
+		Node AE02T2 = new Node("A.E.02T2",400,770);
+		Node AE02T2f = new Node("A.E.02T2Flur",435,770);
 		
 		Node AE03 = new Node("A.E.03",400,50,nodes);
 		Node AE03f = new Node("A.E.03Flur",435,50);
@@ -153,9 +175,9 @@ public class BreadthFirstSearchTest {
 		CE32f.addNeighbor(CE32);
 		
 		
-		
-		
-		path = search(Eingang, CE32);
+		from=Eingang;
+		to=CE31;
+//		path = search(Eingang, CE32);
 		
 //		// Hoersaele
 //		Node AE01 = new Node("A.E.01");

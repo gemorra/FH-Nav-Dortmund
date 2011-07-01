@@ -228,12 +228,15 @@ public class BreadthFirstSearchTest {
 		Eingang.addNeighbor(AE01T1f);
 		AE01T1f.addNeighbor(AE02T1f);
 		AE01T1f.addNeighbor(AE01T1);
+		
+		
 		AE01T1.addNeighbor(AE01);
 		AE01.addNeighbor(AE01T2);
-		AE01T2.addNeighbor(AE02T2f);
+//		AE01T2f.addNeighbor(AE02T2f);
 		AE01T2f.addNeighbor(FlurSued);
 		
-		AE02T1f.addNeighbor(Eingangshalle);
+		AE01T2f.addNeighbor(AE01T2);
+		
 		AE02T1f.addNeighbor(AE02T1);
 		AE02T1.addNeighbor(AE02);
 		AE02.addNeighbor(AE02T2);
@@ -244,6 +247,7 @@ public class BreadthFirstSearchTest {
 		Eingangshalle.addNeighbor(AE01T2f);
 		Eingangshalle.addNeighbor(AE02T2f);
 		Eingangshalle.addNeighbor(AE03T1f);
+		Eingangshalle.addNeighbor(AE02T1f);
 		AE03T1f.addNeighbor(AE03T1);
 		AE03T1.addNeighbor(AE03);
 		AE03.addNeighbor(AE03T2);

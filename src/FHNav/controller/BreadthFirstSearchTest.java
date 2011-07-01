@@ -61,10 +61,10 @@ public class BreadthFirstSearchTest {
 	}
 
 	List nodes;
-	Node Eingang;
-	Node Eingangshalle;
-	Node CE31;
-	Node CE31f;
+//	Node Eingang;
+//	Node Eingangshalle;
+//	Node CE31;
+//	Node CE31f;
 	
 	List path;
 	
@@ -107,18 +107,93 @@ public class BreadthFirstSearchTest {
 
 	public void initGraph() {
 
-		float x_c_li=400;
+//		float x_c_li=400;
+//		float x_c_flur=435;
+//		float x_c_re=470;
+//		
+//		float y_b_li=1225;
+//		float y_b_flur=1260;
+//		float y_b_re=1295;
+		
+		float x_c_li=370;
 		float x_c_flur=435;
-		float x_c_re=470;
+		float x_c_re=500;
+		
+		float y_b_li=1225;
+		float y_b_flur=1260;
+		float y_b_re=1295;
+
 
 		nodes = new LinkedList<Node>();
+		
 		// Eingangshalle
-		Eingang = new Node("Eingang",160,950,nodes);	
-		Eingangshalle = new Node("Eingangshalle",435,950,nodes);
+		Node Eingang = new Node("Eingang",160,950,nodes);	
+		Node Eingangshalle = new Node("Eingangshalle",435,950,nodes);
+		Node FlurSued = new Node("FlurSued",x_c_flur,y_b_flur);
+		
+		//Hörsäle
+		Node AE01 = new Node("A.E.01",220,1110,nodes);
+		Node AE01T1 = new Node("A.E.01T1",220,990);
+		Node AE01T1f = new Node("A.E.01T1Flur",220,950);
+		Node AE01T2 = new Node("A.E.01T2",400,1110);
+		Node AE01T2f = new Node("A.E.01T2Flur",435,1110);
+
+		Node AE02 = new Node("A.E.02",280,770,nodes);
+		Node AE02T1 = new Node("A.E.02T1",280,915);
+		Node AE02T1f = new Node("A.E.02T1Flur",280,950);
+		Node AE02T2 = new Node("A.E.02T2",400,770);
+		Node AE02T2f = new Node("A.E.02T2Flur",435,770);
+		
+		Node AE03 = new Node("A.E.03",510,745,nodes);
+		Node AE03T1 = new Node("A.E.03T1",510,840);
+		Node AE03T1f = new Node("A.E.03T1Flur",510,950);
+		Node AE03T2 = new Node("A.E.03T2",470,745);
+		Node AE03T2f = new Node("A.E.03T2Flur",435,745);		
+		
+		//Räume links B-Trakt
+		Node BE01 = new Node("B.E.01",500,y_b_li,nodes);
+		Node BE01f = new Node("B.E.01Flur",500,y_b_flur);
+		
+		Node BE02 = new Node("B.E.02",570,y_b_li,nodes);
+		Node BE02f = new Node("B.E.02Flur",570,y_b_flur);
+		
+		Node BE03 = new Node("B.E.03",645,y_b_li,nodes);
+		Node BE03f = new Node("B.E.03Flur",645,y_b_flur);
+		
+		Node BE04 = new Node("B.E.04",700,y_b_li,nodes);
+		Node BE04f = new Node("B.E.04Flur",700,y_b_flur);
+	
+		Node BE06 = new Node("B.E.06",845,y_b_li,nodes);
+		Node BE06f = new Node("B.E.06Flur",845,y_b_flur);
+		
+		Node BE07 = new Node("B.E.07",940,y_b_li,nodes);
+		Node BE07f = new Node("B.E.07Flur",940,y_b_flur);
+		
+		Node BE08 = new Node("B.E.08",995,y_b_li,nodes);
+		Node BE08f = new Node("B.E.08Flur",995,y_b_flur);
+		
+		Node BE09 = new Node("B.E.09",1080,y_b_li,nodes);
+		Node BE09f = new Node("B.E.09Flur",1080,y_b_flur);
+		
+		Node BE10 = new Node("B.E.10",1160,y_b_li,nodes);
+		Node BE10f = new Node("B.E.10Flur",1160,y_b_flur);
+		
+		//Räume rechts B-Trakt
+		Node BE20 = new Node("B.E.20",590,y_b_re,nodes);
+		Node BE20f = new Node("B.E.20Flur",590,y_b_flur);
+		
+		Node BE21 = new Node("B.E.21",710,y_b_re,nodes);
+		Node BE21f = new Node("B.E.21Flur",710,y_b_flur);
+		
+		Node BE23 = new Node("B.E.23",1025,y_b_re,nodes);
+		Node BE23f = new Node("B.E.23Flur",1025,y_b_flur);
+		
+		Node BE24 = new Node("B.E.24",1110,y_b_re,nodes);
+		Node BE24f = new Node("B.E.24Flur",1110,y_b_flur);
 		
 		//Räume rechts C-Trakt
-		CE31 = new Node("C.E.31",x_c_re,600,nodes);
-		CE31f = new Node("C.E.31Flur",x_c_flur,600);
+		Node CE31 = new Node("C.E.31",x_c_re,600,nodes);
+		Node CE31f = new Node("C.E.31Flur",x_c_flur,600);
 		
 		Node CE312 = new Node("C.E.31.2",x_c_re,390,nodes);
 		Node CE312f = new Node("C.E.31.2Flur",x_c_flur,390);
@@ -148,32 +223,40 @@ public class BreadthFirstSearchTest {
 		Node CE45 = new Node("C.E.45",x_c_li,50,nodes);
 		Node CE45f = new Node("C.E.45Flur",x_c_flur,50);
 		
-		//Hörsäle
-		Node AE01 = new Node("A.E.01",220,1110,nodes);
-		Node AE01T1 = new Node("A.E.01T1",220,990);
-		Node AE01T1f = new Node("A.E.01T1Flur",220,950);
-		Node AE01T2 = new Node("A.E.01T2",400,1110);
-		Node AE01T2f = new Node("A.E.01T2Flur",435,1110);
+		//Neighbors
+		Eingang.addNeighbor(AE03T1f);
+//		Eingang.addNeighbor(Eingangshalle);
+		AE01T1f.addNeighbor(AE02T1f);
+		AE01T2f.addNeighbor(FlurSued);
+		AE02T1f.addNeighbor(Eingangshalle);
+		AE02T2f.addNeighbor(AE03T2f);
+		AE03T2f.addNeighbor(CE40f);
+		Eingangshalle.addNeighbor(AE01T2f);
+		Eingangshalle.addNeighbor(AE02T2f);
+		Eingangshalle.addNeighbor(AE03T1f);
+		
+		CE40f.addNeighbor(CE31f);
+		CE31f.addNeighbor(CE41f);
+		CE41f.addNeighbor(CE312);
+		CE312f.addNeighbor(CE42f);
+		CE42f.addNeighbor(CE32f);
+		CE32f.addNeighbor(CE43f);
+		CE43f.addNeighbor(CE44f);
+		CE44f.addNeighbor(CE321f);
+		CE321f.addNeighbor(CE45f);
+		
+		
 
-		Node AE02 = new Node("A.E.02",280,770,nodes);
-		Node AE02T1 = new Node("A.E.02T1",280,915);
-		Node AE02T1f = new Node("A.E.02T1Flur",280,950);
-		Node AE02T2 = new Node("A.E.02T2",400,770);
-		Node AE02T2f = new Node("A.E.02T2Flur",435,770);
-		
-		Node AE03 = new Node("A.E.03",400,50,nodes);
-		Node AE03f = new Node("A.E.03Flur",435,50);
 		
 		
-		Eingang.addNeighbor(Eingangshalle);
-		
-		Eingangshalle.addNeighbor(CE31f);
-		CE31f.addNeighbor(CE31);
-		CE31f.addNeighbor(CE312f);
-		CE312f.addNeighbor(CE312);
-		CE312f.addNeighbor(CE32f);
-		CE32f.addNeighbor(CE32);
-		
+//		Eingangshalle.addNeighbor(CE31f);
+//		
+//		CE31f.addNeighbor(CE31);
+//		CE31f.addNeighbor(CE312f);
+//		CE312f.addNeighbor(CE312);
+//		CE312f.addNeighbor(CE32f);
+//		CE32f.addNeighbor(CE32);
+//		
 		
 		from=Eingang;
 		to=CE31;

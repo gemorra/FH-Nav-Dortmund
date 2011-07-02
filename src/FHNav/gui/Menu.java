@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
+import FHNav.controller.BreadthFirstSearchTest;
+import FHNav.controller.BreadthFirstSearchTest.Node;
 import FHNav.controller.CalendarAdapter;
 import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
@@ -27,6 +29,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -76,6 +79,9 @@ public class Menu extends Activity {
 			MainApplicationManager.setStundenplan(IOManager.loadStundenplan());
 
 			veranstaltungen = MainApplicationManager.getVeranstaltungen();
+			BreadthFirstSearchTest bfst = new BreadthFirstSearchTest();
+			bfst.initGraph();
+			MainApplicationManager.setBfst(bfst);
 
 			refresListView();
 
@@ -123,17 +129,19 @@ public class Menu extends Activity {
 			btn2 = (Button) findViewById(R.id.Button02);
 			btn2.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					startActivity(new Intent(Menu.this,ShowExtras.class));
-//
-//					AlertDialog.Builder adb = new AlertDialog.Builder(Menu.this);
-//					adb.setTitle("Navigation");
-//					adb.setMessage("Comming soon...");
-//					adb.setPositiveButton("  OK  ", new DialogInterface.OnClickListener() {
-//
-//						public void onClick(DialogInterface dialog2, int which) {
-//						}
-//					});
-//					adb.show();
+					startActivity(new Intent(Menu.this, ShowExtras.class));
+					//
+					// AlertDialog.Builder adb = new
+					// AlertDialog.Builder(Menu.this);
+					// adb.setTitle("Navigation");
+					// adb.setMessage("Comming soon...");
+					// adb.setPositiveButton("  OK  ", new
+					// DialogInterface.OnClickListener() {
+					//
+					// public void onClick(DialogInterface dialog2, int which) {
+					// }
+					// });
+					// adb.show();
 				}
 			});
 
@@ -231,6 +239,49 @@ public class Menu extends Activity {
 		lv1 = (ListView) findViewById(R.id.listView1);
 		lv1.setAdapter(listAdapter);
 		lv1.setEmptyView(findViewById(R.id.empty));
+
+		lv1.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(Menu.this);
+				SeparatedListAdapter sla = (SeparatedListAdapter) lv1.getAdapter();
+				final Veranstaltung ver = (Veranstaltung) sla.getItem(arg2);
+				builder.setTitle(ver.getName());
+				final BreadthFirstSearchTest bfst = MainApplicationManager.getBfst();
+
+				final Node n = bfst.getNodeFromListByString(ver.getRaum());
+				final CharSequence[] items;
+				if (n == null) {
+					items = new CharSequence[1];
+					items[0] = getString(R.string.editmenu_delete);
+				} else {
+					items = new CharSequence[2];
+					items[0] = getString(R.string.editmenu_delete);
+					items[1] = getString(R.string.extras_button2);
+				}
+
+				builder.setItems(items, new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface dialog, int which) {
+						if(which==0)
+						{
+							MainApplicationManager.getStundenplan().removeVeranstaltung(ver);
+							IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+							refresListView();
+						}
+						else
+						{
+							bfst.setFrom((Node)bfst.getNodes().get(0));
+							bfst.setTo(n);
+							startActivity(new Intent(Menu.this, Navigation.class));
+						}
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+			}
+		});
+
 	}
 
 	public void build_calendar_dialog() {

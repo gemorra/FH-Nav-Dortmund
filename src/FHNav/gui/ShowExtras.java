@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import FHNav.controller.CanteenBeanTest;
@@ -31,24 +30,85 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-public class ShowExtras extends Activity implements Runnable, OnItemSelectedListener {
+public class ShowExtras extends Activity implements Runnable {
 
-	BaseAdapter listAdapter;
-	BaseAdapter listAdapterMensa;
-	boolean mensa = false;
-	ListView lv1;
 	Button btn1;
-	ProgressDialog dialog;
 	Button btn2;
 	Button btn3;
-	Spinner sp;
+	int choose2;
+	String chooseMensa;
+	String choosePage;
+	String dataAktuellesW;
+	String dataKostBar;
+	String dataMensa;
+
+	ProgressDialog dialog;
+	
+	BaseAdapter listAdapter;
+
+	BaseAdapter listAdapterMensa;
+
+	ListView lv1;
+
+	boolean mensa = false;
+
 	WebView mWebView;
+
+	Spinner sp;
+	Thread t1;
+	
+	ArrayList<CanteenMenu> lastMenuMensa;
+	ArrayList<CanteenMenu> lastMenuKostbar;
+	
+	private BaseAdapter build_normal() {
+		SeparatedListAdapter separatedListAdapter = new SeparatedListAdapter(this);
+		ArrayList<CanteenMenu> menus;
+		if (chooseMensa.equals(getString(R.string.page_name_mensa))) {
+			menus = CanteenBeanTest.getMenuMensa();
+		} else {
+			menus = CanteenBeanTest.getMenuKostbar();
+		}
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+
+		NormalListAdapterForMenu[] els = new NormalListAdapterForMenu[8];
+		for (int i = 0; i < els.length; i++) {
+			els[i] = new NormalListAdapterForMenu(this, new ArrayList<CanteenMenu>());
+		}
+		for (CanteenMenu cm : menus) {
+			if (cm.getDate() == null)
+				els[7].getItems().add(cm);
+			else
+				els[cm.getDate().getDay()].getItems().add(cm);
+		}
+		for (int i = 0; i < els.length; i++) {
+			if (els[i].getItems().size() > 0) {
+				String header;
+				if (i != 7)
+					header = getString(Tools.getWeekday(els[i].getItems().get(0).getDate().getDay())) + ", der "
+							+ sdf.format(els[i].getItems().get(0).getDate());
+				else
+					header = getString(R.string.canteenSpezialHeader);
+				separatedListAdapter.addSection(header, els[i]);
+			}
+		}
+		return separatedListAdapter;
+	}
+
+	public void initWebViewContent() {
+		if (choosePage.equals(getString(R.string.page_name_news_W))) {
+			if (dataAktuellesW == null)
+				dataAktuellesW = parseNewsW();
+		}
+	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		chooseMensa = getString(R.string.page_name_mensa);
+		choosePage = getString(R.string.page_name_news);
 		mensa = false;
 		refresh();
-
+		
 	}
 
 	private void refresh() {
@@ -57,13 +117,29 @@ public class ShowExtras extends Activity implements Runnable, OnItemSelectedList
 			refreshButtons();
 			lv1 = (ListView) findViewById(R.id.listView1);
 			lv1.setEmptyView(findViewById(R.id.empty));
-			if (listAdapterMensa == null) {
-				dialog = ProgressDialog.show(ShowExtras.this, "", "Download...", true);
-				Thread t1 = new Thread(ShowExtras.this);
-				t1.start();
-			} else
-				lv1.setAdapter(listAdapterMensa);
+			
 			btn1.setText(R.string.extras_button1a);
+			sp = (Spinner) findViewById(R.id.spinner1);
+			ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new String[] {
+					getString(R.string.page_name_mensa), getString(R.string.page_name_mensa_kostbar) });
+			sp.setPromptId(R.string.page_select_header);
+			sp.setAdapter(adapter2);
+			sp.setOnItemSelectedListener(new OnItemSelectedListener() {
+				public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+					chooseMensa = (String) arg0.getItemAtPosition(arg2);
+					if(dialog!=null)
+						dialog.dismiss();
+					dialog = ProgressDialog.show(ShowExtras.this, "", "Download...", true);
+					Thread t1 = new Thread(ShowExtras.this);
+					t1.start();
+				}
+
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+
 		} else {
 			setContentView(R.layout.extras2);
 			refreshButtons();
@@ -77,11 +153,22 @@ public class ShowExtras extends Activity implements Runnable, OnItemSelectedList
 
 			sp = (Spinner) findViewById(R.id.spinner1);
 			ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new String[] {
-					getString(R.string.page_name_news), getString(R.string.page_name_news_W), getString(R.string.page_name_mensa),
-					getString(R.string.page_name_mensa_kostbar), getString(R.string.page_name_pplan), getString(R.string.page_name_lplan) });
+					getString(R.string.page_name_news), getString(R.string.page_name_news_W), getString(R.string.page_name_pplan),
+					getString(R.string.page_name_lplan) });
 			sp.setPromptId(R.string.page_select_header);
 			sp.setAdapter(adapter2);
-			sp.setOnItemSelectedListener(this);
+			sp.setOnItemSelectedListener(new OnItemSelectedListener() {
+				public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+					choosePage = (String) arg0.getItemAtPosition(arg2);
+					Thread t1 = new Thread(ShowExtras.this);
+					t1.start();
+				}
+
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+
+				}
+			});
 		}
 
 	}
@@ -113,35 +200,6 @@ public class ShowExtras extends Activity implements Runnable, OnItemSelectedList
 		});
 	}
 
-	private BaseAdapter build_normal() {
-		SeparatedListAdapter separatedListAdapter = new SeparatedListAdapter(this);
-		ArrayList<CanteenMenu> menus = CanteenBeanTest.getMenus();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-
-		NormalListAdapterForMenu[] els = new NormalListAdapterForMenu[8];
-		for (int i = 0; i < els.length; i++) {
-			els[i] = new NormalListAdapterForMenu(this, new ArrayList<CanteenMenu>());
-		}
-		for (CanteenMenu cm : menus) {
-			if (cm.getDate() == null)
-				els[7].getItems().add(cm);
-			else
-				els[cm.getDate().getDay()].getItems().add(cm);
-		}
-		for (int i = 0; i < els.length; i++) {
-			if (els[i].getItems().size() > 0) {
-				String header;
-				if (i != 7)
-					header = getString(Tools.getWeekday(els[i].getItems().get(0).getDate().getDay())) + ", der "
-							+ sdf.format(els[i].getItems().get(0).getDate());
-				else
-					header = getString(R.string.canteenSpezialHeader);
-				separatedListAdapter.addSection(header, els[i]);
-			}
-		}
-		return separatedListAdapter;
-	}
-
 	public void run() {
 		if (mensa) {
 			listAdapterMensa = build_normal();
@@ -154,32 +212,23 @@ public class ShowExtras extends Activity implements Runnable, OnItemSelectedList
 		}
 	}
 
-	final Handler handler = new Handler() {
-		public void handleMessage(Message msg) {
-			if (mensa) {
-
-				lv1.setAdapter(listAdapterMensa);
-				dialog.dismiss();
-			} else {
-				setWebViewContent();
-			}
+	protected void setWebViewContent() {
+		if (choosePage.equals(getString(R.string.page_name_news_W))) {
+			// mWebView.loadData(dataAktuellesW, "text/html", "utf-8");
+			mWebView.loadDataWithBaseURL("http://www.fh-dortmund.de/de/studi/fb/9/studieng/400/aktuelles_stud.php", dataAktuellesW, "text/html", "utf-8", null);
+		} else if (choosePage.equals(getString(R.string.page_name_news))) {
+			mWebView.loadUrl("http://www.fh-dortmund.de/de/fb/4/isc/aktuelles/index.php");
+		} else if (choosePage.equals(getString(R.string.page_name_mensa_kostbar))) {
+			mWebView.loadData(dataKostBar, "text/html", "utf-8");
 		}
-	};
+		if (choosePage.equals(getString(R.string.page_name_pplan))) {
+			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.inf.fh-dortmund.de/~pa_data/pplan.pdf");
+		}
+		if (choosePage.equals(getString(R.string.page_name_lplan))) {
+			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.inf.fh-dortmund.de/tmp/lageplan_uni.pdf");
+		}
+	}
 
-	// class MyJavaScriptInterface
-	// {
-	// @SuppressWarnings("unused")
-	// public void showHTML(String html)
-	// {
-	// new AlertDialog.Builder(ShowExtras.this)
-	// .setTitle("HTML")
-	// .setMessage(html)
-	// .setPositiveButton(android.R.string.ok, null)
-	// .setCancelable(false)
-	// .create()
-	// .show();
-	// }
-	// }
 	private class HelloWebViewClient extends WebViewClient {
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -219,67 +268,15 @@ public class ShowExtras extends Activity implements Runnable, OnItemSelectedList
 		return ret;
 	}
 
-	protected void setWebViewContent() {
-		if (choose.equals(getString(R.string.page_name_news_W))) {
-			// mWebView.loadData(dataAktuellesW, "text/html", "utf-8");
-			mWebView.loadDataWithBaseURL("http://www.fh-dortmund.de/de/studi/fb/9/studieng/400/aktuelles_stud.php", dataAktuellesW, "text/html", "utf-8", null);
-		} else if (choose.equals(getString(R.string.page_name_news))) {
-			mWebView.loadUrl("http://www.fh-dortmund.de/de/fb/4/isc/aktuelles/index.php");
-		} else if (choose.equals(getString(R.string.page_name_mensa_kostbar))) {
-			mWebView.loadData(dataKostBar, "text/html", "utf-8");
-		}
-		if (choose.equals(getString(R.string.page_name_pplan))) {
-			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.inf.fh-dortmund.de/~pa_data/pplan.pdf");
-		}
-		if (choose.equals(getString(R.string.page_name_lplan))) {
-			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.inf.fh-dortmund.de/tmp/lageplan_uni.pdf");
-		}
-	}
+	final Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+			if (mensa) {
 
-	public static String parseMensaKostBar() {
-		Document doc;
-		String ret = "";
-		try {
-			doc = Jsoup.connect("http://www.stwdo.de/index.php?id=248").get();
-			Elements tds = doc.select("table.SpeiseplanWoche");
-			// ret = "<table>";
-			for (Element e : tds) {
-				ret += e.toString();
-				// ret += "<hr>";
+				lv1.setAdapter(listAdapterMensa);
+				dialog.dismiss();
+			} else {
+				setWebViewContent();
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		return ret;
-	}
-
-	String choose;
-	int choose2;
-	String dataAktuellesW;
-	String dataMensa;
-	String dataKostBar;
-
-	public void initWebViewContent() {
-		if (choose.equals(getString(R.string.page_name_news_W))) {
-			if (dataAktuellesW == null)
-				dataAktuellesW = parseNewsW();
-		} else if (choose.equals(getString(R.string.page_name_mensa_kostbar))) {
-			if (dataKostBar == null)
-				dataKostBar = parseMensaKostBar();
-
-		}
-	}
-
-	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		choose = (String) arg0.getItemAtPosition(arg2);
-		Thread t1 = new Thread(ShowExtras.this);
-		t1.start();
-	}
-
-	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
+	};
 }

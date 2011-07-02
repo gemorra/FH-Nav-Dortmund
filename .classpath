@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="ksoap2-j2se-2.5.4.jar"/>
 	<classpathentry kind="lib" path="kxml-2.2.4.jar"/>
 	<classpathentry kind="lib" path="jsoup-1.6.0.jar"/>
+	<classpathentry kind="lib" path="commons-lang-2.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

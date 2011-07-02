@@ -79,9 +79,9 @@
 	
 	<string name="page_select_header">Bitte wählen</string>
 	<string name="page_name_news">Aktuelles</string>
-	<string name="page_name_mensa">Speiseplan Mensa</string>
+	<string name="page_name_mensa">Mensa</string>
 	<string name="page_name_news_W">Aktuelles(Wirtschaft)</string>
-	<string name="page_name_mensa_kostbar">Speiseplan Kostbar</string>
+	<string name="page_name_mensa_kostbar">Kostbar</string>
 	<string name="page_name_pplan">Prüfungsplan</string>
 	<string name="page_name_lplan">Lageplan</string>
 	

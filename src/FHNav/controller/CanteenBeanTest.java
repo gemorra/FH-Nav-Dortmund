@@ -1,11 +1,17 @@
 package FHNav.controller;
 
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
@@ -75,9 +81,13 @@ public class CanteenBeanTest {
 			
 			jObject = new JSONObject(result.toString());
 			
+			System.out.println("Parsing!!!");
+			System.out.println(jObject.toString());
+//			JSONObject arr = jObject.getJSONObject("MENUS");
+			
 			JSONArray jArray = jObject.getJSONArray("MENUS");
-			System.out.println(jArray);
-			return jArray;
+			
+			return null;
 
 			
 		} catch (Exception e) {
@@ -88,7 +98,7 @@ public class CanteenBeanTest {
 		return null;		
 	}
 	
-	public static ArrayList<CanteenMenu> getMenus()
+	public static ArrayList<CanteenMenu> getMenusMensa()
 	{
 		JSONArray jArray = CanteenBeanTest.getMensaplanJSON();
 		JSONArray jArray2 = CanteenBeanTest.getMensaplan2JSON();
@@ -101,10 +111,13 @@ public class CanteenBeanTest {
 				
 				String title = json_data.getString("MENUTITLE");
 				String desc = json_data.getString("MENUDESC");
+				System.out.println(json_data);
+				
 				Date dt = sdfToDate.parse(json_data.getString("DATE"));
 				CanteenMenu cm = new CanteenMenu(title,desc,dt);
 				Log.e("Test",json_data.toString());
 				menus.add(cm);
+				
 			}
 			for (int i = 0; i < jArray2.length(); i++) {
 
@@ -125,8 +138,85 @@ public class CanteenBeanTest {
 		return menus;
 	}
 	
+	public static ArrayList<CanteenMenu> getMenuKostbar() {
+		Document doc;
+		ArrayList<CanteenMenu> menus = new ArrayList<CanteenMenu>();
+		SimpleDateFormat sdfToDate = new SimpleDateFormat("dd.MM.yyyy");
+		try {
 	
+			doc = Jsoup.connect("http://www.stwdo.de/index.php?id=248").get();
+
+			Elements tds = doc.select("table.SpeiseplanWoche");
+			
+			for (Element e : tds) {
+				String dat = e.select("caption").html();
+				Date dt = sdfToDate.parse(dat);
+				Elements m = e.select("td.Tabellen-spalte-2");
+				for(Element e2:m)
+				{
+					
+					
+					
+					String desc = e2.select("p").html();
+					
+					desc= StringEscapeUtils.unescapeHtml(desc);
+					CanteenMenu cm = new CanteenMenu("", desc, dt);
+					menus.add(cm);
+				}
+//				Elements m = e.select("td.Tabellen-spalte-1");
+//				for(Element e2:m)
+//				{
+//					String desc = e2.select("p").html();
+//					CanteenMenu cm = new CanteenMenu(desc, "", dt);
+//					menus.add(cm);
+//				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return menus;
+	}
 	
+
+	public static ArrayList<CanteenMenu> getMenuMensa() {
+		Document doc;
+		ArrayList<CanteenMenu> menus = new ArrayList<CanteenMenu>();
+		SimpleDateFormat sdfToDate = new SimpleDateFormat("dd.MM.yyyy");
+		try {
+	
+			doc = Jsoup.connect("http://www.stwdo.de/index.php?id=127").get();
+
+			Elements tds = doc.select("table.SpeiseplanWoche");
+			
+			for (Element e : tds) {
+				String dat = e.select("caption").html();
+				Date dt = sdfToDate.parse(dat);
+				Elements m = e.select("td.Tabellen-spalte-2");
+				Elements m2 = e.select("td.Tabellen-spalte-1");
+				for(int i=0; i< m.size();i++)
+				{
+					
+					
+					String desc = m.get(i).select("p").html();
+					desc= StringEscapeUtils.unescapeHtml(desc);
+					String title = m2.get(i).select("p").html();
+					title= StringEscapeUtils.unescapeHtml(title);
+					CanteenMenu cm = new CanteenMenu(title, desc, dt);
+					menus.add(cm);
+				}
+//				Elements m = e.select("td.Tabellen-spalte-1");
+//				for(Element e2:m)
+//				{
+//					String desc = e2.select("p").html();
+//					CanteenMenu cm = new CanteenMenu(desc, "", dt);
+//					menus.add(cm);
+//				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return menus;
+	}
 	
 
 }

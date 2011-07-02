@@ -1,6 +1,8 @@
 package FHNav.controller;
 import java.util.*;
 
+import android.graphics.Bitmap;
+
 public class BreadthFirstSearchTest {
 
 	public class Node {
@@ -105,6 +107,22 @@ public class BreadthFirstSearchTest {
 		this.path = path;
 	}
 
+	
+	public Node getNodeFromListByString(String s)
+	{
+		Node n = null;
+		
+		for(int i=0; i<nodes.size();i++)
+		{
+			Node ntmp = (Node) nodes.get(i);
+			if(ntmp.getName().equals(s))
+				n = ntmp;
+		}
+		
+		return n;
+	}
+	
+	
 	public void initGraph() {
 
 //		float x_c_li=400;
@@ -119,17 +137,19 @@ public class BreadthFirstSearchTest {
 		float x_c_flur=435;
 		float x_c_re=520;
 		
-		float y_b_li=1225;
+		float y_b_li=1200;
 		float y_b_flur=1260;
-		float y_b_re=1295;
+		float y_b_re=1320;
 
 
 		nodes = new LinkedList<Node>();
 		
 		// Eingangshalle
-		Node Eingang = new Node("Eingang",160,950,nodes);	
-		Node Eingangshalle = new Node("Eingangshalle",435,950,nodes);
+		Node Eingang = new Node("Eingang",185,950,nodes);	
+		Node Eingangshalle = new Node("Eingangshalle",435,950);
 		Node FlurSued = new Node("FlurSued",x_c_flur,y_b_flur);
+		Node Nebeneingang = new Node("Nebeneingang",586,920,nodes);
+		Node Nebeneingangf = new Node("NebeneingangFlur",586,890);
 		
 		//Hörsäle
 		Node AE01 = new Node("A.E.01",220,1110,nodes);
@@ -144,9 +164,11 @@ public class BreadthFirstSearchTest {
 		Node AE02T2 = new Node("A.E.02T2",400,770);
 		Node AE02T2f = new Node("A.E.02T2Flur",435,770);
 		
-		Node AE03 = new Node("A.E.03",510,745,nodes);
+		Node AE03 = new Node("A.E.03",530,800,nodes);
 		Node AE03T1 = new Node("A.E.03T1",510,840);
-		Node AE03T1f = new Node("A.E.03T1Flur",510,950);
+		Node AE03T1f = new Node("A.E.03T1Flur",555,890);
+		Node VorTreppenhaus = new Node("VorTreppenhaus",555,950);
+		
 		Node AE03T2 = new Node("A.E.03T2",470,745);
 		Node AE03T2f = new Node("A.E.03T2Flur",435,745);		
 		
@@ -225,6 +247,11 @@ public class BreadthFirstSearchTest {
 		
 //		Eingang.addNeighbor(Eingangshalle);
 		//Neighbors
+		
+		Nebeneingang.addNeighbor(Nebeneingangf);
+		Nebeneingangf.addNeighbor(AE03T1f);
+		
+		
 		Eingang.addNeighbor(AE01T1f);
 		AE01T1f.addNeighbor(AE02T1f);
 		AE01T1f.addNeighbor(AE01T1);
@@ -246,7 +273,9 @@ public class BreadthFirstSearchTest {
 		AE03T2f.addNeighbor(CE40f);
 		Eingangshalle.addNeighbor(AE01T2f);
 		Eingangshalle.addNeighbor(AE02T2f);
-		Eingangshalle.addNeighbor(AE03T1f);
+		Eingangshalle.addNeighbor(VorTreppenhaus);
+		VorTreppenhaus.addNeighbor(AE03T1f);
+		
 		Eingangshalle.addNeighbor(AE02T1f);
 		AE03T1f.addNeighbor(AE03T1);
 		AE03T1.addNeighbor(AE03);
@@ -321,7 +350,8 @@ public class BreadthFirstSearchTest {
 		
 		BE10f.addNeighbor(BE10);
 		
-		
+		from=Eingang;
+		to=Eingang;
 
 		
 		
@@ -334,8 +364,7 @@ public class BreadthFirstSearchTest {
 //		CE32f.addNeighbor(CE32);
 //		
 		
-		from=Eingang;
-		to=CE31;
+		
 //		path = search(Eingang, CE32);
 		
 //		// Hoersaele
@@ -512,6 +541,17 @@ public class BreadthFirstSearchTest {
 		}
 		// no path found
 		return null;
+	}
+	private Bitmap bmp;
+
+	public Bitmap getBMP() {
+		// TODO Auto-generated method stub
+		return bmp;
+	}
+
+	public void setBMP(Bitmap bmp) {
+		this.bmp = bmp;
+		
 	}
 
 }

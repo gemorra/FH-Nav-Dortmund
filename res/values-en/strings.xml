@@ -74,4 +74,14 @@
 	<string name="extras_button2">Navigation</string>
 	<string name="extras_button3">Back</string>
 	<string name="canteenSpezialHeader">Specials of the Week</string>	
+	
+	
+	<string name="page_select_header">Bitte wählen</string>
+	<string name="page_name_news">Aktuelles</string>
+	<string name="page_name_mensa">Mensa</string>
+	<string name="page_name_news_W">Aktuelles(Wirtschaft)</string>
+	<string name="page_name_mensa_kostbar">Kostbar</string>
+	<string name="page_name_pplan">Prüfungsplan</string>
+	<string name="page_name_lplan">Lageplan</string>
+	
 </resources>

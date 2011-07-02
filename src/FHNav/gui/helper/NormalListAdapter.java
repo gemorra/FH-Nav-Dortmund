@@ -49,7 +49,6 @@ public class NormalListAdapter extends BaseAdapter {
 			
 			if(SettingsManager.getText_size()==1)
 			{
-				Log.e("asd", "1");
 				holder.bottomtext.setTextSize(15);
 				holder.toptext.setTextSize(15);
 				paramsBottom.height = 25;
@@ -57,7 +56,6 @@ public class NormalListAdapter extends BaseAdapter {
 			}
 			else if(SettingsManager.getText_size()==2)
 			{
-				Log.e("asd", "2");
 				holder.bottomtext.setTextSize(20);
 				holder.toptext.setTextSize(20);
 				paramsBottom.height = 30;

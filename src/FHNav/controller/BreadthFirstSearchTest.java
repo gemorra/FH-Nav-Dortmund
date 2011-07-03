@@ -148,7 +148,7 @@ public class BreadthFirstSearchTest {
 		Node Eingang = new Node("Eingang",140,955,nodes);	
 		Node Eingangshalle = new Node("Eingangshalle",x_c_flur,955);
 		Node FlurSued = new Node("FlurSued",x_c_flur,y_b_flur);
-		Node Nebeneingang = new Node("Nebeneingang",555,940,nodes);
+		Node Nebeneingang = new Node("Nebeneingang",555,950,nodes);
 		Node Nebeneingangf = new Node("NebeneingangFlur",555,896);
 		
 		//Hörsäle

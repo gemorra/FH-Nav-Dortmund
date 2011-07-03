@@ -165,7 +165,7 @@ public class BreadthFirstSearchTest {
 		Node AE02T2f = new Node("A.E.02T2Flur",435,770);
 		
 		Node AE03 = new Node("A.E.03",530,800,nodes);
-		Node AE03T1 = new Node("A.E.03T1",510,840);
+		Node AE03T1 = new Node("A.E.03T1",555,840);
 		Node AE03T1f = new Node("A.E.03T1Flur",555,890);
 		Node VorTreppenhaus = new Node("VorTreppenhaus",555,950);
 		

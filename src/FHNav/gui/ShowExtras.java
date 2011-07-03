@@ -43,7 +43,7 @@ public class ShowExtras extends Activity implements Runnable {
 	String dataMensa;
 
 	ProgressDialog dialog;
-	
+
 	BaseAdapter listAdapter;
 
 	BaseAdapter listAdapterMensa;
@@ -56,10 +56,10 @@ public class ShowExtras extends Activity implements Runnable {
 
 	Spinner sp;
 	Thread t1;
-	
+
 	ArrayList<CanteenMenu> lastMenuMensa;
 	ArrayList<CanteenMenu> lastMenuKostbar;
-	
+
 	private BaseAdapter build_normal() {
 		SeparatedListAdapter separatedListAdapter = new SeparatedListAdapter(this);
 		ArrayList<CanteenMenu> menus;
@@ -108,7 +108,7 @@ public class ShowExtras extends Activity implements Runnable {
 		choosePage = getString(R.string.page_name_news);
 		mensa = false;
 		refresh();
-		
+
 	}
 
 	private void refresh() {
@@ -117,7 +117,7 @@ public class ShowExtras extends Activity implements Runnable {
 			refreshButtons();
 			lv1 = (ListView) findViewById(R.id.listView1);
 			lv1.setEmptyView(findViewById(R.id.empty));
-			
+
 			btn1.setText(R.string.extras_button1a);
 			sp = (Spinner) findViewById(R.id.spinner1);
 			ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new String[] {
@@ -127,7 +127,7 @@ public class ShowExtras extends Activity implements Runnable {
 			sp.setOnItemSelectedListener(new OnItemSelectedListener() {
 				public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 					chooseMensa = (String) arg0.getItemAtPosition(arg2);
-					if(dialog!=null)
+					if (dialog != null)
 						dialog.dismiss();
 					dialog = ProgressDialog.show(ShowExtras.this, "", "Download...", true);
 					Thread t1 = new Thread(ShowExtras.this);
@@ -154,7 +154,7 @@ public class ShowExtras extends Activity implements Runnable {
 			sp = (Spinner) findViewById(R.id.spinner1);
 			ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new String[] {
 					getString(R.string.page_name_news), getString(R.string.page_name_news_W), getString(R.string.page_name_pplan),
-					getString(R.string.page_name_lplan) });
+					getString(R.string.page_name_lplan), getString(R.string.page_name_splan), getString(R.string.page_name_bplan) });
 			sp.setPromptId(R.string.page_select_header);
 			sp.setAdapter(adapter2);
 			sp.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -218,14 +218,14 @@ public class ShowExtras extends Activity implements Runnable {
 			mWebView.loadDataWithBaseURL("http://www.fh-dortmund.de/de/studi/fb/9/studieng/400/aktuelles_stud.php", dataAktuellesW, "text/html", "utf-8", null);
 		} else if (choosePage.equals(getString(R.string.page_name_news))) {
 			mWebView.loadUrl("http://www.fh-dortmund.de/de/fb/4/isc/aktuelles/index.php");
-		} else if (choosePage.equals(getString(R.string.page_name_mensa_kostbar))) {
-			mWebView.loadData(dataKostBar, "text/html", "utf-8");
-		}
-		if (choosePage.equals(getString(R.string.page_name_pplan))) {
+		} else if (choosePage.equals(getString(R.string.page_name_pplan))) {
 			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.inf.fh-dortmund.de/~pa_data/pplan.pdf");
-		}
-		if (choosePage.equals(getString(R.string.page_name_lplan))) {
+		} else if (choosePage.equals(getString(R.string.page_name_lplan))) {
 			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.inf.fh-dortmund.de/tmp/lageplan_uni.pdf");
+		} else if (choosePage.equals(getString(R.string.page_name_splan))) {
+			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.gemorra.de/s1.pdf");
+		}else if (choosePage.equals(getString(R.string.page_name_bplan))) {
+			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.gemorra.de/bus.pdf");
 		}
 	}
 

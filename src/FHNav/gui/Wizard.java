@@ -33,11 +33,11 @@ public class Wizard extends Activity implements Runnable {
 	boolean loadSpinner = true;
 
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);		
-		Log.e("Wizard","Create");
-		
+		super.onCreate(savedInstanceState);
+		Log.e("Wizard", "Create");
+
 		SettingsManager.loadSettings(this);
-//		SettingsManager.setPathToFile("www.gemorra.de/fhnav/connec.php");
+		// SettingsManager.setPathToFile("www.gemorra.de/fhnav/connec.php");
 		// Vorbereitungen und Dialog anzeigen
 
 		setContentView(R.layout.wizard);
@@ -71,7 +71,7 @@ public class Wizard extends Activity implements Runnable {
 				}
 			}
 		});
-		
+
 		ImageButton btn1 = (ImageButton) this.findViewById(R.id.wizard_refresh);
 		btn1.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -119,27 +119,36 @@ public class Wizard extends Activity implements Runnable {
 
 	public void run() {
 		if (!loadSpinner) {
-			MainApplicationManager.setStundenplan(PHPConnector.getStundenplanFromMysql((String) (spinner1.getSelectedItem())));
-			if (MainApplicationManager.getStundenplan().getVeranstaltungen().size() > 0) {
-				IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
-				SettingsManager.setWizardDone(true);		
-				startActivity(new Intent(Wizard.this, Menu.class));
+			try {
+				MainApplicationManager.setStundenplan(PHPConnector.getStundenplanFromMysql((String) (spinner1.getSelectedItem())));
+				if (MainApplicationManager.getStundenplan().getVeranstaltungen().size() > 0) {
+					IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+					SettingsManager.setWizardDone(true);
+					startActivity(new Intent(Wizard.this, Menu.class));
+
+				}
+			} catch (Exception e) {
+			} finally {
 				dialog.dismiss();
 			}
-			dialog.dismiss();
+
 		} else {
 			// T1 Liste der Stundenpläne downloaden und bei => H1 in Spinner
 			// packen
-			spinnerContent = PHPConnector.getAllBranches();
-			Message msg = handler.obtainMessage();
-			handler.sendMessage(msg);
+			try {
+				spinnerContent = PHPConnector.getAllBranches();
+				Message msg = handler.obtainMessage();
+				handler.sendMessage(msg);
+			} catch (Exception e) {
+			} finally {
+				dialog.dismiss();
+			}
 
 		}
 	}
-	
+
 	@Override
-	public void onBackPressed()
-	{
-		Log.e("Wizard","Back");
+	public void onBackPressed() {
+		Log.e("Wizard", "Back");
 	}
 }

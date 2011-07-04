@@ -49,12 +49,12 @@ public class AddVorlesung extends Activity implements Runnable {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.addvorlesung);
-		
+
 		dialog = ProgressDialog.show(AddVorlesung.this, "", "Download...", true);
 		loadSpinner = true;
 		Thread t1 = new Thread(AddVorlesung.this);
 		t1.start();
-		
+
 		btn_select_all = (Button) findViewById(R.id.addveranstaltung_select_all);
 		btn_select_all.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -68,13 +68,12 @@ public class AddVorlesung extends Activity implements Runnable {
 
 		btn_back = (Button) findViewById(R.id.addveranstaltung_back);
 		btn_back.setOnClickListener(new View.OnClickListener() {
-			
+
 			public void onClick(View v) {
 				onBackPressed();
 			}
 		});
-		
-		
+
 		btn_add = (Button) findViewById(R.id.addveranstaltung_add);
 		btn_add.setOnClickListener(new OnClickListener() {
 
@@ -97,8 +96,6 @@ public class AddVorlesung extends Activity implements Runnable {
 
 				int count = s.getVeranstaltungen().size() - sizebefore;
 
-				
-				
 				if (count > 0) {
 					IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
 					Toast t = Toast.makeText(getApplicationContext(), getString(R.string.addveranstaltung_toast_text_1a) + " " + count + " "
@@ -133,8 +130,6 @@ public class AddVorlesung extends Activity implements Runnable {
 
 			}
 		});
-
-		
 
 		veranstaltungen = MainApplicationManager.getVeranstaltungen();
 
@@ -179,22 +174,27 @@ public class AddVorlesung extends Activity implements Runnable {
 	};
 
 	public void run() {
-		if (!loadSpinner) {
+		try {
+			if (!loadSpinner) {
 
-			Stundenplan stundenplan = PHPConnector.getStundenplanFromMysql((String) (spinner1.getSelectedItem()));
+				Stundenplan stundenplan = PHPConnector.getStundenplanFromMysql((String) (spinner1.getSelectedItem()));
 
-			if (stundenplan.getVeranstaltungen().size() > 0) {
+				if (stundenplan.getVeranstaltungen().size() > 0) {
 
-				veranstaltungen = stundenplan.getVeranstaltungen();
-				Collections.sort(veranstaltungen);
+					veranstaltungen = stundenplan.getVeranstaltungen();
+					Collections.sort(veranstaltungen);
+					Message msg = handler.obtainMessage();
+					handler.sendMessage(msg);
+				}
+				dialog.dismiss();
+			} else {
+				spinnerContent = PHPConnector.getAllBranches();
 				Message msg = handler.obtainMessage();
 				handler.sendMessage(msg);
 			}
+		} catch (Exception e) {
+		} finally {
 			dialog.dismiss();
-		} else {
-			spinnerContent = PHPConnector.getAllBranches();
-			Message msg = handler.obtainMessage();
-			handler.sendMessage(msg);
 		}
 	}
 

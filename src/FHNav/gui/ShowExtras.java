@@ -215,13 +215,23 @@ public class ShowExtras extends Activity implements Runnable {
 
 	public void run() {
 		if (mensa) {
-			listAdapterMensa = build_normal();
-			Message msg = handler.obtainMessage();
-			handler.sendMessage(msg);
+			try {
+				listAdapterMensa = build_normal();
+				Message msg = handler.obtainMessage();
+				handler.sendMessage(msg);
+			} catch (Exception e) {
+			} finally {
+				dialog.dismiss();
+			}
 		} else {
-			initWebViewContent();
-			Message msg = handler.obtainMessage();
-			handler.sendMessage(msg);
+			try {
+				initWebViewContent();
+				Message msg = handler.obtainMessage();
+				handler.sendMessage(msg);
+			} catch (Exception e) {
+			} finally {
+				
+			}
 		}
 	}
 

@@ -14,7 +14,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.ScaleAnimation;
 
 public class CView extends View {
 
@@ -170,7 +169,6 @@ public class CView extends View {
 			long now = android.os.SystemClock.uptimeMillis();
 			switch (action) {
 			case MotionEvent.ACTION_MOVE:
-				int interpolator = android.R.anim.accelerate_interpolator;
 
 				// point 1 coords
 				x1 = event.getX(0);
@@ -188,8 +186,6 @@ public class CView extends View {
 
 					if (now - mLastGestureTime > 100) {
 						mLastGestureTime = 0;
-
-						ScaleAnimation scale = null;
 
 						float view_mid = (_view.getWidth() / 2) / x_scale_zoom;
 						System.out.println(view_mid);
@@ -223,9 +219,6 @@ public class CView extends View {
 					}
 
 					_view.invalidate();
-
-					float touch_mid_x = (x2 + x1) / 2;
-					float touch_mid_y = (y2 + y1) / 2;
 
 					x1_pre = x1;
 					y1_pre = y1;

@@ -47,7 +47,7 @@ public class CanteenBeanTest {
 			jObject = new JSONObject(result.toString());
 
 			JSONArray jArray = jObject.getJSONArray("MENUS");
-			System.out.println(jArray);
+			Log.e("result", result.toString());
 			return jArray;
 
 		} catch (Exception e) {
@@ -59,6 +59,7 @@ public class CanteenBeanTest {
 
 	public static JSONArray getMensaplanJSON() {
 		JSONObject jObject = null;
+		JSONArray jArray = null;
 		try {
 
 			SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
@@ -79,7 +80,7 @@ public class CanteenBeanTest {
 			System.out.println(jObject.toString());
 			// JSONObject arr = jObject.getJSONObject("MENUS");
 
-			JSONArray jArray = jObject.getJSONArray("MENUS");
+			jArray = jObject.getJSONArray("MENUS");
 
 			return null;
 
@@ -87,7 +88,7 @@ public class CanteenBeanTest {
 			Log.e("a", e.toString());
 		}
 
-		return null;
+		return jArray;
 	}
 
 	public static ArrayList<CanteenMenu> getMenusMensa() {

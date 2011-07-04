@@ -39,8 +39,8 @@ public class ShowExtras extends Activity implements Runnable {
 	String chooseMensa;
 	String choosePage;
 	String dataAktuellesW;
-	String dataKostBar;
-	String dataMensa;
+	ArrayList<CanteenMenu> dataKostBar;
+	ArrayList<CanteenMenu> dataMensa;
 
 	ProgressDialog dialog;
 
@@ -64,9 +64,15 @@ public class ShowExtras extends Activity implements Runnable {
 		SeparatedListAdapter separatedListAdapter = new SeparatedListAdapter(this);
 		ArrayList<CanteenMenu> menus;
 		if (chooseMensa.equals(getString(R.string.page_name_mensa))) {
-			menus = CanteenBeanTest.getMenuMensa();
+			if (dataMensa == null) {
+				dataMensa = menus = CanteenBeanTest.getMenuMensa();
+			} else
+				menus = dataMensa;
 		} else {
-			menus = CanteenBeanTest.getMenuKostbar();
+			if (dataKostBar == null)
+				dataKostBar = menus = CanteenBeanTest.getMenuKostbar();
+			else
+				menus = dataKostBar;
 		}
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
@@ -85,7 +91,7 @@ public class ShowExtras extends Activity implements Runnable {
 			if (els[i].getItems().size() > 0) {
 				String header;
 				if (i != 7)
-					header = getString(Tools.getWeekday(els[i].getItems().get(0).getDate().getDay())) + ", der "
+					header = getString(Tools.getWeekday(els[i].getItems().get(0).getDate().getDay())) + ", " + getString(R.string.the) + " "
 							+ sdf.format(els[i].getItems().get(0).getDate());
 				else
 					header = getString(R.string.canteenSpezialHeader);
@@ -127,11 +133,13 @@ public class ShowExtras extends Activity implements Runnable {
 			sp.setOnItemSelectedListener(new OnItemSelectedListener() {
 				public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 					chooseMensa = (String) arg0.getItemAtPosition(arg2);
+
 					if (dialog != null)
 						dialog.dismiss();
 					dialog = ProgressDialog.show(ShowExtras.this, "", "Download...", true);
 					Thread t1 = new Thread(ShowExtras.this);
 					t1.start();
+
 				}
 
 				public void onNothingSelected(AdapterView<?> arg0) {
@@ -177,7 +185,8 @@ public class ShowExtras extends Activity implements Runnable {
 		btn1 = (Button) findViewById(R.id.Button01);
 		btn1.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-
+				if (dialog != null)
+					dialog.dismiss();
 				mensa = !mensa;
 				refresh();
 			}
@@ -187,6 +196,8 @@ public class ShowExtras extends Activity implements Runnable {
 		btn2 = (Button) findViewById(R.id.Button02);
 		btn2.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				if (dialog != null)
+					dialog.dismiss();
 				startActivity(new Intent(ShowExtras.this, Navigation.class));
 			}
 		});
@@ -195,6 +206,8 @@ public class ShowExtras extends Activity implements Runnable {
 		btn3 = (Button) findViewById(R.id.Button03);
 		btn3.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				if (dialog != null)
+					dialog.dismiss();
 				onBackPressed();
 			}
 		});
@@ -219,13 +232,14 @@ public class ShowExtras extends Activity implements Runnable {
 		} else if (choosePage.equals(getString(R.string.page_name_news))) {
 			mWebView.loadUrl("http://www.fh-dortmund.de/de/fb/4/isc/aktuelles/index.php");
 		} else if (choosePage.equals(getString(R.string.page_name_pplan))) {
-			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.inf.fh-dortmund.de/~pa_data/pplan.pdf");
+			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.gemorra.de/pplan.pdf");
 		} else if (choosePage.equals(getString(R.string.page_name_lplan))) {
-			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.inf.fh-dortmund.de/tmp/lageplan_uni.pdf");
+			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.gemorra.de/lplan.pdf");
 		} else if (choosePage.equals(getString(R.string.page_name_splan))) {
 			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.gemorra.de/s1.pdf");
-		}else if (choosePage.equals(getString(R.string.page_name_bplan))) {
-			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.gemorra.de/bus.pdf");
+		} else if (choosePage.equals(getString(R.string.page_name_bplan))) {
+			mWebView.loadUrl("http://docs.google.com/gview?embedded=false&url=http://www.gemorra.de/bus.pdf");
+			System.out.println("bus.pdf");
 		}
 	}
 

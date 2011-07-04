@@ -40,7 +40,7 @@
 	<string name="editmenu_change_view">Ansicht wechseln</string>
 	<string name="editmenu_add">Hinzufügen</string>
 	<string name="editmenu_delete">Löschen</string>
-	<string name="editmenu_commit">In Kalendar übertragen...</string>
+	<string name="editmenu_commit">In Kalender übertragen...</string>
 
 	<string name="monday">Montag</string>
 	<string name="tuesday">Dienstag</string>
@@ -68,13 +68,17 @@
 		Kalendar eingerichtet?)</string>
 
 	<string name="add_hauptmenue_title">Hauptmenü</string>
+	<string name="normal_view">Stundenplan</string>
+	<string name="agenda_view">Agenda</string>
+
+
 	<string name="add_vorlesung_title">Veranstaltung hinzufügen</string>
 	<string name="add_adaptstundenplan_title">Veranstaltung löschen</string>
 	<string name="add_settings_title">Einstellungen</string>
 	<string name="add_wizard_title">Wizard</string>
 	<string name="menu_extras_button">Extras</string>
 	<string name="extras_title">Extras</string>
-	<string name="extras_button1a">Seite:</string>
+	<string name="extras_button1a">Infos</string>
 	<string name="extras_button1b">Speiseplan</string>
 	<string name="extras_button2">Navigation</string>
 	<string name="extras_button3">Zurück</string>
@@ -89,5 +93,8 @@
 	<string name="page_name_lplan">Lageplan</string>
 	<string name="page_name_splan">S1 Fahrplan</string>
 	<string name="page_name_bplan">Bus Fahrplan</string>
+	<string name="the">der</string>
+
+	<string name="empty_list">Keine Daten vorhanden</string>
 
 </resources>

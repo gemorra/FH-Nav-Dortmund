@@ -21,7 +21,7 @@
 		android:cacheColorHint="#00000000"></ListView>
 	<TextView android:id="@+id/empty" android:layout_width="match_parent"
 		android:layout_height="wrap_content" 
-		android:layout_weight="1" android:gravity="center" android:text="No data"
+		android:layout_weight="1" android:gravity="center" android:text="@string/empty_list"
 		android:textColor="#FF6000" />
 	<LinearLayout android:id="@+id/linearLayout3"
 		android:layout_height="wrap_content" android:layout_width="match_parent"

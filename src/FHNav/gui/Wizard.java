@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 public class Wizard extends Activity implements Runnable {
@@ -70,7 +71,16 @@ public class Wizard extends Activity implements Runnable {
 				}
 			}
 		});
-
+		
+		ImageButton btn1 = (ImageButton) this.findViewById(R.id.wizard_refresh);
+		btn1.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				loadSpinner = true;
+				dialog = ProgressDialog.show(Wizard.this, "", "Download...", true);
+				Thread t1 = new Thread(Wizard.this);
+				t1.start();
+			}
+		});
 	}
 
 	final Handler handler = new Handler() {

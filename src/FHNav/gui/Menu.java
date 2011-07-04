@@ -48,9 +48,10 @@ public class Menu extends Activity {
 	Intent wizard;
 
 	private ArrayList<Veranstaltung> veranstaltungen;
-	BaseAdapter listAdapter;
+	SeparatedListAdapter listAdapter;
 	boolean agenda = false;
 	ListView lv1;
+	TextView header;
 
 	public void onResume() {
 		super.onResume();
@@ -61,7 +62,7 @@ public class Menu extends Activity {
 		super.onStart();
 		Log.e("Menu", "Start");
 		if (SettingsManager.isWizardDone())
-			refresListView();
+			refresListView(true);
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -78,12 +79,14 @@ public class Menu extends Activity {
 			setContentView(R.layout.menu);
 			MainApplicationManager.setStundenplan(IOManager.loadStundenplan());
 
+			header = (TextView) findViewById(R.id.menu_header);
+			header.setText(getString(R.string.normal_view));
 			veranstaltungen = MainApplicationManager.getVeranstaltungen();
 			BreadthFirstSearchTest bfst = new BreadthFirstSearchTest();
 			bfst.initGraph();
 			MainApplicationManager.setBfst(bfst);
 
-			refresListView();
+			refresListView(true);
 
 			Button btn1;
 			btn1 = (Button) findViewById(R.id.Button01);
@@ -98,7 +101,13 @@ public class Menu extends Activity {
 						public void onClick(DialogInterface dialog, int item) {
 							if (item == 0) {
 								agenda = !agenda;
-								refresListView();
+								if (agenda)
+									header.setText(getString(R.string.agenda_view));
+								else
+									header.setText(getString(R.string.normal_view));
+
+								refresListView(true);
+
 							}
 							if (item == 2) {
 								startActivity(adaptstundenplan);
@@ -130,18 +139,7 @@ public class Menu extends Activity {
 			btn2.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					startActivity(new Intent(Menu.this, ShowExtras.class));
-					//
-					// AlertDialog.Builder adb = new
-					// AlertDialog.Builder(Menu.this);
-					// adb.setTitle("Navigation");
-					// adb.setMessage("Comming soon...");
-					// adb.setPositiveButton("  OK  ", new
-					// DialogInterface.OnClickListener() {
-					//
-					// public void onClick(DialogInterface dialog2, int which) {
-					// }
-					// });
-					// adb.show();
+
 				}
 			});
 
@@ -160,7 +158,7 @@ public class Menu extends Activity {
 
 	}
 
-	private BaseAdapter build_normal(ArrayList<Veranstaltung> veranstaltungen2) {
+	private SeparatedListAdapter build_normal(ArrayList<Veranstaltung> veranstaltungen2) {
 		SeparatedListAdapter separatedListAdapter = new SeparatedListAdapter(this);
 		NormalListAdapter[] els = new NormalListAdapter[7];
 		for (int i = 0; i < els.length; i++) {
@@ -178,7 +176,7 @@ public class Menu extends Activity {
 		return separatedListAdapter;
 	}
 
-	private BaseAdapter build_agenda(ArrayList<Veranstaltung> veranstaltungen) {
+	private SeparatedListAdapter build_agenda(ArrayList<Veranstaltung> veranstaltungen) {
 
 		SeparatedListAdapter separatedListAdapter = new SeparatedListAdapter(this);
 
@@ -229,7 +227,10 @@ public class Menu extends Activity {
 		return separatedListAdapter;
 	}
 
-	public void refresListView() {
+	int visibleFirst = 0;
+	int topy = 0;
+
+	public void refresListView(boolean startAtBeginning) {
 		Collections.sort(veranstaltungen);
 		if (agenda)
 			listAdapter = build_agenda(veranstaltungen);
@@ -244,36 +245,50 @@ public class Menu extends Activity {
 
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(Menu.this);
-				SeparatedListAdapter sla = (SeparatedListAdapter) lv1.getAdapter();
+				final SeparatedListAdapter sla = (SeparatedListAdapter) lv1.getAdapter();
 				final Veranstaltung ver = (Veranstaltung) sla.getItem(arg2);
 				builder.setTitle(ver.getName());
 				final BreadthFirstSearchTest bfst = MainApplicationManager.getBfst();
 
-				final Node n = bfst.getNodeFromListByString(ver.getRaum());
 				final CharSequence[] items;
-				if (n == null) {
-					items = new CharSequence[1];
-					items[0] = getString(R.string.editmenu_delete);
-				} else {
+//				if (n == null) {
+//					items = new CharSequence[1];
+//					items[0] = getString(R.string.editmenu_delete);
+//				} else {
 					items = new CharSequence[2];
 					items[0] = getString(R.string.editmenu_delete);
 					items[1] = getString(R.string.extras_button2);
-				}
+//				}
 
 				builder.setItems(items, new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {
-						if(which==0)
-						{
+						if (which == 0) {
 							MainApplicationManager.getStundenplan().removeVeranstaltung(ver);
 							IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
-							refresListView();
-						}
-						else
-						{
-							bfst.setFrom((Node)bfst.getNodes().get(0));
-							bfst.setTo(n);
-							startActivity(new Intent(Menu.this, Navigation.class));
+							visibleFirst = lv1.getFirstVisiblePosition();
+							View v = lv1.getChildAt(0);
+							topy = (v == null) ? 0 : v.getTop();
+
+							refresListView(false);
+						} else {
+							final Node n = bfst.getNodeFromListByString(ver.getRaum());
+							if (n != null) {
+								bfst.setFrom((Node) bfst.getNodes().get(0));
+								bfst.setTo(n);
+								startActivity(new Intent(Menu.this, Navigation.class));
+							}else
+							{
+								AlertDialog.Builder adb = new AlertDialog.Builder(Menu.this);
+								adb.setTitle("Navigation");
+								adb.setMessage("Comming soon...");
+								adb.setPositiveButton("  OK  ", new DialogInterface.OnClickListener() {
+
+									public void onClick(DialogInterface dialog2, int which) {
+									}
+								});
+								adb.show();
+							}
 						}
 					}
 				});
@@ -281,6 +296,19 @@ public class Menu extends Activity {
 				alert.show();
 			}
 		});
+		if (!startAtBeginning) {
+
+			if (visibleFirst >= listAdapter.getCount()) {
+				visibleFirst = listAdapter.getCount() - 1;
+				topy = 0;
+			}
+			if (visibleFirst < 0) {
+				visibleFirst = 0;
+				topy = 0;
+			}
+
+			lv1.setSelectionFromTop(visibleFirst, topy);
+		}
 
 	}
 

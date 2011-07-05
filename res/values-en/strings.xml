@@ -78,15 +78,15 @@
 	<string name="canteenSpezialHeader">Specials of the Week</string>	
 	
 	
-	<string name="page_select_header">Choose</string>
+	<string name="page_select_header">Please select an option</string>
 	<string name="page_name_news">News</string>
-	<string name="page_name_mensa">Mensa</string>
-	<string name="page_name_news_W">News(Wirtschaft)</string>
-	<string name="page_name_mensa_kostbar">Kostbar</string>
-	<string name="page_name_pplan">Exams</string>
-	<string name="page_name_lplan">Location</string>
+	<string name="page_name_mensa">Canteen: Mensa Campus Nord </string>
+	<string name="page_name_news_W">News(Business School)</string>
+	<string name="page_name_mensa_kostbar">Canteen: Kostbar</string>
+	<string name="page_name_pplan">List of exams</string>
+	<string name="page_name_lplan">View of the campus</string>
 	<string name="page_name_splan">S1 Timetable</string>
 	<string name="page_name_bplan">Bus Timetable</string>
 	<string name="the"></string>
-	<string name="empty_list">No Data</string>
+	<string name="empty_list">No Data available</string>
 </resources>

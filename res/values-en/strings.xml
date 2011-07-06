@@ -72,7 +72,7 @@
 	<string name="menu_extras_button">Extras</string>
 	<string name="extras_title">Extras</string>
 	<string name="extras_button1a">Infos</string>
-	<string name="extras_button1b">Mensa</string>
+	<string name="extras_button1b">Canteen</string>
 	<string name="extras_button2">Navigation</string>
 	<string name="extras_button3">Back</string>
 	<string name="canteenSpezialHeader">Specials of the Week</string>	
@@ -80,11 +80,12 @@
 	
 	<string name="page_select_header">Please select an option</string>
 	<string name="page_name_news">News</string>
-	<string name="page_name_mensa">Canteen: Mensa Campus Nord </string>
+	<string name="page_name_mensa">Mensa Campus Nord </string>
 	<string name="page_name_news_W">News(Business School)</string>
-	<string name="page_name_mensa_kostbar">Canteen: Kostbar</string>
+	<string name="page_name_mensa_kostbar">Kostbar</string>
 	<string name="page_name_pplan">List of exams</string>
 	<string name="page_name_lplan">View of the campus</string>
+	<string name="page_name_lplan2">View of the campus (Google Maps)</string>
 	<string name="page_name_splan">S1 Timetable</string>
 	<string name="page_name_bplan">Bus Timetable</string>
 	<string name="the"></string>

@@ -66,6 +66,7 @@ public class ShowExtras extends Activity implements Runnable {
 		if (chooseMensa.equals(getString(R.string.page_name_mensa))) {
 			if (dataMensa == null) {
 				dataMensa = menus = CanteenBeanTest.getMenuMensa();
+				CanteenBeanTest.getMenusMensa();
 			} else
 				menus = dataMensa;
 		} else {
@@ -162,7 +163,7 @@ public class ShowExtras extends Activity implements Runnable {
 			sp = (Spinner) findViewById(R.id.spinner1);
 			ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new String[] {
 					getString(R.string.page_name_news), getString(R.string.page_name_news_W), getString(R.string.page_name_pplan),
-					getString(R.string.page_name_lplan), getString(R.string.page_name_splan), getString(R.string.page_name_bplan) });
+					getString(R.string.page_name_lplan),getString(R.string.page_name_lplan2), getString(R.string.page_name_splan), getString(R.string.page_name_bplan) });
 			sp.setPromptId(R.string.page_select_header);
 			sp.setAdapter(adapter2);
 			sp.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -245,7 +246,9 @@ public class ShowExtras extends Activity implements Runnable {
 			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.gemorra.de/pplan.pdf");
 		} else if (choosePage.equals(getString(R.string.page_name_lplan))) {
 			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.gemorra.de/lplan.pdf");
-		} else if (choosePage.equals(getString(R.string.page_name_splan))) {
+		} else if (choosePage.equals(getString(R.string.page_name_lplan2))) {
+			mWebView.loadUrl("http://maps.google.de/maps?hl=de&ll=51.4926,7.415965&spn=0.005965,0.016512&sll=51.491311,7.409399&sspn=0.011931,0.033023&t=h&z=17");
+		}else if (choosePage.equals(getString(R.string.page_name_splan))) {
 			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.gemorra.de/s1.pdf");
 		} else if (choosePage.equals(getString(R.string.page_name_bplan))) {
 			mWebView.loadUrl("http://docs.google.com/gview?embedded=false&url=http://www.gemorra.de/bus.pdf");

@@ -91,6 +91,7 @@
 	<string name="page_name_mensa_kostbar">Kostbar</string>
 	<string name="page_name_pplan">Prüfungsplan</string>
 	<string name="page_name_lplan">Lageplan</string>
+	<string name="page_name_lplan2">Lageplan (Google Maps)</string>
 	<string name="page_name_splan">S1 Fahrplan</string>
 	<string name="page_name_bplan">Bus Fahrplan</string>
 	<string name="the">der</string>

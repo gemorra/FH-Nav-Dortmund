@@ -246,54 +246,50 @@ public class Menu extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(Menu.this);
 				final SeparatedListAdapter sla = (SeparatedListAdapter) lv1.getAdapter();
-				final Veranstaltung ver = (Veranstaltung) sla.getItem(arg2);
-				builder.setTitle(ver.getName());
-				final BreadthFirstSearchTest bfst = MainApplicationManager.getBfst();
+				if (sla.getItem(arg2) instanceof Veranstaltung) {
+					final Veranstaltung ver = (Veranstaltung) sla.getItem(arg2);
+					builder.setTitle(ver.getName());
+					final BreadthFirstSearchTest bfst = MainApplicationManager.getBfst();
 
-				final CharSequence[] items;
-//				if (n == null) {
-//					items = new CharSequence[1];
-//					items[0] = getString(R.string.editmenu_delete);
-//				} else {
+					final CharSequence[] items;
 					items = new CharSequence[2];
 					items[0] = getString(R.string.editmenu_delete);
 					items[1] = getString(R.string.extras_button2);
-//				}
 
-				builder.setItems(items, new DialogInterface.OnClickListener() {
+					builder.setItems(items, new DialogInterface.OnClickListener() {
 
-					public void onClick(DialogInterface dialog, int which) {
-						if (which == 0) {
-							MainApplicationManager.getStundenplan().removeVeranstaltung(ver);
-							IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
-							visibleFirst = lv1.getFirstVisiblePosition();
-							View v = lv1.getChildAt(0);
-							topy = (v == null) ? 0 : v.getTop();
+						public void onClick(DialogInterface dialog, int which) {
+							if (which == 0) {
+								MainApplicationManager.getStundenplan().removeVeranstaltung(ver);
+								IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+								visibleFirst = lv1.getFirstVisiblePosition();
+								View v = lv1.getChildAt(0);
+								topy = (v == null) ? 0 : v.getTop();
 
-							refresListView(false);
-						} else {
-							final Node n = bfst.getNodeFromListByString(ver.getRaum());
-							if (n != null) {
-								bfst.setFrom((Node) bfst.getNodes().get(0));
-								bfst.setTo(n);
-								startActivity(new Intent(Menu.this, Navigation.class));
-							}else
-							{
-								AlertDialog.Builder adb = new AlertDialog.Builder(Menu.this);
-								adb.setTitle("Navigation");
-								adb.setMessage("Comming soon...");
-								adb.setPositiveButton("  OK  ", new DialogInterface.OnClickListener() {
+								refresListView(false);
+							} else {
+								final Node n = bfst.getNodeFromListByString(ver.getRaum());
+								if (n != null) {
+									bfst.setFrom((Node) bfst.getNodes().get(0));
+									bfst.setTo(n);
+									startActivity(new Intent(Menu.this, Navigation.class));
+								} else {
+									AlertDialog.Builder adb = new AlertDialog.Builder(Menu.this);
+									adb.setTitle("Navigation");
+									adb.setMessage("Comming soon...");
+									adb.setPositiveButton("  OK  ", new DialogInterface.OnClickListener() {
 
-									public void onClick(DialogInterface dialog2, int which) {
-									}
-								});
-								adb.show();
+										public void onClick(DialogInterface dialog2, int which) {
+										}
+									});
+									adb.show();
+								}
 							}
 						}
-					}
-				});
-				AlertDialog alert = builder.create();
-				alert.show();
+					});
+					AlertDialog alert = builder.create();
+					alert.show();
+				}
 			}
 		});
 		if (!startAtBeginning) {

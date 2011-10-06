@@ -354,18 +354,18 @@ public class Menu extends Activity {
 		final DatePickerDialog.OnDateSetListener fDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-				textFrom.setText(dayOfMonth + "." + monthOfYear + "." + year);
+				textFrom.setText(dayOfMonth + "." + (monthOfYear+1) + "." + year);
 			}
 		};
 		final DatePickerDialog.OnDateSetListener tDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-				textTo.setText(dayOfMonth + "." + monthOfYear + "." + year);
+				textTo.setText(dayOfMonth + "." + (monthOfYear+1) + "." + year);
 			}
 		};
 
-		final DatePickerDialog dpdf = new DatePickerDialog(Menu.this, fDateSetListener, fYear, fMonth, fDay);
-		final DatePickerDialog dpdt = new DatePickerDialog(Menu.this, tDateSetListener, tYear, tMonth, tDay);
+		final DatePickerDialog dpdf = new DatePickerDialog(Menu.this, fDateSetListener, fYear, fMonth-1, fDay);
+		final DatePickerDialog dpdt = new DatePickerDialog(Menu.this, tDateSetListener, tYear, tMonth-1, tDay);
 
 		Button btnFrom = (Button) layout.findViewById(R.id.pickDateFrom);
 		btnFrom.setOnClickListener(new OnClickListener() {

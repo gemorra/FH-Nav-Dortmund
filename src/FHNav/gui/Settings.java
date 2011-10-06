@@ -25,8 +25,8 @@ public class Settings extends Activity {
 	CheckBox lecturerCheckbox;
 	CheckBox groupletterCheckbox;
 	CheckBox typeCheckbox;
-	EditText pathToFileEditText;
-
+//	EditText pathToFileEditText;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -47,13 +47,14 @@ public class Settings extends Activity {
 
 		ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new String[] {
 				getString(R.string.settings_test_size_0), getString(R.string.settings_test_size_1), getString(R.string.settings_test_size_2) });
+	
 		textSizeSpinner.setPromptId(R.string.settings_text_size);
 		textSizeSpinner.setAdapter(adapter2);
 		textSizeSpinner.setSelection(SettingsManager.getText_size());
 		textSizeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				SettingsManager.setText_size(arg2);
+				
 			}
 
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -65,7 +66,7 @@ public class Settings extends Activity {
 		groupletterCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				SettingsManager.setLecture_details_groupletter(isChecked);
+				
 			}
 		});
 
@@ -74,7 +75,7 @@ public class Settings extends Activity {
 		lecturerCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				SettingsManager.setLecture_details_lecturer(isChecked);
+				
 			}
 		});
 
@@ -83,14 +84,60 @@ public class Settings extends Activity {
 		typeCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				SettingsManager.setLecture_details_type(isChecked);
+				
 			}
 		});
+		
+		Button btn1;
+		btn1 = (Button) findViewById(R.id.Button01);
+		btn1.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				save();
+				startActivity(new Intent(Settings.this, Menu.class));
 
-		pathToFileEditText = (EditText) findViewById(R.id.settings_pathToFile_edit_text);
-		pathToFileEditText.setText(SettingsManager.getPathToFile());
+			}
+
+			
+		});
+		
+		
+		Button btn2;
+		btn2 = (Button) findViewById(R.id.Button02);
+		btn2.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				restore();
+			
+			}
+
+			
+		});
+
+		Button btn3;
+		btn3 = (Button) findViewById(R.id.Button03);
+		btn3.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+
+				onBackPressed();
+
+			}
+		});
+//		pathToFileEditText = (EditText) findViewById(R.id.settings_pathToFile_edit_text);
+//		pathToFileEditText.setText(SettingsManager.getPathToFile());
 		
 
 	}
-
+	public void save() {
+		
+		SettingsManager.setText_size(textSizeSpinner.getSelectedItemPosition());
+		SettingsManager.setLecture_details_groupletter(groupletterCheckbox.isChecked());
+		SettingsManager.setLecture_details_lecturer(lecturerCheckbox.isChecked());
+		SettingsManager.setLecture_details_type(typeCheckbox.isChecked());
+	}
+	public void restore() {
+		textSizeSpinner.setSelection(1);
+		groupletterCheckbox.setChecked(true);
+		lecturerCheckbox.setChecked(true);
+		typeCheckbox.setChecked(true);	
+		save();
+	}
 }

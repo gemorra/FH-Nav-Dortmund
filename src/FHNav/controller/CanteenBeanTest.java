@@ -148,27 +148,22 @@ public class CanteenBeanTest {
 					String desc = e2.select("p").html();
 
 					desc = StringEscapeUtils.unescapeHtml(desc);
-					CanteenMenu cm = new CanteenMenu("", desc, dt);
-					menus.add(cm);
+					Log.e("CANTEEN", "|" + desc + "|");
+					if (!(desc.startsWith("(") && desc.endsWith(")"))) {
+						CanteenMenu cm = new CanteenMenu("", desc, dt);
+						menus.add(cm);
+					}
 				}
-				// Elements m = e.select("td.Tabellen-spalte-1");
-				// for(Element e2:m)
-				// {
-				// String desc = e2.select("p").html();
-				// CanteenMenu cm = new CanteenMenu(desc, "", dt);
-				// menus.add(cm);
-				// }
+				System.out.println("Kostbar parsed");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(menus.size()==0)
-		{
-			//DUMMIES
-			
-			
+		if (menus.size() == 0) {
+			// DUMMIES
+
 		}
-		
+
 		return menus;
 	}
 
@@ -192,6 +187,7 @@ public class CanteenBeanTest {
 					desc = StringEscapeUtils.unescapeHtml(desc);
 					// String title = m2.get(i).select("p").html();
 					// title= StringEscapeUtils.unescapeHtml(title);
+
 					CanteenMenu cm = new CanteenMenu("", desc, dt);
 					menus.add(cm);
 				}
@@ -205,13 +201,13 @@ public class CanteenBeanTest {
 
 			}
 			Elements tdss = doc.select("table.WochenSpecials");
-			System.out.println(tdss.size());
+
 			for (Element e2 : tdss) {
-				System.out.println("josen");
+
 				// String dat = e.select("caption").html();
 				// Date dt = sdfToDate.parse(dat);
 				Elements ms = e2.select("td.Tabellen-spalte-2");
-				System.out.println("MS:" + ms.size());
+
 				for (int i = 0; i < ms.size(); i++) {
 					String desc = ms.get(i).select("p").html();
 					desc = StringEscapeUtils.unescapeHtml(desc);
@@ -222,52 +218,52 @@ public class CanteenBeanTest {
 				}
 
 			}
+			System.out.println("Mensa parsed");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if (menus.size() == 0) {
-			//DUMMIES
-			try
-			{
+			// DUMMIES
+			try {
 				Date dt = sdfToDate.parse("7.7.2011");
-				CanteenMenu cm  = new CanteenMenu("","Bratwurst mit Kartoffelsalat dazu Salat und Dessert",dt);
+				CanteenMenu cm = new CanteenMenu("", "Bratwurst mit Kartoffelsalat dazu Salat und Dessert", dt);
 				menus.add(cm);
-				cm = new CanteenMenu("","Schweinebraten, dazu Kräuterkartoffel",dt);
+				cm = new CanteenMenu("", "Schweinebraten, dazu Kräuterkartoffel", dt);
 				menus.add(cm);
-				cm = new CanteenMenu("","Cevapcici vom Rind mit Dip dazu Pommes frites",dt);
+				cm = new CanteenMenu("", "Cevapcici vom Rind mit Dip dazu Pommes frites", dt);
 				menus.add(cm);
-				cm = new CanteenMenu("","Germknödel mit Pflaumenmusfüllung und Vanillesauce",dt);
+				cm = new CanteenMenu("", "Germknödel mit Pflaumenmusfüllung und Vanillesauce", dt);
 				menus.add(cm);
-				
+
 				Date dt2 = sdfToDate.parse("8.7.2011");
-				cm = new CanteenMenu("","Cajuns gebacken mit zwei Dips, dazu Salat und Desser",dt2);
+				cm = new CanteenMenu("", "Cajuns gebacken mit zwei Dips, dazu Salat und Desser", dt2);
 				menus.add(cm);
-				cm = new CanteenMenu("","Westernpfanne mit Bohnen und Zwiebeln, dazu Pommes frites",dt2);
-				menus.add(cm);				
-				cm = new CanteenMenu("","Paniertes Fischfilet gebacken mit Tomaten-Dip, dazu Salzkartoffeln",dt2);
+				cm = new CanteenMenu("", "Westernpfanne mit Bohnen und Zwiebeln, dazu Pommes frites", dt2);
 				menus.add(cm);
-				cm = new CanteenMenu("","Tagliatelle mit Spinatsauce, dazu Saisonsalat",dt2);
+				cm = new CanteenMenu("", "Paniertes Fischfilet gebacken mit Tomaten-Dip, dazu Salzkartoffeln", dt2);
 				menus.add(cm);
-				
-				
-				cm = new CanteenMenu("","Hähnchen „Southern Fried“ Scharfer Knuspermantel, dazu Fry & Dip und Farmersalat",null);
+				cm = new CanteenMenu("", "Tagliatelle mit Spinatsauce, dazu Saisonsalat", dt2);
 				menus.add(cm);
-				cm = new CanteenMenu("","Schollenfilet gefüllt mit Spinat, dazu Salzkartoffeln und Salat der Saison",null);
+
+				cm = new CanteenMenu("", "Hähnchen „Southern Fried“ Scharfer Knuspermantel, dazu Fry & Dip und Farmersalat", null);
 				menus.add(cm);
-				cm = new CanteenMenu("","Vegetarische Lasagne, Bolognese „al Forno“ dazu Salatschale",null);
+				cm = new CanteenMenu("", "Schollenfilet gefüllt mit Spinat, dazu Salzkartoffeln und Salat der Saison", null);
 				menus.add(cm);
-				cm = new CanteenMenu("","Zartes Rinderhüftsteak, dazu Sweet Potato (gebackene Süßkartoffel) und frisches Pfannengemüse",null);
+				cm = new CanteenMenu("", "Vegetarische Lasagne, Bolognese „al Forno“ dazu Salatschale", null);
 				menus.add(cm);
-				cm = new CanteenMenu("","Döner Teller (Hähnchenfleisch)",null);
+				cm = new CanteenMenu("", "Zartes Rinderhüftsteak, dazu Sweet Potato (gebackene Süßkartoffel) und frisches Pfannengemüse", null);
 				menus.add(cm);
-				cm = new CanteenMenu("","Döner Tasche (Hähnchenfleisch)",null);
+				cm = new CanteenMenu("", "Döner Teller (Hähnchenfleisch)", null);
 				menus.add(cm);
-				cm = new CanteenMenu("","Schweinesteak vom Grill mit gebackenen Onionringen, dazu Country Cubes und Salat",null);
+				cm = new CanteenMenu("", "Döner Tasche (Hähnchenfleisch)", null);
 				menus.add(cm);
-				cm = new CanteenMenu("","Schweine-Medaillons mit Champignons à la Creme, dazu Pommes frites und Salat",null);
+				cm = new CanteenMenu("", "Schweinesteak vom Grill mit gebackenen Onionringen, dazu Country Cubes und Salat", null);
 				menus.add(cm);
-				
-			}catch(Exception e){}
+				cm = new CanteenMenu("", "Schweine-Medaillons mit Champignons à la Creme, dazu Pommes frites und Salat", null);
+				menus.add(cm);
+
+			} catch (Exception e) {
+			}
 
 		}
 		return menus;

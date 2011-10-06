@@ -6,6 +6,7 @@ import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
 import FHNav.controller.PHPConnector;
 import FHNav.controller.SettingsManager;
+import FHNav.model.Stundenplan;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -31,6 +32,7 @@ public class Wizard extends Activity implements Runnable {
 	Spinner spinner1;
 	ProgressDialog dialog;
 	boolean loadSpinner = true;
+	boolean handle1 = true;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -85,34 +87,83 @@ public class Wizard extends Activity implements Runnable {
 
 	final Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
-			if (spinnerContent.size() < 1) {
+			if (handle1) {
+				if (spinnerContent.size() < 1) {
+					// Verbindungsfehler Dialog:
+					final Dialog error_dialog = new Dialog(Wizard.this);
+
+					error_dialog.setContentView(R.layout.alert_dialog_connection_problem);
+					error_dialog.setTitle(R.string.alert_dialog_connection_problem_title);
+					// final EditText et = (EditText)
+					// error_dialog.findViewById(R.id.alert_dialog_connection_problem_editText);
+					Button btn = (Button) error_dialog.findViewById(R.id.alert_dialog_connection_problem_button);
+					// et.setText(SettingsManager.getPathToFile());
+					btn.setOnClickListener(new OnClickListener() {
+						// Anderen Pfad angeben und neuer Versuch:
+						public void onClick(View v) {
+							// SettingsManager.setPathToFile(et.getText().toString());
+							error_dialog.dismiss();
+							loadSpinner = true;
+							dialog = ProgressDialog.show(Wizard.this, "", "Download...", true);
+							Thread t1 = new Thread(Wizard.this);
+							t1.start();
+						}
+					});
+					Button btn2 = (Button) error_dialog.findViewById(R.id.alert_dialog_connection_problem_buttonNext);
+					btn2.setOnClickListener(new OnClickListener() {
+						// Anderen Pfad angeben und neuer Versuch:
+						public void onClick(View v) {
+							MainApplicationManager.setStundenplan(new Stundenplan());
+							IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+							SettingsManager.setWizardDone(true);
+							startActivity(new Intent(Wizard.this, Menu.class));
+						}
+					});
+
+					dialog.dismiss();
+					error_dialog.show();
+				} else { // H1 Spinner laden
+					spinner1 = (Spinner) Wizard.this.findViewById(R.id.Spinner01);
+					ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(Wizard.this, android.R.layout.simple_dropdown_item_1line, spinnerContent);
+					adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+					spinner1.setAdapter(adapter1);
+					dialog.dismiss();
+				}
+			}else
+			{
 				// Verbindungsfehler Dialog:
 				final Dialog error_dialog = new Dialog(Wizard.this);
 
+				
 				error_dialog.setContentView(R.layout.alert_dialog_connection_problem);
 				error_dialog.setTitle(R.string.alert_dialog_connection_problem_title);
-				final EditText et = (EditText) error_dialog.findViewById(R.id.alert_dialog_connection_problem_editText);
+//				final EditText et = (EditText) error_dialog.findViewById(R.id.alert_dialog_connection_problem_editText);
 				Button btn = (Button) error_dialog.findViewById(R.id.alert_dialog_connection_problem_button);
-				et.setText(SettingsManager.getPathToFile());
+//				et.setText(SettingsManager.getPathToFile());
 				btn.setOnClickListener(new OnClickListener() {
 					// Anderen Pfad angeben und neuer Versuch:
 					public void onClick(View v) {
-						SettingsManager.setPathToFile(et.getText().toString());
+//						SettingsManager.setPathToFile(et.getText().toString());
 						error_dialog.dismiss();
-						loadSpinner = true;
+						loadSpinner = false;
 						dialog = ProgressDialog.show(Wizard.this, "", "Download...", true);
 						Thread t1 = new Thread(Wizard.this);
 						t1.start();
 					}
 				});
+				Button btn2 = (Button) error_dialog.findViewById(R.id.alert_dialog_connection_problem_buttonNext);
+				btn2.setOnClickListener(new OnClickListener() {
+					// Anderen Pfad angeben und neuer Versuch:
+					public void onClick(View v) {
+						MainApplicationManager.setStundenplan(new Stundenplan());
+						IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+						SettingsManager.setWizardDone(true);
+						startActivity(new Intent(Wizard.this, Menu.class));
+					}
+				});
 				dialog.dismiss();
 				error_dialog.show();
-			} else { // H1 Spinner laden
-				spinner1 = (Spinner) Wizard.this.findViewById(R.id.Spinner01);
-				ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(Wizard.this, android.R.layout.simple_dropdown_item_1line, spinnerContent);
-				adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				spinner1.setAdapter(adapter1);
-				dialog.dismiss();
+				
 			}
 		}
 	};
@@ -126,10 +177,17 @@ public class Wizard extends Activity implements Runnable {
 					SettingsManager.setWizardDone(true);
 					startActivity(new Intent(Wizard.this, Menu.class));
 
+				} else {
+
 				}
 			} catch (Exception e) {
 			} finally {
-				dialog.dismiss();
+
+			
+				Message msg = handler.obtainMessage();
+				handle1 = false;
+				handler.sendMessage(msg);
+				
 			}
 
 		} else {
@@ -138,6 +196,7 @@ public class Wizard extends Activity implements Runnable {
 			try {
 				spinnerContent = PHPConnector.getAllBranches();
 				Message msg = handler.obtainMessage();
+				handle1 = true;
 				handler.sendMessage(msg);
 			} catch (Exception e) {
 			} finally {

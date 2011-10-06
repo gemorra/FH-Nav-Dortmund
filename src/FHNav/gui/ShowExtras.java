@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import FHNav.controller.CanteenBeanTest;
+import FHNav.controller.MainApplicationManager;
 import FHNav.controller.Tools;
 import FHNav.gui.helper.NormalListAdapterForMenu;
 import FHNav.gui.helper.SeparatedListAdapter;
@@ -20,6 +21,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -27,6 +29,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -39,8 +42,7 @@ public class ShowExtras extends Activity implements Runnable {
 	String chooseMensa;
 	String choosePage;
 	String dataAktuellesW;
-	ArrayList<CanteenMenu> dataKostBar;
-	ArrayList<CanteenMenu> dataMensa;
+	
 
 	ProgressDialog dialog;
 
@@ -57,6 +59,7 @@ public class ShowExtras extends Activity implements Runnable {
 	Spinner sp;
 	Thread t1;
 
+	boolean load = false;
 	ArrayList<CanteenMenu> lastMenuMensa;
 	ArrayList<CanteenMenu> lastMenuKostbar;
 
@@ -64,18 +67,27 @@ public class ShowExtras extends Activity implements Runnable {
 		SeparatedListAdapter separatedListAdapter = new SeparatedListAdapter(this);
 		ArrayList<CanteenMenu> menus;
 		if (chooseMensa.equals(getString(R.string.page_name_mensa))) {
-			if (dataMensa == null) {
-				dataMensa = menus = CanteenBeanTest.getMenuMensa();
-				CanteenBeanTest.getMenusMensa();
-			} else
-				menus = dataMensa;
+			if(load)
+			{
+				MainApplicationManager.setDataMensa(CanteenBeanTest.getMenuMensa());
+				load = false;
+			}
+			menus = MainApplicationManager.getDataMensa();
 		} else {
-			if (dataKostBar == null)
-				dataKostBar = menus = CanteenBeanTest.getMenuKostbar();
-			else
-				menus = dataKostBar;
+			if(load)
+			{
+				MainApplicationManager.setDataKostBar(CanteenBeanTest.getMenuKostbar());
+				load = false;
+			}
+			
+			menus = MainApplicationManager.getDataKostBar();
+			
+			System.out.println(menus);
 		}
-
+		if(menus==null)
+		{
+			menus = new ArrayList<CanteenMenu>();
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
 		NormalListAdapterForMenu[] els = new NormalListAdapterForMenu[8];
@@ -149,6 +161,19 @@ public class ShowExtras extends Activity implements Runnable {
 				}
 			});
 
+			ImageButton btn2 = (ImageButton) findViewById(R.id.mensa_refresh);
+			btn2.setOnClickListener(new OnClickListener() {
+				
+				public void onClick(View v) {
+					load = true;
+					if (dialog != null)
+						dialog.dismiss();
+					dialog = ProgressDialog.show(ShowExtras.this, "", "Download...", true);
+					Thread t1 = new Thread(ShowExtras.this);
+					t1.start();
+					
+				}
+			});
 		} else {
 			setContentView(R.layout.extras2);
 			refreshButtons();
@@ -243,7 +268,7 @@ public class ShowExtras extends Activity implements Runnable {
 		} else if (choosePage.equals(getString(R.string.page_name_news))) {
 			mWebView.loadUrl("http://www.fh-dortmund.de/de/fb/4/isc/aktuelles/index.php");
 		} else if (choosePage.equals(getString(R.string.page_name_pplan))) {
-			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.gemorra.de/pplan.pdf");
+			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.inf.fh-dortmund.de/~pa_data/pplan.pdf");
 		} else if (choosePage.equals(getString(R.string.page_name_lplan))) {
 			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.gemorra.de/lplan.pdf");
 		} else if (choosePage.equals(getString(R.string.page_name_lplan2))) {

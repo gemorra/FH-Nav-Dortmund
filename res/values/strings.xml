@@ -24,11 +24,13 @@
 	<string name="alert_dialog_connection_problem_title">Verbindungsfehler!</string>
 	<string name="alert_dialog_connection_problem_msg">Leider konnte keine Verbindung zum Server
 		hergestellt werden.</string>
+
 	<string name="alert_dialog_connection_problem_msg2">Anderen Serveradresse eingeben:</string>
 
 	<string name="addvorlesung_spinner_text">Studiengang wählen</string>
 	<string name="addveranstaltung_toast_text_0">Die Veranstaltung ist bereits im Stundenplan!
 	</string>
+
 	<string name="addveranstaltung_toast_text_1a">Es wurde(n) </string>
 	<string name="addveranstaltung_toast_text_1b">Veranstaltung(en) hinzugefügt.</string>
 	<string name="calendar_transfer_toast_text_1b">Veranstaltung(en) dem Kalender hinzugefügt.
@@ -97,5 +99,15 @@
 	<string name="the">der</string>
 
 	<string name="empty_list">Keine Daten vorhanden</string>
-
+	
+	
+	<string name="alert_dialog_connection_problem_retry_button">Noch mal</string>
+	<string name="alert_dialog_connection_problem_next_button">Überspringen</string>
+	<string name="alert_dialog_connection_problem_next_button2">Abbruch</string>
+	<string name="addveranstaltung_toast_text_0b">Es wurde nichts ausgewählt!</string>
+	
+	<string name="settings_OK_button">Speichern</string>
+	<string name="settings_Back_button">Zurück</string>
+	<string name="settings_default_button">Standard</string>
+	
 </resources>

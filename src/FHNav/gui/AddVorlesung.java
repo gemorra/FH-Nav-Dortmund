@@ -49,7 +49,7 @@ public class AddVorlesung extends Activity implements Runnable {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.addvorlesung);
-
+		separatedListAdapter = new SeparatedListAdapter(this);
 		dialog = ProgressDialog.show(AddVorlesung.this, "", "Download...", true);
 		loadSpinner = true;
 		Thread t1 = new Thread(AddVorlesung.this);
@@ -89,21 +89,25 @@ public class AddVorlesung extends Activity implements Runnable {
 						}
 					}
 				}
-
-				for (Veranstaltung ver : tmpArr)
-					s.addVeranstaltung(ver);
-				deselect_all();
-
-				int count = s.getVeranstaltungen().size() - sizebefore;
-
-				if (count > 0) {
-					IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
-					Toast t = Toast.makeText(getApplicationContext(), getString(R.string.addveranstaltung_toast_text_1a) + " " + count + " "
-							+ getString(R.string.addveranstaltung_toast_text_1b), Toast.LENGTH_SHORT);
+				if (tmpArr.size() == 0) {
+					Toast t = Toast.makeText(getApplicationContext(), getString(R.string.addveranstaltung_toast_text_0b), Toast.LENGTH_SHORT);
 					t.show();
 				} else {
-					Toast t = Toast.makeText(getApplicationContext(), getString(R.string.addveranstaltung_toast_text_0), Toast.LENGTH_SHORT);
-					t.show();
+					for (Veranstaltung ver : tmpArr)
+						s.addVeranstaltung(ver);
+					deselect_all();
+
+					int count = s.getVeranstaltungen().size() - sizebefore;
+
+					if (count > 0) {
+						IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+						Toast t = Toast.makeText(getApplicationContext(), getString(R.string.addveranstaltung_toast_text_1a) + " " + count + " "
+								+ getString(R.string.addveranstaltung_toast_text_1b), Toast.LENGTH_SHORT);
+						t.show();
+					} else {
+						Toast t = Toast.makeText(getApplicationContext(), getString(R.string.addveranstaltung_toast_text_0), Toast.LENGTH_SHORT);
+						t.show();
+					}
 				}
 			}
 
@@ -152,13 +156,13 @@ public class AddVorlesung extends Activity implements Runnable {
 
 					error_dialog.setContentView(R.layout.alert_dialog_connection_problem);
 					error_dialog.setTitle(R.string.alert_dialog_connection_problem_title);
-					final EditText et = (EditText) error_dialog.findViewById(R.id.alert_dialog_connection_problem_editText);
+//					final EditText et = (EditText) error_dialog.findViewById(R.id.alert_dialog_connection_problem_editText);
 					Button btn = (Button) error_dialog.findViewById(R.id.alert_dialog_connection_problem_button);
-					et.setText(SettingsManager.getPathToFile());
+//					et.setText(SettingsManager.getPathToFile());
 					btn.setOnClickListener(new OnClickListener() {
 
 						public void onClick(View v) {
-							SettingsManager.setPathToFile(et.getText().toString());
+//							SettingsManager.setPathToFile(et.getText().toString());
 							error_dialog.dismiss();
 							loadSpinner = true;
 							dialog = ProgressDialog.show(AddVorlesung.this, "", "Download...", true);
@@ -166,7 +170,16 @@ public class AddVorlesung extends Activity implements Runnable {
 							t1.start();
 						}
 					});
+					Button btn2 = (Button) error_dialog.findViewById(R.id.alert_dialog_connection_problem_buttonNext);
+					btn2.setText(getString(R.string.alert_dialog_connection_problem_next_button2));
+					btn2.setOnClickListener(new OnClickListener() {
 
+						public void onClick(View v) {
+							error_dialog.dismiss();
+							onBackPressed();
+						}
+					});
+					
 					error_dialog.show();
 				}
 			}

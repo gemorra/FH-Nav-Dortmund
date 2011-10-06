@@ -25,7 +25,7 @@ public class AdaptStundenplan extends Activity {
 	Button btn_select_all;
 	Button btn_delete;
 	Button btn_back;
-	boolean select = false;
+	boolean select = true;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,16 +71,21 @@ public class AdaptStundenplan extends Activity {
 					}
 
 				}
-				for (Veranstaltung ver : tmpArr)
-					veranstaltungen.remove(ver);
-				if (count > 0) {
-					IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
-
-					deselect_all();
-					build_list();
-					Toast t = Toast.makeText(getApplicationContext(), getString(R.string.adaptstundenplan_toast_text_1a) + " " + count + " "
-							+ getString(R.string.adaptstundenplan_toast_text_1b), Toast.LENGTH_SHORT);
+				if (tmpArr.size() == 0) {
+					Toast t = Toast.makeText(getApplicationContext(), getString(R.string.addveranstaltung_toast_text_0b), Toast.LENGTH_SHORT);
 					t.show();
+				} else {
+					for (Veranstaltung ver : tmpArr)
+						veranstaltungen.remove(ver);
+					if (count > 0) {
+						IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+
+						deselect_all();
+						build_list();
+						Toast t = Toast.makeText(getApplicationContext(), getString(R.string.adaptstundenplan_toast_text_1a) + " " + count + " "
+								+ getString(R.string.adaptstundenplan_toast_text_1b), Toast.LENGTH_SHORT);
+						t.show();
+					}
 				}
 			}
 		});

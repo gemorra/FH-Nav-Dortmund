@@ -90,4 +90,14 @@
 	<string name="page_name_bplan">Bus Timetable</string>
 	<string name="the"></string>
 	<string name="empty_list">No Data available</string>
+	
+		<string name="alert_dialog_connection_problem_retry_button">Try Again</string>
+	<string name="alert_dialog_connection_problem_next_button">Skip</string>
+	<string name="alert_dialog_connection_problem_next_button2">Cancel</string>
+	<string name="addveranstaltung_toast_text_0b">Nothing hast been selected!</string>
+	
+	<string name="settings_OK_button">Save</string>
+	<string name="settings_Back_button">Back</string>
+	<string name="settings_default_button">Default</string>
+	
 </resources>

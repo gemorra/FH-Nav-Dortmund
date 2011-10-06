@@ -18,16 +18,16 @@
 	<LinearLayout android:id="@+id/linearLayout3"
 		android:layout_height="wrap_content" android:layout_weight="0"
 		android:layout_gravity="bottom" android:layout_width="match_parent">
-		<Button android:id="@+id/adaptstundenplan_select_all"
-			android:text="@string/button_select_all_label" android:drawableTop="@android:drawable/ic_menu_agenda"
-			android:background="@drawable/android_button" android:layout_height="69dip"
-			android:layout_width="50dip" android:layout_weight="1"
-			android:layout_gravity="bottom"></Button>
 		<Button android:id="@+id/adaptstundenplan_delete" android:text="@string/button_delete_label"
 			android:drawableTop="@android:drawable/ic_menu_delete"
 			android:background="@drawable/android_button" android:layout_height="69dip"
 			android:layout_width="50dip" android:layout_weight="1"
 			android:layout_gravity="bottom"></Button>
+		<Button android:id="@+id/adaptstundenplan_select_all"
+			android:text="@string/button_select_all_label" android:drawableTop="@android:drawable/ic_menu_agenda"
+			android:background="@drawable/android_button" android:layout_height="69dip"
+			android:layout_width="50dip" android:layout_weight="1"
+			android:layout_gravity="bottom"></Button>		
 		<Button android:id="@+id/adaptstundenplan_back" android:text="@string/button_back_label"
 			android:drawableTop="@android:drawable/ic_menu_revert"
 			android:background="@drawable/android_button" android:layout_height="69dip"

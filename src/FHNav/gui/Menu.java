@@ -32,13 +32,14 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.flurry.android.FlurryAgent;
 
 public class Menu extends Activity {
 
@@ -60,9 +61,15 @@ public class Menu extends Activity {
 
 	public void onStart() {
 		super.onStart();
-		Log.e("Menu", "Start");
-		if (SettingsManager.isWizardDone())
-			refresListView(true);
+		Log.e(this.getClass().toString(), "Start");
+		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
+
+	}
+	public void onStop()
+	{
+		super.onStop();
+		   FlurryAgent.onEndSession(this);
+		   Log.e(this.getClass().toString(), "Stop");
 	}
 
 	public void onCreate(Bundle savedInstanceState) {

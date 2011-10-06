@@ -8,8 +8,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import com.flurry.android.FlurryAgent;
+
 import FHNav.controller.CanteenBeanTest;
 import FHNav.controller.MainApplicationManager;
+import FHNav.controller.SettingsManager;
 import FHNav.controller.Tools;
 import FHNav.gui.helper.NormalListAdapterForMenu;
 import FHNav.gui.helper.SeparatedListAdapter;
@@ -20,6 +23,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
@@ -128,6 +132,19 @@ public class ShowExtras extends Activity implements Runnable {
 		mensa = false;
 		refresh();
 
+	}
+
+	public void onStart() {
+		super.onStart();
+		Log.e("Extras", "Start");
+		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
+
+	}
+
+	public void onStop() {
+		super.onStop();
+		FlurryAgent.onEndSession(this);
+		Log.e("Extras", "Stop");
 	}
 
 	private void refresh() {

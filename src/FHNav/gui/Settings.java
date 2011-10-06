@@ -1,9 +1,12 @@
 package FHNav.gui;
 
+import com.flurry.android.FlurryAgent;
+
 import FHNav.controller.SettingsManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -19,42 +22,55 @@ import android.widget.Spinner;
 public class Settings extends Activity {
 
 	Intent wizard;
-	
+
 	Button restartWizardButton;
 	Spinner textSizeSpinner;
 	CheckBox lecturerCheckbox;
 	CheckBox groupletterCheckbox;
 	CheckBox typeCheckbox;
-//	EditText pathToFileEditText;
-	
+
+	// EditText pathToFileEditText;
+
+	public void onStart() {
+		super.onStart();
+		Log.e(this.getClass().toString(), "Start");
+		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
+
+	}
+
+	public void onStop() {
+		super.onStop();
+		FlurryAgent.onEndSession(this);
+		Log.e(this.getClass().toString(), "Stop");
+	}
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.settings);
-		
+
 		wizard = new Intent(Settings.this, Wizard.class);
 		restartWizardButton = (Button) findViewById(R.id.settings_restart_wizard_button);
 		restartWizardButton.setOnClickListener(new OnClickListener() {
-			
+
 			public void onClick(View v) {
 				SettingsManager.setWizardDone(false);
-				startActivity(wizard);		
+				startActivity(wizard);
 			}
 		});
-		
-		
+
 		textSizeSpinner = (Spinner) this.findViewById(R.id.settings_text_size_spinner);
 
 		ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new String[] {
 				getString(R.string.settings_test_size_0), getString(R.string.settings_test_size_1), getString(R.string.settings_test_size_2) });
-	
+
 		textSizeSpinner.setPromptId(R.string.settings_text_size);
 		textSizeSpinner.setAdapter(adapter2);
 		textSizeSpinner.setSelection(SettingsManager.getText_size());
 		textSizeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				
+
 			}
 
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -66,7 +82,7 @@ public class Settings extends Activity {
 		groupletterCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				
+
 			}
 		});
 
@@ -75,7 +91,7 @@ public class Settings extends Activity {
 		lecturerCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				
+
 			}
 		});
 
@@ -84,10 +100,10 @@ public class Settings extends Activity {
 		typeCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				
+
 			}
 		});
-		
+
 		Button btn1;
 		btn1 = (Button) findViewById(R.id.Button01);
 		btn1.setOnClickListener(new View.OnClickListener() {
@@ -97,19 +113,16 @@ public class Settings extends Activity {
 
 			}
 
-			
 		});
-		
-		
+
 		Button btn2;
 		btn2 = (Button) findViewById(R.id.Button02);
 		btn2.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				restore();
-			
+
 			}
 
-			
 		});
 
 		Button btn3;
@@ -121,23 +134,25 @@ public class Settings extends Activity {
 
 			}
 		});
-//		pathToFileEditText = (EditText) findViewById(R.id.settings_pathToFile_edit_text);
-//		pathToFileEditText.setText(SettingsManager.getPathToFile());
-		
+		// pathToFileEditText = (EditText)
+		// findViewById(R.id.settings_pathToFile_edit_text);
+		// pathToFileEditText.setText(SettingsManager.getPathToFile());
 
 	}
+
 	public void save() {
-		
+
 		SettingsManager.setText_size(textSizeSpinner.getSelectedItemPosition());
 		SettingsManager.setLecture_details_groupletter(groupletterCheckbox.isChecked());
 		SettingsManager.setLecture_details_lecturer(lecturerCheckbox.isChecked());
 		SettingsManager.setLecture_details_type(typeCheckbox.isChecked());
 	}
+
 	public void restore() {
 		textSizeSpinner.setSelection(1);
 		groupletterCheckbox.setChecked(true);
 		lecturerCheckbox.setChecked(true);
-		typeCheckbox.setChecked(true);	
+		typeCheckbox.setChecked(true);
 		save();
 	}
 }

@@ -1,10 +1,13 @@
 package FHNav.gui;
 
+import com.flurry.android.FlurryAgent;
+
 import FHNav.controller.BreadthFirstSearchTest;
 import FHNav.controller.BreadthFirstSearchTest.Node;
 import FHNav.controller.MainApplicationManager;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
@@ -18,7 +21,18 @@ public class Navigation extends Activity {
 	BreadthFirstSearchTest bfst;
 	CView cv;
 
+	public void onStart() {
+		super.onStart();
+		Log.e(this.getClass().toString(), "Start");
+		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
 
+	}
+	public void onStop()
+	{
+		super.onStop();
+		   FlurryAgent.onEndSession(this);
+		   Log.e(this.getClass().toString(), "Stop");
+	}
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.navigation);

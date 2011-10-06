@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="kxml-2.2.4.jar"/>
 	<classpathentry kind="lib" path="jsoup-1.6.1.jar"/>
 	<classpathentry kind="lib" path="commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="FlurryAgent.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

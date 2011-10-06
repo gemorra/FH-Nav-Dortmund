@@ -2,16 +2,32 @@ package FHNav.gui;
 
 import java.util.Date;
 
+import com.flurry.android.FlurryAgent;
+
 import FHNav.controller.MainApplicationManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 public class SplashScreen extends Activity {
 
 	long startTime;
 	protected int _splashTime = 1000;
 	int datarefresh = 12;
+
+	public void onStart() {
+		super.onStart();
+		Log.e(this.getClass().toString(), "Start");
+		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
+
+	}
+
+	public void onStop() {
+		super.onStop();
+		FlurryAgent.onEndSession(this);
+		Log.e(this.getClass().toString(), "Stop");
+	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,7 +66,7 @@ public class SplashScreen extends Activity {
 							sleep(1000 * 3600);
 							waited++;
 						}
-						
+
 					} catch (InterruptedException e) {
 						// do nothing
 					}

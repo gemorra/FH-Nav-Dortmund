@@ -3,6 +3,8 @@ package FHNav.gui;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.flurry.android.FlurryAgent;
+
 import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
 import FHNav.controller.Tools;
@@ -11,6 +13,7 @@ import FHNav.gui.helper.SeparatedListAdapter;
 import FHNav.model.Veranstaltung;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -26,6 +29,19 @@ public class AdaptStundenplan extends Activity {
 	Button btn_delete;
 	Button btn_back;
 	boolean select = true;
+
+	public void onStart() {
+		super.onStart();
+		Log.e(this.getClass().toString(), "Start");
+		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
+
+	}
+
+	public void onStop() {
+		super.onStop();
+		FlurryAgent.onEndSession(this);
+		Log.e(this.getClass().toString(), "Stop");
+	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

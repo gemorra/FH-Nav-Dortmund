@@ -2,6 +2,8 @@ package FHNav.gui;
 
 import java.util.ArrayList;
 
+import com.flurry.android.FlurryAgent;
+
 import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
 import FHNav.controller.PHPConnector;
@@ -33,6 +35,19 @@ public class Wizard extends Activity implements Runnable {
 	ProgressDialog dialog;
 	boolean loadSpinner = true;
 	boolean handle1 = true;
+
+	public void onStart() {
+		super.onStart();
+		Log.e(this.getClass().toString(), "Start");
+		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
+
+	}
+
+	public void onStop() {
+		super.onStop();
+		FlurryAgent.onEndSession(this);
+		Log.e(this.getClass().toString(), "Stop");
+	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -129,21 +144,20 @@ public class Wizard extends Activity implements Runnable {
 					spinner1.setAdapter(adapter1);
 					dialog.dismiss();
 				}
-			}else
-			{
+			} else {
 				// Verbindungsfehler Dialog:
 				final Dialog error_dialog = new Dialog(Wizard.this);
 
-				
 				error_dialog.setContentView(R.layout.alert_dialog_connection_problem);
 				error_dialog.setTitle(R.string.alert_dialog_connection_problem_title);
-//				final EditText et = (EditText) error_dialog.findViewById(R.id.alert_dialog_connection_problem_editText);
+				// final EditText et = (EditText)
+				// error_dialog.findViewById(R.id.alert_dialog_connection_problem_editText);
 				Button btn = (Button) error_dialog.findViewById(R.id.alert_dialog_connection_problem_button);
-//				et.setText(SettingsManager.getPathToFile());
+				// et.setText(SettingsManager.getPathToFile());
 				btn.setOnClickListener(new OnClickListener() {
 					// Anderen Pfad angeben und neuer Versuch:
 					public void onClick(View v) {
-//						SettingsManager.setPathToFile(et.getText().toString());
+						// SettingsManager.setPathToFile(et.getText().toString());
 						error_dialog.dismiss();
 						loadSpinner = false;
 						dialog = ProgressDialog.show(Wizard.this, "", "Download...", true);
@@ -163,7 +177,7 @@ public class Wizard extends Activity implements Runnable {
 				});
 				dialog.dismiss();
 				error_dialog.show();
-				
+
 			}
 		}
 	};
@@ -183,11 +197,10 @@ public class Wizard extends Activity implements Runnable {
 			} catch (Exception e) {
 			} finally {
 
-			
 				Message msg = handler.obtainMessage();
 				handle1 = false;
 				handler.sendMessage(msg);
-				
+
 			}
 
 		} else {

@@ -8,6 +8,7 @@
 
 	<string name="wizard_study_course">Studiengang</string>
 	<string name="wizard_ok_button">Stundenplan laden</string>
+	<string name="wizard_skip_button">Überspringen</string>
 	<string name="wizard_alert_title">Herzlich Willkommen</string>
 	<string name="wizard_alert_message">Dieser Wizard wird sie durch die erste Einrichtung
 		führen.</string>

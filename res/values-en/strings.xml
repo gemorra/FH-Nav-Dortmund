@@ -8,6 +8,7 @@
 	
 	<string name="wizard_study_course">Study Course</string>
 	<string name="wizard_ok_button">Load Timetable</string>
+	<string name="wizard_skip_button">Skip</string>
     <string name="wizard_alert_title">Welcome</string>
     <string name="wizard_alert_message">This Wizard will guide you through the installation.</string>
     <string name="wizard_alert_positiveButton">Start!</string>

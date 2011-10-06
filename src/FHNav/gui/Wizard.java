@@ -2,8 +2,6 @@ package FHNav.gui;
 
 import java.util.ArrayList;
 
-import com.flurry.android.FlurryAgent;
-
 import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
 import FHNav.controller.PHPConnector;
@@ -23,9 +21,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+
+import com.flurry.android.FlurryAgent;
 
 public class Wizard extends Activity implements Runnable {
 
@@ -72,6 +71,14 @@ public class Wizard extends Activity implements Runnable {
 				Thread t1 = new Thread(Wizard.this);
 				t1.start();
 
+			}
+		});
+		adb.setNegativeButton(R.string.wizard_skip_button, new DialogInterface.OnClickListener() {
+			
+			public void onClick(DialogInterface dialog, int which) {
+				SettingsManager.setWizardDone(true);
+				startActivity(new Intent(Wizard.this, Menu.class));
+				
 			}
 		});
 		adb.show();

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">FH-Nav</string>
+	<string name="app_name">FH Nav</string>
 	<string name="menu_edit_button">Edit</string>
 	<string name="menu_navigation_button">Navigation</string>
 	<string name="menu_settings_button">Settings</string>
@@ -28,16 +28,16 @@
     <string name="addvorlesung_spinner_text">Select Study Course</string>
     <string name="addveranstaltung_toast_text_0">The course already exists!</string>
     <string name="addveranstaltung_toast_text_1a"></string>
-    <string name="addveranstaltung_toast_text_1b">lesson(s) added</string>
+    <string name="addveranstaltung_toast_text_1b">lesson(s) added.</string>
     <string name="calendar_transfer_toast_text_1b">lesson(s) transfered to the calendar.</string>
         
     <string name="adaptstundenplan_toast_text_1a"></string>
-    <string name="adaptstundenplan_toast_text_1b">lesson(s) deleted</string>
+    <string name="adaptstundenplan_toast_text_1b">lesson(s) deleted.</string>
     
-  	<string name="editmenu_change_view">change view</string>
-	<string name="editmenu_add">add</string>
-	<string name="editmenu_delete">delete</string>
-	<string name="editmenu_commit">transfer to calendar</string>
+  	<string name="editmenu_change_view">Change View</string>
+	<string name="editmenu_add">Add</string>
+	<string name="editmenu_delete">Delete</string>
+	<string name="editmenu_commit">Transfer To Calendar</string>
 	  
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
@@ -95,10 +95,12 @@
 		<string name="alert_dialog_connection_problem_retry_button">Try Again</string>
 	<string name="alert_dialog_connection_problem_next_button">Skip</string>
 	<string name="alert_dialog_connection_problem_next_button2">Cancel</string>
-	<string name="addveranstaltung_toast_text_0b">Nothing hast been selected!</string>
+	<string name="addveranstaltung_toast_text_0b">Nothing has been selected!</string>
 	
 	<string name="settings_OK_button">Save</string>
 	<string name="settings_Back_button">Back</string>
 	<string name="settings_default_button">Default</string>
 	
+<string name="tomorrow">Tomorrow</string>
+<string name="timetable_menu">Customize Timetable</string>
 </resources>

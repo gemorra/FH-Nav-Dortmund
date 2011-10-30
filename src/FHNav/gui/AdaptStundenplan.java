@@ -3,8 +3,6 @@ package FHNav.gui;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.flurry.android.FlurryAgent;
-
 import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
 import FHNav.controller.Tools;
@@ -19,6 +17,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.flurry.android.FlurryAgent;
 
 public class AdaptStundenplan extends Activity {
 
@@ -47,7 +47,6 @@ public class AdaptStundenplan extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.adaptstundenplan);
-
 		veranstaltungen = MainApplicationManager.getVeranstaltungen();
 		Collections.sort(veranstaltungen);
 		build_list();
@@ -94,6 +93,7 @@ public class AdaptStundenplan extends Activity {
 					for (Veranstaltung ver : tmpArr)
 						veranstaltungen.remove(ver);
 					if (count > 0) {
+						MainApplicationManager.getStundenplan().setVeranstaltungen(veranstaltungen);
 						IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
 
 						deselect_all();

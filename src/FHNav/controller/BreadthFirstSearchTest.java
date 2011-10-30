@@ -2,10 +2,11 @@ package FHNav.controller;
 import java.util.*;
 
 import android.graphics.Bitmap;
-
+@SuppressWarnings("all")
 public class BreadthFirstSearchTest {
-
+	
 	public class Node {
+		
 		List neighbors;
 		Node pathParent;
 		String name;
@@ -28,6 +29,7 @@ public class BreadthFirstSearchTest {
 			this.x = x;
 			this.y = y;
 		}
+		
 		
 		public Node(String name,float x, float y, List l) {
 			this.name = name;

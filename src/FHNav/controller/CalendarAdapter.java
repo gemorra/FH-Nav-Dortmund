@@ -5,11 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 import FHNav.model.Veranstaltung;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import android.text.format.DateUtils;
 import android.util.Log;
 
 public class CalendarAdapter {
@@ -107,29 +105,29 @@ public class CalendarAdapter {
 		
 	}
 	
-	public void getEvent()
-	{
-		Uri.Builder builder = Uri.parse("content://com.android.calendar/instances/when").buildUpon();
-		long now = new Date().getTime();
-		ContentUris.appendId(builder, now - DateUtils.WEEK_IN_MILLIS);
-		ContentUris.appendId(builder, now + DateUtils.WEEK_IN_MILLIS);
-		 
-		Cursor eventCursor = MainApplicationManager.getCtx().getContentResolver().query(builder.build(),
-		        new String[] { "title", "begin", "end", "allDay", "rrule","duration"}, "Calendars._id=" + calendarId[selectedId],
-		        null, "startDay ASC, startMinute ASC" );
-		 
-		while (eventCursor.moveToNext()) {
-		    final String title = eventCursor.getString(0);
-		    final Date begin = new Date(eventCursor.getLong(1));
-		    final Date end = new Date(eventCursor.getLong(2));
-		    final Boolean allDay = !eventCursor.getString(3).equals("0");
-		    String rrule = eventCursor.getString(4);
-		    String rdate = eventCursor.getString(5);
-		   
-		    Log.e("asd: ","Title: " + title + " RRule:" + rrule + " Dur:" + rdate);
-		}
-		
-	}
+//	public void getEvent()
+//	{
+//		Uri.Builder builder = Uri.parse("content://com.android.calendar/instances/when").buildUpon();
+//		long now = new Date().getTime();
+//		ContentUris.appendId(builder, now - DateUtils.WEEK_IN_MILLIS);
+//		ContentUris.appendId(builder, now + DateUtils.WEEK_IN_MILLIS);
+//		 
+//		Cursor eventCursor = MainApplicationManager.getCtx().getContentResolver().query(builder.build(),
+//		        new String[] { "title", "begin", "end", "allDay", "rrule","duration"}, "Calendars._id=" + calendarId[selectedId],
+//		        null, "startDay ASC, startMinute ASC" );
+//		 
+//		while (eventCursor.moveToNext()) {
+//		    final String title = eventCursor.getString(0);
+//		    final Date begin = new Date(eventCursor.getLong(1));
+//		    final Date end = new Date(eventCursor.getLong(2));
+//		    final Boolean allDay = !eventCursor.getString(3).equals("0");
+//		    String rrule = eventCursor.getString(4);
+//		    String rdate = eventCursor.getString(5);
+//		   
+//		    Log.e("asd: ","Title: " + title + " RRule:" + rrule + " Dur:" + rdate);
+//		}
+//		
+//	}
 	
 	
 	

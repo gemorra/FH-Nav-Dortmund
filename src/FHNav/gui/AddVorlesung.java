@@ -3,12 +3,9 @@ package FHNav.gui;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.flurry.android.FlurryAgent;
-
 import FHNav.controller.IOManager;
 import FHNav.controller.MainApplicationManager;
 import FHNav.controller.PHPConnector;
-import FHNav.controller.SettingsManager;
 import FHNav.controller.Tools;
 import FHNav.gui.helper.ExtendedListAdapter;
 import FHNav.gui.helper.SeparatedListAdapter;
@@ -27,10 +24,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.flurry.android.FlurryAgent;
 
 public class AddVorlesung extends Activity implements Runnable {
 	ProgressDialog dialog;
@@ -62,7 +60,6 @@ public class AddVorlesung extends Activity implements Runnable {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.addvorlesung);
 		separatedListAdapter = new SeparatedListAdapter(this);
 		dialog = ProgressDialog.show(AddVorlesung.this, "", "Download...", true);
@@ -115,6 +112,7 @@ public class AddVorlesung extends Activity implements Runnable {
 					int count = s.getVeranstaltungen().size() - sizebefore;
 
 					if (count > 0) {
+						MainApplicationManager.getStundenplan().setVeranstaltungen(veranstaltungen);
 						IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
 						Toast t = Toast.makeText(getApplicationContext(), getString(R.string.addveranstaltung_toast_text_1a) + " " + count + " "
 								+ getString(R.string.addveranstaltung_toast_text_1b), Toast.LENGTH_SHORT);

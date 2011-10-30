@@ -8,11 +8,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import com.flurry.android.FlurryAgent;
-
 import FHNav.controller.CanteenBeanTest;
+import FHNav.controller.I_Mensa_Downloader;
 import FHNav.controller.MainApplicationManager;
-import FHNav.controller.SettingsManager;
 import FHNav.controller.Tools;
 import FHNav.gui.helper.NormalListAdapterForMenu;
 import FHNav.gui.helper.SeparatedListAdapter;
@@ -36,8 +34,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
-public class ShowExtras extends Activity implements Runnable {
+import com.flurry.android.FlurryAgent;
+
+public class ShowExtras extends Activity implements Runnable, I_Mensa_Downloader {
 
 	Button btn1;
 	Button btn2;
@@ -46,7 +47,6 @@ public class ShowExtras extends Activity implements Runnable {
 	String chooseMensa;
 	String choosePage;
 	String dataAktuellesW;
-	
 
 	ProgressDialog dialog;
 
@@ -71,25 +71,21 @@ public class ShowExtras extends Activity implements Runnable {
 		SeparatedListAdapter separatedListAdapter = new SeparatedListAdapter(this);
 		ArrayList<CanteenMenu> menus;
 		if (chooseMensa.equals(getString(R.string.page_name_mensa))) {
-			if(load)
-			{
+			if (load) {
 				MainApplicationManager.setDataMensa(CanteenBeanTest.getMenuMensa());
 				load = false;
 			}
 			menus = MainApplicationManager.getDataMensa();
 		} else {
-			if(load)
-			{
+			if (load) {
 				MainApplicationManager.setDataKostBar(CanteenBeanTest.getMenuKostbar());
 				load = false;
 			}
-			
+
 			menus = MainApplicationManager.getDataKostBar();
-			
-			System.out.println(menus);
+
 		}
-		if(menus==null)
-		{
+		if (menus == null) {
 			menus = new ArrayList<CanteenMenu>();
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
@@ -137,6 +133,7 @@ public class ShowExtras extends Activity implements Runnable {
 	public void onStart() {
 		super.onStart();
 		Log.e("Extras", "Start");
+		MainApplicationManager.addListener(this);
 		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
 
 	}
@@ -144,6 +141,7 @@ public class ShowExtras extends Activity implements Runnable {
 	public void onStop() {
 		super.onStop();
 		FlurryAgent.onEndSession(this);
+		MainApplicationManager.removeListener(this);
 		Log.e("Extras", "Stop");
 	}
 
@@ -153,7 +151,10 @@ public class ShowExtras extends Activity implements Runnable {
 			refreshButtons();
 			lv1 = (ListView) findViewById(R.id.listView1);
 			lv1.setEmptyView(findViewById(R.id.empty));
-
+			if (MainApplicationManager.isDownloading()) {
+				TextView tv = (TextView) lv1.getEmptyView();
+				tv.setText(R.string.empty_list_downloading);
+			}
 			btn1.setText(R.string.extras_button1a);
 			sp = (Spinner) findViewById(R.id.spinner1);
 			ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new String[] {
@@ -166,7 +167,8 @@ public class ShowExtras extends Activity implements Runnable {
 
 					if (dialog != null)
 						dialog.dismiss();
-					dialog = ProgressDialog.show(ShowExtras.this, "", "Download...", true);
+					// dialog = ProgressDialog.show(ShowExtras.this, "",
+					// "Download...", true);
 					Thread t1 = new Thread(ShowExtras.this);
 					t1.start();
 
@@ -180,15 +182,16 @@ public class ShowExtras extends Activity implements Runnable {
 
 			ImageButton btn2 = (ImageButton) findViewById(R.id.mensa_refresh);
 			btn2.setOnClickListener(new OnClickListener() {
-				
+
 				public void onClick(View v) {
 					load = true;
 					if (dialog != null)
 						dialog.dismiss();
-					dialog = ProgressDialog.show(ShowExtras.this, "", "Download...", true);
+					// dialog = ProgressDialog.show(ShowExtras.this, "",
+					// "Download...", true);
 					Thread t1 = new Thread(ShowExtras.this);
 					t1.start();
-					
+
 				}
 			});
 		} else {
@@ -205,7 +208,8 @@ public class ShowExtras extends Activity implements Runnable {
 			sp = (Spinner) findViewById(R.id.spinner1);
 			ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new String[] {
 					getString(R.string.page_name_news), getString(R.string.page_name_news_W), getString(R.string.page_name_pplan),
-					getString(R.string.page_name_lplan),getString(R.string.page_name_lplan2), getString(R.string.page_name_splan), getString(R.string.page_name_bplan) });
+					getString(R.string.page_name_lplan), getString(R.string.page_name_lplan2), getString(R.string.page_name_splan),
+					getString(R.string.page_name_bplan) });
 			sp.setPromptId(R.string.page_select_header);
 			sp.setAdapter(adapter2);
 			sp.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -264,7 +268,8 @@ public class ShowExtras extends Activity implements Runnable {
 				handler.sendMessage(msg);
 			} catch (Exception e) {
 			} finally {
-				dialog.dismiss();
+				if (dialog != null)
+					dialog.dismiss();
 			}
 		} else {
 			try {
@@ -273,7 +278,7 @@ public class ShowExtras extends Activity implements Runnable {
 				handler.sendMessage(msg);
 			} catch (Exception e) {
 			} finally {
-				
+
 			}
 		}
 	}
@@ -290,7 +295,7 @@ public class ShowExtras extends Activity implements Runnable {
 			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.gemorra.de/lplan.pdf");
 		} else if (choosePage.equals(getString(R.string.page_name_lplan2))) {
 			mWebView.loadUrl("http://maps.google.de/maps?hl=de&ll=51.4926,7.415965&spn=0.005965,0.016512&sll=51.491311,7.409399&sspn=0.011931,0.033023&t=h&z=17");
-		}else if (choosePage.equals(getString(R.string.page_name_splan))) {
+		} else if (choosePage.equals(getString(R.string.page_name_splan))) {
 			mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://www.gemorra.de/s1.pdf");
 		} else if (choosePage.equals(getString(R.string.page_name_bplan))) {
 			mWebView.loadUrl("http://docs.google.com/gview?embedded=false&url=http://www.gemorra.de/bus.pdf");
@@ -339,13 +344,38 @@ public class ShowExtras extends Activity implements Runnable {
 
 	final Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
-			if (mensa) {
-
-				lv1.setAdapter(listAdapterMensa);
-				dialog.dismiss();
+			if (loaded) {
+				refresh();
+				loaded = false;
 			} else {
-				setWebViewContent();
+				if (mensa) {
+
+					lv1.setAdapter(listAdapterMensa);
+					if (listAdapterMensa.getCount() == 0) {
+						if (MainApplicationManager.isDownloading()) {
+							TextView tv = (TextView) lv1.getEmptyView();
+							tv.setText(R.string.empty_list_downloading);
+						} else {
+							TextView tv = (TextView) lv1.getEmptyView();
+							tv.setText(R.string.empty_list_downloading_no);
+						}
+					}
+					if (dialog != null)
+						dialog.dismiss();
+				} else {
+					setWebViewContent();
+				}
+
 			}
 		}
 	};
+
+	private boolean loaded = false;
+
+	public void downloadDone() {
+		loaded = true;
+		Message msg = handler.obtainMessage();
+		handler.sendMessage(msg);
+
+	}
 }

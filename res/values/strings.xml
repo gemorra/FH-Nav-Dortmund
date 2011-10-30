@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">FH-Nav</string>
+	<string name="app_name">FH Nav</string>
 	<string name="menu_edit_button">Anpassen</string>
 	<string name="menu_navigation_button">Navigation</string>
 	<string name="menu_settings_button">Einstellungen</string>
@@ -98,10 +98,10 @@
 	<string name="page_name_splan">S1 Fahrplan</string>
 	<string name="page_name_bplan">Bus Fahrplan</string>
 	<string name="the">der</string>
-
 	<string name="empty_list">Keine Daten vorhanden</string>
 	
-	
+	<string name="empty_list_downloading">Daten werden gerade heruntergeladen...</string>
+	<string name="empty_list_downloading_no">Neu Laden ist erforderlich!</string>
 	<string name="alert_dialog_connection_problem_retry_button">Noch mal</string>
 	<string name="alert_dialog_connection_problem_next_button">Überspringen</string>
 	<string name="alert_dialog_connection_problem_next_button2">Abbruch</string>
@@ -111,4 +111,6 @@
 	<string name="settings_Back_button">Zurück</string>
 	<string name="settings_default_button">Standard</string>
 	
+<string name="tomorrow">Morgen</string>
+<string name="timetable_menu">Stundenplan anpassen</string>
 </resources>

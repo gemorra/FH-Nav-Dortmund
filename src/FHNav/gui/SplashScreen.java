@@ -2,18 +2,22 @@ package FHNav.gui;
 
 import java.util.Date;
 
-import com.flurry.android.FlurryAgent;
-
 import FHNav.controller.MainApplicationManager;
+import FHNav.controller.SettingsManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.widget.TextView;
+
+import com.flurry.android.FlurryAgent;
 
 public class SplashScreen extends Activity {
 
 	long startTime;
-	protected int _splashTime = 1000;
+	protected int _splashTime = 2000;
 	int datarefresh = 12;
 
 	public void onStart() {
@@ -27,30 +31,43 @@ public class SplashScreen extends Activity {
 		super.onStop();
 		FlurryAgent.onEndSession(this);
 		Log.e(this.getClass().toString(), "Stop");
+
 	}
+
+	TextView t1;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splashscreen);
-
+		t1 = (TextView) findViewById(R.id.textView1);
 		Date dt = new Date();
 		startTime = dt.getTime();
-
+		SettingsManager.loadSettings(this);
+		MainApplicationManager.setCtx(getApplicationContext());
 		Thread splashTread = new Thread() {
 			@Override
 			public void run() {
+				int waited = 0;
+
+				
+				
 				try {
-					int waited = 0;
 					while (waited < _splashTime) {
 						sleep(100);
 						waited += 100;
+						Message msg = handler.obtainMessage();
+						msg.arg1 = waited;
+						handler.sendMessage(msg);
+						//System.out.println("int:" + waited);
 					}
+
 				} catch (InterruptedException e) {
 					// do nothing
 				} finally {
 					finish();
 					startActivity(new Intent(SplashScreen.this, Menu.class));
 				}
+
 			}
 		};
 		splashTread.start();
@@ -64,7 +81,7 @@ public class SplashScreen extends Activity {
 						int waited = 0;
 						while (waited < datarefresh) {
 							sleep(1000 * 3600);
-							waited++;
+							waited++;							
 						}
 
 					} catch (InterruptedException e) {
@@ -75,7 +92,26 @@ public class SplashScreen extends Activity {
 		};
 		splashTread2.start();
 	}
+
+	final Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+//System.out.println(msg.arg1);
+			int waited = msg.arg1;
+			if (t1 != null) {
+				if (waited <= 1000) {
+					t1.setText("Loading Data...");
+				} else if (waited <= 1500) {
+					t1.setText("Starting Daemons...");
+				} else if (waited <= 2000) {
+					t1.setText("Initialising GUI...");
+				}
+			}
+
+		}
+	};
+
 }
+
 // public void run() {
 // boolean isRunning = true;
 // while (isRunning) {

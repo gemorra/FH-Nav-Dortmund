@@ -11,10 +11,31 @@ import android.content.Context;
 public class MainApplicationManager {
 
 	public static void refreshData() {
+		downloading = true;
 		dataKostBar = CanteenBeanTest.getMenuKostbar();
 		dataMensa = CanteenBeanTest.getMenuMensa();
+		downloading = false;
+		fireDownloader();
+	}
+	private static ArrayList<I_Mensa_Downloader> listener = new ArrayList<I_Mensa_Downloader>();
+	
+	private static void fireDownloader()
+	{
+		for(I_Mensa_Downloader i : listener)
+		{
+			i.downloadDone();
+		}
 	}
 
+	public static void addListener(I_Mensa_Downloader i){
+		listener.add(i);
+	}
+	public static void removeListener(I_Mensa_Downloader i){
+		listener.remove(i);
+	}
+	
+	private static boolean downloading = false;
+	
 	private static ArrayList<CanteenMenu> dataKostBar;
 	private static ArrayList<CanteenMenu> dataMensa;
 
@@ -23,6 +44,14 @@ public class MainApplicationManager {
 	private static Stundenplan stundenplan;
 
 	private static BreadthFirstSearchTest bfst;
+
+	public static boolean isDownloading() {
+		return downloading;
+	}
+
+	public static void setDownloading(boolean downloading) {
+		MainApplicationManager.downloading = downloading;
+	}
 
 	public static ArrayList<CanteenMenu> getDataKostBar() {
 		return dataKostBar;

@@ -1,8 +1,9 @@
 package FHNav.gui;
 
-import com.flurry.android.FlurryAgent;
-
+import FHNav.controller.IOManager;
+import FHNav.controller.MainApplicationManager;
 import FHNav.controller.SettingsManager;
+import FHNav.model.Stundenplan;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,8 +17,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.flurry.android.FlurryAgent;
 
 public class Settings extends Activity {
 
@@ -55,6 +57,8 @@ public class Settings extends Activity {
 
 			public void onClick(View v) {
 				SettingsManager.setWizardDone(false);
+				MainApplicationManager.setStundenplan(new Stundenplan());
+				IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
 				startActivity(wizard);
 			}
 		});

@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import FHNav.controller.SettingsManager;
 import FHNav.gui.R;
 import FHNav.model.CanteenMenu;
-import FHNav.model.Veranstaltung;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +81,7 @@ public class NormalListAdapterForMenu extends BaseAdapter {
 		String topText = cm.getDesc();
 
 		
-		String bottomText = cm.getTitle();
+		//String bottomText = cm.getTitle();
 		
 //		holder.bottomtext.setText(bottomText);
 		holder.toptext.setText(topText);

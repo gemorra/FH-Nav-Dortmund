@@ -63,20 +63,20 @@ public class Menu extends Activity {
 		super.onStart();
 		Log.e(this.getClass().toString(), "Start");
 		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
+		refresListView(true);
 
 	}
-	public void onStop()
-	{
+
+	public void onStop() {
 		super.onStop();
-		   FlurryAgent.onEndSession(this);
-		   Log.e(this.getClass().toString(), "Stop");
+		FlurryAgent.onEndSession(this);
+		Log.e(this.getClass().toString(), "Stop");
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.e("Menu", "Create");
-		SettingsManager.loadSettings(this);
-		MainApplicationManager.setCtx(getApplicationContext());
+
 		addVorlesung = new Intent(Menu.this, AddVorlesung.class);
 		adaptstundenplan = new Intent(Menu.this, AdaptStundenplan.class);
 		settings = new Intent(Menu.this, Settings.class);
@@ -103,7 +103,7 @@ public class Menu extends Activity {
 							getString(R.string.editmenu_delete), getString(R.string.editmenu_commit) };
 
 					AlertDialog.Builder builder = new AlertDialog.Builder(Menu.this);
-					builder.setTitle("Stundenplan anpassen");
+					builder.setTitle(getString(R.string.timetable_menu));
 					builder.setItems(items, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int item) {
 							if (item == 0) {
@@ -223,7 +223,7 @@ public class Menu extends Activity {
 				if (i == 0) {
 					header = "Heute (" + getString(Tools.getWeekday(els[i].getItems().get(0).getWochentag())) + "," + sdf.format(c1.getTime()) + ")";
 				} else if (i == 1) {
-					header = "Morgen (" + getString(Tools.getWeekday(els[i].getItems().get(0).getWochentag())) + "," + sdf.format(c1.getTime()) + ")";
+					header = getString(R.string.tomorrow) + " (" + getString(Tools.getWeekday(els[i].getItems().get(0).getWochentag())) + "," + sdf.format(c1.getTime()) + ")";
 				} else
 					header = getString(Tools.getWeekday(els[i].getItems().get(0).getWochentag())) + "," + sdf.format(c1.getTime());
 				separatedListAdapter.addSection(header, els[i]);
@@ -238,87 +238,89 @@ public class Menu extends Activity {
 	int topy = 0;
 
 	public void refresListView(boolean startAtBeginning) {
-		Collections.sort(veranstaltungen);
-		if (agenda)
-			listAdapter = build_agenda(veranstaltungen);
-		else
-			listAdapter = build_normal(veranstaltungen);
+		if (veranstaltungen != null) {
+			Collections.sort(veranstaltungen);
+			if (agenda)
+				listAdapter = build_agenda(veranstaltungen);
+			else
+				listAdapter = build_normal(veranstaltungen);
 
-		lv1 = (ListView) findViewById(R.id.listView1);
-		lv1.setAdapter(listAdapter);
-		lv1.setEmptyView(findViewById(R.id.empty));
+			lv1 = (ListView) findViewById(R.id.listView1);
+			lv1.setAdapter(listAdapter);
+			lv1.setEmptyView(findViewById(R.id.empty));
 
-		lv1.setOnItemClickListener(new OnItemClickListener() {
+			lv1.setOnItemClickListener(new OnItemClickListener() {
 
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(Menu.this);
-				final SeparatedListAdapter sla = (SeparatedListAdapter) lv1.getAdapter();
-				if (sla.getItem(arg2) instanceof Veranstaltung) {
-					final Veranstaltung ver = (Veranstaltung) sla.getItem(arg2);
-					builder.setTitle(ver.getName());
-					final BreadthFirstSearchTest bfst = MainApplicationManager.getBfst();
+				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(Menu.this);
+					final SeparatedListAdapter sla = (SeparatedListAdapter) lv1.getAdapter();
+					if (sla.getItem(arg2) instanceof Veranstaltung) {
+						final Veranstaltung ver = (Veranstaltung) sla.getItem(arg2);
+						builder.setTitle(ver.getName());
+						final BreadthFirstSearchTest bfst = MainApplicationManager.getBfst();
 
-					final CharSequence[] items;
-					items = new CharSequence[2];
-					items[0] = getString(R.string.editmenu_delete);
-					items[1] = getString(R.string.extras_button2);
+						final CharSequence[] items;
+						items = new CharSequence[2];
+						items[0] = getString(R.string.editmenu_delete);
+						items[1] = getString(R.string.extras_button2);
 
-					builder.setItems(items, new DialogInterface.OnClickListener() {
+						builder.setItems(items, new DialogInterface.OnClickListener() {
 
-						public void onClick(DialogInterface dialog, int which) {
-							if (which == 0) {
-								MainApplicationManager.getStundenplan().removeVeranstaltung(ver);
-								IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
-								visibleFirst = lv1.getFirstVisiblePosition();
-								View v = lv1.getChildAt(0);
-								topy = (v == null) ? 0 : v.getTop();
+							public void onClick(DialogInterface dialog, int which) {
+								if (which == 0) {
+									MainApplicationManager.getStundenplan().removeVeranstaltung(ver);
+									IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+									visibleFirst = lv1.getFirstVisiblePosition();
+									View v = lv1.getChildAt(0);
+									topy = (v == null) ? 0 : v.getTop();
 
-								refresListView(false);
-							} else {
-								final Node n = bfst.getNodeFromListByString(ver.getRaum());
-								if (n != null) {
-									bfst.setFrom((Node) bfst.getNodes().get(0));
-									bfst.setTo(n);
-									startActivity(new Intent(Menu.this, Navigation.class));
+									refresListView(false);
 								} else {
-									AlertDialog.Builder adb = new AlertDialog.Builder(Menu.this);
-									adb.setTitle("Navigation");
-									adb.setMessage("Comming soon...");
-									adb.setPositiveButton("  OK  ", new DialogInterface.OnClickListener() {
+									final Node n = bfst.getNodeFromListByString(ver.getRaum());
+									if (n != null) {
+										bfst.setFrom((Node) bfst.getNodes().get(0));
+										bfst.setTo(n);
+										startActivity(new Intent(Menu.this, Navigation.class));
+									} else {
+										AlertDialog.Builder adb = new AlertDialog.Builder(Menu.this);
+										adb.setTitle("Navigation");
+										adb.setMessage("Comming soon...");
+										adb.setPositiveButton("  OK  ", new DialogInterface.OnClickListener() {
 
-										public void onClick(DialogInterface dialog2, int which) {
-										}
-									});
-									adb.show();
+											public void onClick(DialogInterface dialog2, int which) {
+											}
+										});
+										adb.show();
+									}
 								}
 							}
-						}
-					});
-					AlertDialog alert = builder.create();
-					alert.show();
+						});
+						AlertDialog alert = builder.create();
+						alert.show();
+					}
 				}
-			}
-		});
-		if (!startAtBeginning) {
+			});
+			if (!startAtBeginning) {
 
-			if (visibleFirst >= listAdapter.getCount()) {
-				visibleFirst = listAdapter.getCount() - 1;
-				topy = 0;
-			}
-			if (visibleFirst < 0) {
-				visibleFirst = 0;
-				topy = 0;
-			}
+				if (visibleFirst >= listAdapter.getCount()) {
+					visibleFirst = listAdapter.getCount() - 1;
+					topy = 0;
+				}
+				if (visibleFirst < 0) {
+					visibleFirst = 0;
+					topy = 0;
+				}
 
-			lv1.setSelectionFromTop(visibleFirst, topy);
+				lv1.setSelectionFromTop(visibleFirst, topy);
+			}
 		}
-
 	}
 
 	public void build_calendar_dialog() {
 		final CalendarAdapter ca = new CalendarAdapter();
 		ca.setSelectedid(0);
 		AlertDialog.Builder builder;
+		@SuppressWarnings("unused")
 		AlertDialog alertDialog;
 
 		Context mContext = Menu.this;
@@ -361,18 +363,18 @@ public class Menu extends Activity {
 		final DatePickerDialog.OnDateSetListener fDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-				textFrom.setText(dayOfMonth + "." + (monthOfYear+1) + "." + year);
+				textFrom.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
 			}
 		};
 		final DatePickerDialog.OnDateSetListener tDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-				textTo.setText(dayOfMonth + "." + (monthOfYear+1) + "." + year);
+				textTo.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
 			}
 		};
 
-		final DatePickerDialog dpdf = new DatePickerDialog(Menu.this, fDateSetListener, fYear, fMonth-1, fDay);
-		final DatePickerDialog dpdt = new DatePickerDialog(Menu.this, tDateSetListener, tYear, tMonth-1, tDay);
+		final DatePickerDialog dpdf = new DatePickerDialog(Menu.this, fDateSetListener, fYear, fMonth - 1, fDay);
+		final DatePickerDialog dpdt = new DatePickerDialog(Menu.this, tDateSetListener, tYear, tMonth - 1, tDay);
 
 		Button btnFrom = (Button) layout.findViewById(R.id.pickDateFrom);
 		btnFrom.setOnClickListener(new OnClickListener() {

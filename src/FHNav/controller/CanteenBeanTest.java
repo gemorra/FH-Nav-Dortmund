@@ -148,14 +148,15 @@ public class CanteenBeanTest {
 					String desc = e2.select("p").html();
 
 					desc = StringEscapeUtils.unescapeHtml(desc);
-					Log.e("CANTEEN", "|" + desc + "|");
+					
 					if (!(desc.startsWith("(") && desc.endsWith(")"))) {
 						CanteenMenu cm = new CanteenMenu("", desc, dt);
 						menus.add(cm);
 					}
 				}
-				System.out.println("Kostbar parsed");
+				
 			}
+			System.out.println("Kostbar parsed");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

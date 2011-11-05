@@ -103,4 +103,10 @@
 	
 <string name="tomorrow">Tomorrow</string>
 <string name="timetable_menu">Customize Timetable</string>
+
+<string name="settings_alert_title">Warning</string>
+	<string name="settings_alert_message">Restarting the Wizard will delete your current timetable!</string>
+	<string name="settings_alert_positiveButton">Continue</string>
+	<string name="settings_alert_negativeButton">Cancel</string>
+
 </resources>

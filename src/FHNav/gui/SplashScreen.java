@@ -24,7 +24,8 @@ public class SplashScreen extends Activity {
 		super.onStart();
 		Log.e(this.getClass().toString(), "Start");
 		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
-
+//		if(MainApplicationManager.isFinish())
+//			finish();
 	}
 
 	public void onStop() {

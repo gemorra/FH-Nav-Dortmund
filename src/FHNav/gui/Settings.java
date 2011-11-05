@@ -5,6 +5,8 @@ import FHNav.controller.MainApplicationManager;
 import FHNav.controller.SettingsManager;
 import FHNav.model.Stundenplan;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,10 +58,29 @@ public class Settings extends Activity {
 		restartWizardButton.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
-				SettingsManager.setWizardDone(false);
-				MainApplicationManager.setStundenplan(new Stundenplan());
-				IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
-				startActivity(wizard);
+				
+				AlertDialog.Builder adb = new AlertDialog.Builder(Settings.this);
+				adb.setTitle(R.string.settings_alert_title);
+				adb.setMessage(R.string.settings_alert_message);
+				adb.setPositiveButton(R.string.settings_alert_positiveButton, new DialogInterface.OnClickListener() {
+
+					// Nach ok, wird versucht die Stundenplanliste zu laden (siehe run()
+					// unten) => T1
+					public void onClick(DialogInterface dialog2, int which) {
+						SettingsManager.setWizardDone(false);
+						MainApplicationManager.setStundenplan(new Stundenplan());
+						IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+						startActivity(wizard);
+
+					}
+				});
+				adb.setNegativeButton(R.string.settings_alert_negativeButton, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog2, int which) {
+					}
+				});
+				adb.show();
+				
+
 			}
 		});
 

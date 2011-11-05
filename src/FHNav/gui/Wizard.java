@@ -39,6 +39,8 @@ public class Wizard extends Activity implements Runnable {
 		super.onStart();
 		Log.e(this.getClass().toString(), "Start");
 		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
+//		if(MainApplicationManager.isFinish())
+//			finish();
 
 	}
 
@@ -46,12 +48,15 @@ public class Wizard extends Activity implements Runnable {
 		super.onStop();
 		FlurryAgent.onEndSession(this);
 		Log.e(this.getClass().toString(), "Stop");
+		if(MainApplicationManager.getCtx()==null)
+			MainApplicationManager.setCtx(getApplicationContext());
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.e("Wizard", "Create");
-
+		if(MainApplicationManager.getCtx()==null)
+			MainApplicationManager.setCtx(getApplicationContext());
 		SettingsManager.loadSettings(this);
 		// SettingsManager.setPathToFile("www.gemorra.de/fhnav/connec.php");
 		// Vorbereitungen und Dialog anzeigen
@@ -77,8 +82,9 @@ public class Wizard extends Activity implements Runnable {
 			
 			public void onClick(DialogInterface dialog, int which) {
 				SettingsManager.setWizardDone(true);
-				startActivity(new Intent(Wizard.this, Menu.class));
-				
+				MainApplicationManager.setStundenplan(new Stundenplan());
+				IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+				startActivity(new Intent(Wizard.this, Menu.class));			
 			}
 		});
 		adb.show();

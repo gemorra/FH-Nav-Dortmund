@@ -65,6 +65,8 @@ public class Menu extends Activity {
 		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
 		refresListView(true);
 
+		if(MainApplicationManager.getCtx()==null)
+			MainApplicationManager.setCtx(getApplicationContext());
 	}
 
 	public void onStop() {
@@ -76,7 +78,8 @@ public class Menu extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.e("Menu", "Create");
-
+		if(MainApplicationManager.getCtx()==null)
+			MainApplicationManager.setCtx(getApplicationContext());
 		addVorlesung = new Intent(Menu.this, AddVorlesung.class);
 		adaptstundenplan = new Intent(Menu.this, AdaptStundenplan.class);
 		settings = new Intent(Menu.this, Settings.class);
@@ -159,6 +162,19 @@ public class Menu extends Activity {
 
 				}
 			});
+			
+//			Button btn4;
+//			btn4 = (Button) findViewById(R.id.Button04);
+//			btn4.setOnClickListener(new View.OnClickListener() {
+//				
+//				public void onClick(View v) {
+//				MainApplicationManager.setFinish(true);
+//				finish();
+//				System.exit(0);
+//				}
+//			});
+			
+			
 		} else {
 			startActivity(wizard);
 		}

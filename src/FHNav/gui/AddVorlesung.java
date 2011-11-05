@@ -112,7 +112,7 @@ public class AddVorlesung extends Activity implements Runnable {
 					int count = s.getVeranstaltungen().size() - sizebefore;
 
 					if (count > 0) {
-						MainApplicationManager.getStundenplan().setVeranstaltungen(veranstaltungen);
+						MainApplicationManager.setStundenplan(s);
 						IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
 						Toast t = Toast.makeText(getApplicationContext(), getString(R.string.addveranstaltung_toast_text_1a) + " " + count + " "
 								+ getString(R.string.addveranstaltung_toast_text_1b), Toast.LENGTH_SHORT);
@@ -148,7 +148,7 @@ public class AddVorlesung extends Activity implements Runnable {
 			}
 		});
 
-		veranstaltungen = MainApplicationManager.getVeranstaltungen();
+		//veranstaltungen = MainApplicationManager.getVeranstaltungen();
 
 	}
 

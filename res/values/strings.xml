@@ -113,4 +113,11 @@
 	
 <string name="tomorrow">Morgen</string>
 <string name="timetable_menu">Stundenplan anpassen</string>
+
+	<string name="settings_alert_title">Warnung</string>
+	<string name="settings_alert_message">Beim Neustart des Wizard wird der aktuelle persönliche Stundenplan gelöscht.</string>
+	<string name="settings_alert_positiveButton">Weiter</string>
+	<string name="settings_alert_negativeButton">Abbruch</string>
+
+
 </resources>

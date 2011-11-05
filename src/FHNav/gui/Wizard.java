@@ -84,7 +84,8 @@ public class Wizard extends Activity implements Runnable {
 				SettingsManager.setWizardDone(true);
 				MainApplicationManager.setStundenplan(new Stundenplan());
 				IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
-				startActivity(new Intent(Wizard.this, Menu.class));			
+				startActivity(new Intent(Wizard.this, Menu.class));	
+				MainApplicationManager.setSelectedBranch("");
 			}
 		});
 		adb.show();
@@ -145,6 +146,7 @@ public class Wizard extends Activity implements Runnable {
 							IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
 							SettingsManager.setWizardDone(true);
 							startActivity(new Intent(Wizard.this, Menu.class));
+							MainApplicationManager.setSelectedBranch("");
 						}
 					});
 
@@ -168,7 +170,6 @@ public class Wizard extends Activity implements Runnable {
 				Button btn = (Button) error_dialog.findViewById(R.id.alert_dialog_connection_problem_button);
 				// et.setText(SettingsManager.getPathToFile());
 				btn.setOnClickListener(new OnClickListener() {
-					// Anderen Pfad angeben und neuer Versuch:
 					public void onClick(View v) {
 						// SettingsManager.setPathToFile(et.getText().toString());
 						error_dialog.dismiss();
@@ -180,12 +181,12 @@ public class Wizard extends Activity implements Runnable {
 				});
 				Button btn2 = (Button) error_dialog.findViewById(R.id.alert_dialog_connection_problem_buttonNext);
 				btn2.setOnClickListener(new OnClickListener() {
-					// Anderen Pfad angeben und neuer Versuch:
 					public void onClick(View v) {
 						MainApplicationManager.setStundenplan(new Stundenplan());
 						IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
 						SettingsManager.setWizardDone(true);
 						startActivity(new Intent(Wizard.this, Menu.class));
+						MainApplicationManager.setSelectedBranch("");
 					}
 				});
 				dialog.dismiss();
@@ -198,12 +199,13 @@ public class Wizard extends Activity implements Runnable {
 	public void run() {
 		if (!loadSpinner) {
 			try {
+				String selectedBranch = (String) (spinner1.getSelectedItem());
 				MainApplicationManager.setStundenplan(PHPConnector.getStundenplanFromMysql((String) (spinner1.getSelectedItem())));
 				if (MainApplicationManager.getStundenplan().getVeranstaltungen().size() > 0) {
 					IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
 					SettingsManager.setWizardDone(true);
 					startActivity(new Intent(Wizard.this, Menu.class));
-
+					MainApplicationManager.setSelectedBranch(selectedBranch);
 				} else {
 
 				}

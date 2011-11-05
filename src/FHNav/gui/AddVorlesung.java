@@ -44,7 +44,7 @@ public class AddVorlesung extends Activity implements Runnable {
 	Button btn_back;
 	boolean select = false;
 	boolean click = false;
-	
+
 	public void onStart() {
 		super.onStart();
 		Log.e(this.getClass().toString(), "Start");
@@ -130,25 +130,40 @@ public class AddVorlesung extends Activity implements Runnable {
 		spinner1 = (Spinner) AddVorlesung.this.findViewById(R.id.Spinner01);
 		spinner1.setOnItemSelectedListener(new OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				if (spinnerContent.size() >= 1 && click) {
+				System.out.println("ITEM SELECTED");
+				String selectedBranch = (String) (spinner1.getSelectedItem());
+				if (spinnerContent.size() >= 1 && !selectedBranch.equals(getString(R.string.addvorlesung_spinner_text))) {
+					if (spinnerContent.get(0).equals(getString(R.string.addvorlesung_spinner_text))) {
+						spinnerContent.remove(0);
+						spinner1.setSelection(spinner1.getSelectedItemPosition() - 1);
+						// spinner1.refreshDrawableState();
+					} else {
+						// if (spinnerContent.size() >= 1 &&
+						// !selectedBranch.equals(getString(R.string.addvorlesung_spinner_text)))
+						// {
 
-					Log.e("inhalt", (String) (spinner1.getSelectedItem()));
+						Log.e("inhalt", selectedBranch);
 
-					loadSpinner = false;
-					dialog = ProgressDialog.show(AddVorlesung.this, "", "Download...", true);
-					Thread t = new Thread(AddVorlesung.this);
-					t.start();
+						if (selectedBranch != getString(R.string.addvorlesung_spinner_text)) {
+							loadSpinner = false;
+							dialog = ProgressDialog.show(AddVorlesung.this, "", "Download...", true);
+							Thread t = new Thread(AddVorlesung.this);
+							t.start();
+						}
+
+						// }
+					}
 				}
-				click = true;
+
 			}
 
 			public void onNothingSelected(AdapterView<?> arg0) {
 				// TODO Auto-generated method stub
-
+				System.out.println("NOTHING SELECTED");
 			}
 		});
 
-		//veranstaltungen = MainApplicationManager.getVeranstaltungen();
+		// veranstaltungen = MainApplicationManager.getVeranstaltungen();
 
 	}
 
@@ -169,13 +184,14 @@ public class AddVorlesung extends Activity implements Runnable {
 
 					error_dialog.setContentView(R.layout.alert_dialog_connection_problem);
 					error_dialog.setTitle(R.string.alert_dialog_connection_problem_title);
-//					final EditText et = (EditText) error_dialog.findViewById(R.id.alert_dialog_connection_problem_editText);
+					// final EditText et = (EditText)
+					// error_dialog.findViewById(R.id.alert_dialog_connection_problem_editText);
 					Button btn = (Button) error_dialog.findViewById(R.id.alert_dialog_connection_problem_button);
-//					et.setText(SettingsManager.getPathToFile());
+					// et.setText(SettingsManager.getPathToFile());
 					btn.setOnClickListener(new OnClickListener() {
 
 						public void onClick(View v) {
-//							SettingsManager.setPathToFile(et.getText().toString());
+							// SettingsManager.setPathToFile(et.getText().toString());
 							error_dialog.dismiss();
 							loadSpinner = true;
 							dialog = ProgressDialog.show(AddVorlesung.this, "", "Download...", true);
@@ -192,7 +208,7 @@ public class AddVorlesung extends Activity implements Runnable {
 							onBackPressed();
 						}
 					});
-					
+
 					error_dialog.show();
 				}
 			}
@@ -214,7 +230,11 @@ public class AddVorlesung extends Activity implements Runnable {
 				}
 				dialog.dismiss();
 			} else {
-				spinnerContent = PHPConnector.getAllBranches();
+				spinnerContent = new ArrayList<String>();
+				spinnerContent.add("Studiengang wählen");
+
+				spinnerContent.addAll(PHPConnector.getAllBranches());
+
 				Message msg = handler.obtainMessage();
 				handler.sendMessage(msg);
 			}

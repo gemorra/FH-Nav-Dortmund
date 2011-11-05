@@ -8,7 +8,7 @@
 	<LinearLayout android:layout_weight="0" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">>
 		<TextView android:text="Loading..." android:id="@+id/textView1" android:textColor="#FF6000"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-		<TextView android:text="Version 1.0" android:id="@+id/textView2" android:textColor="#FF6000"
+		<TextView android:text="Version 1.1" android:id="@+id/textView2" android:textColor="#FF6000"
 			android:layout_height="wrap_content" android:layout_width="match_parent" android:gravity="right"></TextView>
 	</LinearLayout>
 </LinearLayout>

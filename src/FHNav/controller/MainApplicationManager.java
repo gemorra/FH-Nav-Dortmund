@@ -34,6 +34,16 @@ public class MainApplicationManager {
 		listener.remove(i);
 	}
 	
+	private static String selectedBranch = "";
+	
+	
+	public static String getSelectedBranch() {
+		return selectedBranch;
+	}
+
+	public static void setSelectedBranch(String selectedBranch) {
+		MainApplicationManager.selectedBranch = selectedBranch;
+	}
 	private static boolean downloading = false;
 	
 	private static ArrayList<CanteenMenu> dataKostBar;

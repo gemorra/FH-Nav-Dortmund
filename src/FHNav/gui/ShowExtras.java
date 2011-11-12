@@ -134,6 +134,8 @@ public class ShowExtras extends Activity implements Runnable, I_Mensa_Downloader
 		super.onStart();
 		Log.e("Extras", "Start");
 		MainApplicationManager.addListener(this);
+		if (MainApplicationManager.isFinish())
+			finish();
 		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
 
 	}

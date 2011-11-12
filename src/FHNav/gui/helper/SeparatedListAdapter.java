@@ -94,7 +94,7 @@ public class SeparatedListAdapter extends BaseAdapter {
 			// check if position inside this section
 			if (position == 0)
 				return headers.getView(sectionnum, convertView, parent);
-			
+
 			if (position < size)
 				return adapter.getView(position - 1, convertView, parent);
 

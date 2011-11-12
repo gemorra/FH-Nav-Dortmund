@@ -15,6 +15,19 @@ import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.view.View;
 
+/**
+ * Prunkstück für Unkommentierten Code, den ich nie wieder verstehen werde.
+ * 
+ * Damals ging es um das Laden des Hintergrundes, das richtige Skalieren der
+ * Auflösung des Bildes und des Graphens (x/y_scale_mapping) und um das Zoomen
+ * in dieses Bild und der richtigen Darstellung des Graphen (x/y_scale_zoom)
+ * Gelöst habe ich das mit Matrixabbildungen. Die Pinch2Zoomfunktion, also die
+ * reine Tatsache, dass ein Pinch erkannt wird, ist übernommen aus einem
+ * Beispiel im Internet.
+ * 
+ * @author Moritz Wiechers
+ * 
+ */
 public class CView extends View {
 
 	Paint mpaint = new Paint();
@@ -31,26 +44,27 @@ public class CView extends View {
 	boolean shrink = false;
 	float x_moved = 0;
 	float y_moved = 0;
-
+	Context ctx;
 	Rect dst;
 	Rect src = null;
 
 	public CView(Context context) {
 		super(context);
+		ctx = context;
 		BitmapFactory.Options opt = new BitmapFactory.Options();
 		opt.inScaled = false;
 		bmp = MainApplicationManager.getBfst().getBMP();
 
 		if (bmp == null) {
-			bmp = BitmapFactory.decodeResource(MainApplicationManager.getCtx().getResources(), R.drawable.ergeschoss, opt);
+			bmp = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.ergeschoss, opt);
 			MainApplicationManager.getBfst().setBMP(bmp);
 		}
 		x_start = bmp.getWidth() / 2;
 		y_start = bmp.getHeight() / 2;
 
-		ziel = BitmapFactory.decodeResource(MainApplicationManager.getCtx().getResources(), R.drawable.ziel, opt);
+		ziel = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.ziel, opt);
 
-		start = BitmapFactory.decodeResource(MainApplicationManager.getCtx().getResources(), R.drawable.nadel, opt);
+		start = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.nadel, opt);
 
 		_view = this;
 		this.setOnTouchListener(touchListener);

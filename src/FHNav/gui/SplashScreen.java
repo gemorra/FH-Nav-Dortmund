@@ -23,9 +23,10 @@ public class SplashScreen extends Activity {
 	public void onStart() {
 		super.onStart();
 		Log.e(this.getClass().toString(), "Start");
-		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
-//		if(MainApplicationManager.isFinish())
-//			finish();
+		if (MainApplicationManager.isFinish())
+			finish();
+		else
+			FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
 	}
 
 	public void onStop() {
@@ -39,19 +40,17 @@ public class SplashScreen extends Activity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		MainApplicationManager.setFinish(false);
 		setContentView(R.layout.splashscreen);
 		t1 = (TextView) findViewById(R.id.textView1);
 		Date dt = new Date();
 		startTime = dt.getTime();
 		SettingsManager.loadSettings(this);
-		MainApplicationManager.setCtx(getApplicationContext());
 		Thread splashTread = new Thread() {
 			@Override
 			public void run() {
 				int waited = 0;
 
-				
-				
 				try {
 					while (waited < _splashTime) {
 						sleep(100);
@@ -59,7 +58,7 @@ public class SplashScreen extends Activity {
 						Message msg = handler.obtainMessage();
 						msg.arg1 = waited;
 						handler.sendMessage(msg);
-						//System.out.println("int:" + waited);
+						// System.out.println("int:" + waited);
 					}
 
 				} catch (InterruptedException e) {
@@ -82,7 +81,7 @@ public class SplashScreen extends Activity {
 						int waited = 0;
 						while (waited < datarefresh) {
 							sleep(1000 * 3600);
-							waited++;							
+							waited++;
 						}
 
 					} catch (InterruptedException e) {
@@ -96,7 +95,7 @@ public class SplashScreen extends Activity {
 
 	final Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
-//System.out.println(msg.arg1);
+			// System.out.println(msg.arg1);
 			int waited = msg.arg1;
 			if (t1 != null) {
 				if (waited <= 1000) {

@@ -2,6 +2,12 @@ package FHNav.controller;
 
 import FHNav.gui.R;
 
+/**
+ * Klasse für kleine Transformationen (bis jetzt nur Wochentagsnamen und kürzel)
+ * 
+ * @author Moritz Wiechers
+ * 
+ */
 public class Tools {
 
 	public static int getWeekday(int day) {
@@ -28,11 +34,11 @@ public class Tools {
 		case 7:
 			ret = R.string.sunday;
 			break;
-		
+
 		}
 		return ret;
 	}
-	
+
 	public static String getShortWeekday(int day) {
 		String ret = "";
 		switch (day) {
@@ -57,9 +63,9 @@ public class Tools {
 		case 7:
 			ret = "SU";
 			break;
-		
+
 		}
 		return ret;
 	}
-	
+
 }

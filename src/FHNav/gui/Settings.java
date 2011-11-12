@@ -38,6 +38,9 @@ public class Settings extends Activity {
 	public void onStart() {
 		super.onStart();
 		Log.e(this.getClass().toString(), "Start");
+		if (MainApplicationManager.isFinish())
+			finish();
+
 		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
 
 	}
@@ -58,18 +61,19 @@ public class Settings extends Activity {
 		restartWizardButton.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
-				
+
 				AlertDialog.Builder adb = new AlertDialog.Builder(Settings.this);
 				adb.setTitle(R.string.settings_alert_title);
 				adb.setMessage(R.string.settings_alert_message);
 				adb.setPositiveButton(R.string.settings_alert_positiveButton, new DialogInterface.OnClickListener() {
 
-					// Nach ok, wird versucht die Stundenplanliste zu laden (siehe run()
+					// Nach ok, wird versucht die Stundenplanliste zu laden
+					// (siehe run()
 					// unten) => T1
 					public void onClick(DialogInterface dialog2, int which) {
 						SettingsManager.setWizardDone(false);
 						MainApplicationManager.setStundenplan(new Stundenplan());
-						IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+						IOManager.saveStundenplan(MainApplicationManager.getStundenplan(), getApplicationContext());
 						startActivity(wizard);
 
 					}
@@ -79,7 +83,6 @@ public class Settings extends Activity {
 					}
 				});
 				adb.show();
-				
 
 			}
 		});

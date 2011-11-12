@@ -20,6 +20,12 @@ import android.widget.Toast;
 
 import com.flurry.android.FlurryAgent;
 
+/**
+ * GUI Klasse für das Löschen von Veranstaltungen
+ * 
+ * @author Moritz Wiechers
+ * 
+ */
 public class AdaptStundenplan extends Activity {
 
 	private ArrayList<Veranstaltung> veranstaltungen;
@@ -32,9 +38,10 @@ public class AdaptStundenplan extends Activity {
 
 	public void onStart() {
 		super.onStart();
+		if (MainApplicationManager.isFinish())
+			finish();
 		Log.e(this.getClass().toString(), "Start");
 		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
-
 	}
 
 	public void onStop() {
@@ -94,7 +101,7 @@ public class AdaptStundenplan extends Activity {
 						veranstaltungen.remove(ver);
 					if (count > 0) {
 						MainApplicationManager.getStundenplan().setVeranstaltungen(veranstaltungen);
-						IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+						IOManager.saveStundenplan(MainApplicationManager.getStundenplan(), getApplicationContext());
 
 						deselect_all();
 						build_list();

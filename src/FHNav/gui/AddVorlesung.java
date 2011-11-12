@@ -48,6 +48,8 @@ public class AddVorlesung extends Activity implements Runnable {
 	public void onStart() {
 		super.onStart();
 		Log.e(this.getClass().toString(), "Start");
+		if (MainApplicationManager.isFinish())
+			finish();
 		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
 
 	}
@@ -113,7 +115,7 @@ public class AddVorlesung extends Activity implements Runnable {
 
 					if (count > 0) {
 						MainApplicationManager.setStundenplan(s);
-						IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+						IOManager.saveStundenplan(MainApplicationManager.getStundenplan(), getApplicationContext());
 						Toast t = Toast.makeText(getApplicationContext(), getString(R.string.addveranstaltung_toast_text_1a) + " " + count + " "
 								+ getString(R.string.addveranstaltung_toast_text_1b), Toast.LENGTH_SHORT);
 						t.show();

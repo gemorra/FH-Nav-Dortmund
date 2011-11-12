@@ -56,17 +56,19 @@ public class Menu extends Activity {
 
 	public void onResume() {
 		super.onResume();
-		Log.e("Menu", "Resume");
+		Log.e(this.getClass().toString(), "Resume");
+		refresListView(true);
 	}
 
 	public void onStart() {
 		super.onStart();
 		Log.e(this.getClass().toString(), "Start");
-		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
-		refresListView(true);
+		if (MainApplicationManager.isFinish())
+			finish();
+		else
+			refresListView(true);
 
-		if(MainApplicationManager.getCtx()==null)
-			MainApplicationManager.setCtx(getApplicationContext());
+		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
 	}
 
 	public void onStop() {
@@ -77,9 +79,8 @@ public class Menu extends Activity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.e("Menu", "Create");
-		if(MainApplicationManager.getCtx()==null)
-			MainApplicationManager.setCtx(getApplicationContext());
+		Log.e(this.getClass().toString(), "Create");
+
 		addVorlesung = new Intent(Menu.this, AddVorlesung.class);
 		adaptstundenplan = new Intent(Menu.this, AdaptStundenplan.class);
 		settings = new Intent(Menu.this, Settings.class);
@@ -87,7 +88,7 @@ public class Menu extends Activity {
 
 		if (SettingsManager.isWizardDone()) {
 			setContentView(R.layout.menu);
-			MainApplicationManager.setStundenplan(IOManager.loadStundenplan());
+			MainApplicationManager.setStundenplan(IOManager.loadStundenplan(getApplicationContext()));
 
 			header = (TextView) findViewById(R.id.menu_header);
 			header.setText(getString(R.string.normal_view));
@@ -162,19 +163,18 @@ public class Menu extends Activity {
 
 				}
 			});
-			
-//			Button btn4;
-//			btn4 = (Button) findViewById(R.id.Button04);
-//			btn4.setOnClickListener(new View.OnClickListener() {
-//				
-//				public void onClick(View v) {
-//				MainApplicationManager.setFinish(true);
-//				finish();
-//				System.exit(0);
-//				}
-//			});
-			
-			
+
+			Button btn4;
+			btn4 = (Button) findViewById(R.id.exit_application);
+			btn4.setOnClickListener(new View.OnClickListener() {
+
+				public void onClick(View v) {
+					MainApplicationManager.setFinish(true);
+					finish();
+					// System.exit(0);
+				}
+			});
+
 		} else {
 			startActivity(wizard);
 		}
@@ -239,7 +239,8 @@ public class Menu extends Activity {
 				if (i == 0) {
 					header = "Heute (" + getString(Tools.getWeekday(els[i].getItems().get(0).getWochentag())) + "," + sdf.format(c1.getTime()) + ")";
 				} else if (i == 1) {
-					header = getString(R.string.tomorrow) + " (" + getString(Tools.getWeekday(els[i].getItems().get(0).getWochentag())) + "," + sdf.format(c1.getTime()) + ")";
+					header = getString(R.string.tomorrow) + " (" + getString(Tools.getWeekday(els[i].getItems().get(0).getWochentag())) + ","
+							+ sdf.format(c1.getTime()) + ")";
 				} else
 					header = getString(Tools.getWeekday(els[i].getItems().get(0).getWochentag())) + "," + sdf.format(c1.getTime());
 				separatedListAdapter.addSection(header, els[i]);
@@ -285,7 +286,7 @@ public class Menu extends Activity {
 							public void onClick(DialogInterface dialog, int which) {
 								if (which == 0) {
 									MainApplicationManager.getStundenplan().removeVeranstaltung(ver);
-									IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+									IOManager.saveStundenplan(MainApplicationManager.getStundenplan(), getApplicationContext());
 									visibleFirst = lv1.getFirstVisiblePosition();
 									View v = lv1.getChildAt(0);
 									topy = (v == null) ? 0 : v.getTop();
@@ -333,7 +334,7 @@ public class Menu extends Activity {
 	}
 
 	public void build_calendar_dialog() {
-		final CalendarAdapter ca = new CalendarAdapter();
+		final CalendarAdapter ca = new CalendarAdapter(getApplicationContext());
 		ca.setSelectedid(0);
 		AlertDialog.Builder builder;
 		@SuppressWarnings("unused")
@@ -436,8 +437,7 @@ public class Menu extends Activity {
 					to = sdfToDate.parse((String) textTo.getText());
 					to.setHours(23);
 					to.setMinutes(59);
-					// Log.e("from",from.toLocaleString());
-					// Log.e("to",to.toLocaleString());
+
 					int count = 0;
 					for (Veranstaltung ver : MainApplicationManager.getStundenplan().getVeranstaltungen()) {
 						ca.addRecEventToCalendar(ver, from, to);

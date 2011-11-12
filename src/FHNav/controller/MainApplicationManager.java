@@ -6,9 +6,19 @@ import FHNav.model.CanteenMenu;
 import FHNav.model.Stundenplan;
 import FHNav.model.Veranstaltung;
 import android.app.Activity;
-import android.content.Context;
 
+/**
+ * Diese Klasse dient als "Sammelcontainer" Der Stundenplan und Speiseplan u.A.
+ * werden so "appweit" verwaltet.
+ * 
+ * @author Moritz Wiechers
+ * 
+ */
 public class MainApplicationManager {
+
+	/**
+	 * aktualisiert den Speiseplan
+	 */
 
 	public static void refreshData() {
 		downloading = true;
@@ -17,26 +27,35 @@ public class MainApplicationManager {
 		downloading = false;
 		fireDownloader();
 	}
+
 	private static ArrayList<I_Mensa_Downloader> listener = new ArrayList<I_Mensa_Downloader>();
-	
-	private static void fireDownloader()
-	{
-		for(I_Mensa_Downloader i : listener)
-		{
+
+	private static void fireDownloader() {
+		for (I_Mensa_Downloader i : listener) {
 			i.downloadDone();
 		}
 	}
 
-	public static void addListener(I_Mensa_Downloader i){
+	public static void addListener(I_Mensa_Downloader i) {
 		listener.add(i);
 	}
-	public static void removeListener(I_Mensa_Downloader i){
+
+	public static void removeListener(I_Mensa_Downloader i) {
 		listener.remove(i);
 	}
-	
+
+	private static boolean finish = false;
+
+	public static boolean isFinish() {
+		return finish;
+	}
+
+	public static void setFinish(boolean finish) {
+		MainApplicationManager.finish = finish;
+	}
+
 	private static String selectedBranch = "";
-	
-	
+
 	public static String getSelectedBranch() {
 		return selectedBranch;
 	}
@@ -44,12 +63,12 @@ public class MainApplicationManager {
 	public static void setSelectedBranch(String selectedBranch) {
 		MainApplicationManager.selectedBranch = selectedBranch;
 	}
+
 	private static boolean downloading = false;
-	
+
 	private static ArrayList<CanteenMenu> dataKostBar;
 	private static ArrayList<CanteenMenu> dataMensa;
 
-	private static Context ctx;
 	private static Activity currentAcctivity;
 	private static Stundenplan stundenplan;
 
@@ -87,14 +106,6 @@ public class MainApplicationManager {
 		MainApplicationManager.bfst = bfst;
 	}
 
-	public static Context getCtx() {
-		return ctx;
-	}
-
-	public static void setCtx(Context ctx) {
-		MainApplicationManager.ctx = ctx;
-	}
-
 	public static Activity getCurrentAcctivity() {
 		return currentAcctivity;
 	}
@@ -115,15 +126,7 @@ public class MainApplicationManager {
 	}
 
 	public static ArrayList<Veranstaltung> getVeranstaltungen() {
-		ArrayList<Veranstaltung> m_orders = new ArrayList<Veranstaltung>();
-
-		if (MainApplicationManager.getStundenplan().getVeranstaltungen().size() > 990) {
-			for (int i = 0; i < 990; i++) {
-				m_orders.add(MainApplicationManager.getStundenplan().getVeranstaltungen().get(i));
-			}
-			return m_orders;
-		} else
-			return MainApplicationManager.getStundenplan().getVeranstaltungen();
+		return MainApplicationManager.getStundenplan().getVeranstaltungen();
 
 	}
 }

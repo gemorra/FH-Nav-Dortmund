@@ -38,9 +38,10 @@ public class Wizard extends Activity implements Runnable {
 	public void onStart() {
 		super.onStart();
 		Log.e(this.getClass().toString(), "Start");
+		if (MainApplicationManager.isFinish())
+			finish();
+
 		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
-//		if(MainApplicationManager.isFinish())
-//			finish();
 
 	}
 
@@ -48,18 +49,11 @@ public class Wizard extends Activity implements Runnable {
 		super.onStop();
 		FlurryAgent.onEndSession(this);
 		Log.e(this.getClass().toString(), "Stop");
-		if(MainApplicationManager.getCtx()==null)
-			MainApplicationManager.setCtx(getApplicationContext());
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.e("Wizard", "Create");
-		if(MainApplicationManager.getCtx()==null)
-			MainApplicationManager.setCtx(getApplicationContext());
-		SettingsManager.loadSettings(this);
-		// SettingsManager.setPathToFile("www.gemorra.de/fhnav/connec.php");
-		// Vorbereitungen und Dialog anzeigen
 
 		setContentView(R.layout.wizard);
 		getWindow().setBackgroundDrawableResource(R.drawable.b2obenunten);
@@ -79,13 +73,9 @@ public class Wizard extends Activity implements Runnable {
 			}
 		});
 		adb.setNegativeButton(R.string.wizard_skip_button, new DialogInterface.OnClickListener() {
-			
+
 			public void onClick(DialogInterface dialog, int which) {
-				SettingsManager.setWizardDone(true);
-				MainApplicationManager.setStundenplan(new Stundenplan());
-				IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
-				startActivity(new Intent(Wizard.this, Menu.class));	
-				MainApplicationManager.setSelectedBranch("");
+				new_blank_plan();
 			}
 		});
 		adb.show();
@@ -140,13 +130,9 @@ public class Wizard extends Activity implements Runnable {
 					});
 					Button btn2 = (Button) error_dialog.findViewById(R.id.alert_dialog_connection_problem_buttonNext);
 					btn2.setOnClickListener(new OnClickListener() {
-						// Anderen Pfad angeben und neuer Versuch:
+
 						public void onClick(View v) {
-							MainApplicationManager.setStundenplan(new Stundenplan());
-							IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
-							SettingsManager.setWizardDone(true);
-							startActivity(new Intent(Wizard.this, Menu.class));
-							MainApplicationManager.setSelectedBranch("");
+							new_blank_plan();
 						}
 					});
 
@@ -182,11 +168,7 @@ public class Wizard extends Activity implements Runnable {
 				Button btn2 = (Button) error_dialog.findViewById(R.id.alert_dialog_connection_problem_buttonNext);
 				btn2.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
-						MainApplicationManager.setStundenplan(new Stundenplan());
-						IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
-						SettingsManager.setWizardDone(true);
-						startActivity(new Intent(Wizard.this, Menu.class));
-						MainApplicationManager.setSelectedBranch("");
+						new_blank_plan();
 					}
 				});
 				dialog.dismiss();
@@ -202,12 +184,13 @@ public class Wizard extends Activity implements Runnable {
 				String selectedBranch = (String) (spinner1.getSelectedItem());
 				MainApplicationManager.setStundenplan(PHPConnector.getStundenplanFromMysql((String) (spinner1.getSelectedItem())));
 				if (MainApplicationManager.getStundenplan().getVeranstaltungen().size() > 0) {
-					IOManager.saveStundenplan(MainApplicationManager.getStundenplan());
+					IOManager.saveStundenplan(MainApplicationManager.getStundenplan(), getApplicationContext());
 					SettingsManager.setWizardDone(true);
-					startActivity(new Intent(Wizard.this, Menu.class));
 					MainApplicationManager.setSelectedBranch(selectedBranch);
-				} else {
+					startActivity(new Intent(Wizard.this, Menu.class));
 
+				} else {
+					new_blank_plan();
 				}
 			} catch (Exception e) {
 			} finally {
@@ -232,6 +215,15 @@ public class Wizard extends Activity implements Runnable {
 			}
 
 		}
+	}
+
+	public void new_blank_plan() {
+		SettingsManager.setWizardDone(true);
+		MainApplicationManager.setStundenplan(new Stundenplan());
+		IOManager.saveStundenplan(MainApplicationManager.getStundenplan(), getApplicationContext());
+		MainApplicationManager.setSelectedBranch("");
+		startActivity(new Intent(Wizard.this, Menu.class));
+
 	}
 
 	@Override

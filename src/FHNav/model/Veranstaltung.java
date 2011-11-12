@@ -3,6 +3,12 @@ package FHNav.model;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Stellt die einzelne Veranstaltung dar
+ * 
+ * @author Moritz Wiechers
+ * 
+ */
 public class Veranstaltung implements Serializable, Comparable<Veranstaltung> {
 
 	/**
@@ -41,6 +47,9 @@ public class Veranstaltung implements Serializable, Comparable<Veranstaltung> {
 
 	}
 
+	/**
+	 * Dient der Sortierung nach dem Datum
+	 */
 	public int compareTo(Veranstaltung ver) {
 		final int BEFORE = -1;
 		final int EQUAL = 0;
@@ -70,6 +79,13 @@ public class Veranstaltung implements Serializable, Comparable<Veranstaltung> {
 		setEndTime(getEndDateFromInt(start, dauer));
 	}
 
+	/**
+	 * Transformation für das Ende einer Veranstaltung
+	 * 
+	 * @param value
+	 * @param duration
+	 * @return
+	 */
 	public static Date getEndDateFromInt(int value, int duration) {
 		Date dt;
 		value += (duration - 1);
@@ -79,6 +95,12 @@ public class Veranstaltung implements Serializable, Comparable<Veranstaltung> {
 
 	}
 
+	/**
+	 * Transformation für den Anfang einer Veranstaltung
+	 * 
+	 * @param value
+	 * @return
+	 */
 	public static Date getStartDateFromInt(int value) {
 		value++;
 		Date dt = new Date();
@@ -136,7 +158,7 @@ public class Veranstaltung implements Serializable, Comparable<Veranstaltung> {
 	}
 
 	/**
-	 * Erstmal ohne Semester und Studiengang
+	 * Vergleich auf Gleichheit
 	 */
 	@Override
 	public boolean equals(Object o) {

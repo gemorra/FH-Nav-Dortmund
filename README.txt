@@ -10,6 +10,12 @@ Vorraussetzungen:
 
  - Java
  - AndroidSDK
+ 
+ 
  - Eclipse Plugin für Android (falls Eclipse benutzt wird)
+ - git + eclipseplugin
+ 
+Eventuell muss der Ordner "gen" in Eclipse gelöscht werden. 
+
 
 Moritz Wiechers

@@ -25,8 +25,10 @@ public class SplashScreen extends Activity {
 		Log.e(this.getClass().toString(), "Start");
 		if (MainApplicationManager.isFinish())
 			finish();
-		else
+		else{
 			FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
+			SettingsManager.loadSettings(getApplicationContext());
+		}
 	}
 
 	public void onStop() {
@@ -40,12 +42,13 @@ public class SplashScreen extends Activity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.e(this.getClass().toString(), "Create");
 		MainApplicationManager.setFinish(false);
 		setContentView(R.layout.splashscreen);
 		t1 = (TextView) findViewById(R.id.textView1);
 		Date dt = new Date();
 		startTime = dt.getTime();
-		SettingsManager.loadSettings(this);
+		
 		Thread splashTread = new Thread() {
 			@Override
 			public void run() {

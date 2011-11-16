@@ -182,10 +182,10 @@ public class Wizard extends Activity implements Runnable {
 		if (!loadSpinner) {
 			try {
 				String selectedBranch = (String) (spinner1.getSelectedItem());
-				MainApplicationManager.setStundenplan(PHPConnector.getStundenplanFromMysql((String) (spinner1.getSelectedItem())));
+				MainApplicationManager.setStundenplan(PHPConnector.getStundenplanFromMysql((String) (spinner1.getSelectedItem()),getApplicationContext()));
 				if (MainApplicationManager.getStundenplan().getVeranstaltungen().size() > 0) {
 					IOManager.saveStundenplan(MainApplicationManager.getStundenplan(), getApplicationContext());
-					SettingsManager.setWizardDone(true);
+					SettingsManager.setWizardDone(true,getApplicationContext());
 					MainApplicationManager.setSelectedBranch(selectedBranch);
 					startActivity(new Intent(Wizard.this, Menu.class));
 
@@ -205,7 +205,7 @@ public class Wizard extends Activity implements Runnable {
 			// T1 Liste der Stundenpläne downloaden und bei => H1 in Spinner
 			// packen
 			try {
-				spinnerContent = PHPConnector.getAllBranches();
+				spinnerContent = PHPConnector.getAllBranches(getApplicationContext());
 				Message msg = handler.obtainMessage();
 				handle1 = true;
 				handler.sendMessage(msg);
@@ -218,7 +218,7 @@ public class Wizard extends Activity implements Runnable {
 	}
 
 	public void new_blank_plan() {
-		SettingsManager.setWizardDone(true);
+		SettingsManager.setWizardDone(true,getApplicationContext());
 		MainApplicationManager.setStundenplan(new Stundenplan());
 		IOManager.saveStundenplan(MainApplicationManager.getStundenplan(), getApplicationContext());
 		MainApplicationManager.setSelectedBranch("");

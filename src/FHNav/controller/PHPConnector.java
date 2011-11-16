@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import FHNav.model.Stundenplan;
 import FHNav.model.Veranstaltung;
+import android.content.Context;
 import android.util.Log;
 
 public class PHPConnector {
@@ -33,14 +34,14 @@ public class PHPConnector {
 	 *            Variablen in der URL statt
 	 * @return
 	 */
-	public static JSONArray getJSONArray(ArrayList<NameValuePair> nvp) {
+	public static JSONArray getJSONArray(ArrayList<NameValuePair> nvp, Context ctx) {
 		String result = "";
 
 		try {
 
 			HttpClient httpclient = new DefaultHttpClient();
 
-			HttpPost httppost = new HttpPost(SettingsManager.getPathToFile());
+			HttpPost httppost = new HttpPost(SettingsManager.getPathToFile(ctx));
 
 			httppost.setEntity(new UrlEncodedFormEntity(nvp));
 
@@ -91,7 +92,7 @@ public class PHPConnector {
 	 * 
 	 * @return Liste mit allen Stundenplänen
 	 */
-	public static ArrayList<String> getAllBranches() {
+	public static ArrayList<String> getAllBranches(Context ctx) {
 
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
@@ -100,7 +101,7 @@ public class PHPConnector {
 		// http post
 		ArrayList<String> ret = new ArrayList<String>();
 
-		JSONArray jArray = getJSONArray(nameValuePairs);
+		JSONArray jArray = getJSONArray(nameValuePairs,ctx);
 		try {
 			for (int i = 0; i < jArray.length(); i++) {
 
@@ -123,7 +124,7 @@ public class PHPConnector {
 	 *            Studiengang+Semester)
 	 * @return der generierte Stundenplan
 	 */
-	public static Stundenplan getStundenplanFromMysql(String s) {
+	public static Stundenplan getStundenplanFromMysql(String s, Context ctx) {
 
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
@@ -132,7 +133,7 @@ public class PHPConnector {
 
 		Stundenplan stundenplan = new Stundenplan();
 
-		JSONArray jArray = getJSONArray(nameValuePairs);
+		JSONArray jArray = getJSONArray(nameValuePairs, ctx);
 
 		try {
 			for (int i = 0; i < jArray.length(); i++) {

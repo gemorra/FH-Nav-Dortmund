@@ -221,7 +221,7 @@ public class AddVorlesung extends Activity implements Runnable {
 		try {
 			if (!loadSpinner) {
 
-				Stundenplan stundenplan = PHPConnector.getStundenplanFromMysql((String) (spinner1.getSelectedItem()));
+				Stundenplan stundenplan = PHPConnector.getStundenplanFromMysql((String) (spinner1.getSelectedItem()),getApplicationContext());
 
 				if (stundenplan.getVeranstaltungen().size() > 0) {
 
@@ -235,7 +235,7 @@ public class AddVorlesung extends Activity implements Runnable {
 				spinnerContent = new ArrayList<String>();
 				spinnerContent.add("Studiengang wählen");
 
-				spinnerContent.addAll(PHPConnector.getAllBranches());
+				spinnerContent.addAll(PHPConnector.getAllBranches(getApplicationContext()));
 
 				Message msg = handler.obtainMessage();
 				handler.sendMessage(msg);

@@ -20,8 +20,10 @@ public class NormalListAdapterForMenu extends BaseAdapter {
 	private ArrayList<CanteenMenu> items;
 	String pattern = "HH:mm";
 	SimpleDateFormat sdf = new SimpleDateFormat();
-
+	Context ctx;
+	
 	public NormalListAdapterForMenu(Context ctx, ArrayList<CanteenMenu> items) {
+		this.ctx = ctx;
 		mInflater = LayoutInflater.from(ctx);
 		this.items = items;
 		sdf.applyPattern(pattern);
@@ -42,17 +44,17 @@ public class NormalListAdapterForMenu extends BaseAdapter {
 			LayoutParams paramsTop = holder.toptext.getLayoutParams();
 			// LayoutParams paramsBottom = holder.bottomtext.getLayoutParams();
 
-			if (SettingsManager.getText_size() == 1) {
+			if (SettingsManager.getText_size(ctx) == 1) {
 				// holder.bottomtext.setTextSize(0);
 				holder.toptext.setTextSize(15);
 				// paramsBottom.height = 0;
 				paramsTop.height = 65;
-			} else if (SettingsManager.getText_size() == 2) {
+			} else if (SettingsManager.getText_size(ctx) == 2) {
 				// holder.bottomtext.setTextSize(0);
 				holder.toptext.setTextSize(20);
 				// paramsBottom.height = 0;
 				paramsTop.height = 80;
-			} else if (SettingsManager.getText_size() == 0) {
+			} else if (SettingsManager.getText_size(ctx) == 0) {
 				// holder.bottomtext.setTextSize(0);
 				holder.toptext.setTextSize(10);
 				// paramsBottom.height = 0;

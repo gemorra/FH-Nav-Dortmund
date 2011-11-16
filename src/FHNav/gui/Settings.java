@@ -71,7 +71,7 @@ public class Settings extends Activity {
 					// (siehe run()
 					// unten) => T1
 					public void onClick(DialogInterface dialog2, int which) {
-						SettingsManager.setWizardDone(false);
+						SettingsManager.setWizardDone(false,getApplicationContext());
 						MainApplicationManager.setStundenplan(new Stundenplan());
 						IOManager.saveStundenplan(MainApplicationManager.getStundenplan(), getApplicationContext());
 						startActivity(wizard);
@@ -94,7 +94,7 @@ public class Settings extends Activity {
 
 		textSizeSpinner.setPromptId(R.string.settings_text_size);
 		textSizeSpinner.setAdapter(adapter2);
-		textSizeSpinner.setSelection(SettingsManager.getText_size());
+		textSizeSpinner.setSelection(SettingsManager.getText_size(getApplicationContext()));
 		textSizeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -106,7 +106,7 @@ public class Settings extends Activity {
 		});
 
 		groupletterCheckbox = (CheckBox) findViewById(R.id.settings_lecture_details_groupletter_checkbox);
-		groupletterCheckbox.setChecked(SettingsManager.isLecture_details_groupletter());
+		groupletterCheckbox.setChecked(SettingsManager.isLecture_details_groupletter(getApplicationContext()));
 		groupletterCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -115,7 +115,7 @@ public class Settings extends Activity {
 		});
 
 		lecturerCheckbox = (CheckBox) findViewById(R.id.settings_lecture_details_lecturer_checkbox);
-		lecturerCheckbox.setChecked(SettingsManager.isLecture_details_lecturer());
+		lecturerCheckbox.setChecked(SettingsManager.isLecture_details_lecturer(getApplicationContext()));
 		lecturerCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -124,7 +124,7 @@ public class Settings extends Activity {
 		});
 
 		typeCheckbox = (CheckBox) findViewById(R.id.settings_lecture_details_type_checkbox);
-		typeCheckbox.setChecked(SettingsManager.isLecture_details_type());
+		typeCheckbox.setChecked(SettingsManager.isLecture_details_type(getApplicationContext()));
 		typeCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -170,10 +170,10 @@ public class Settings extends Activity {
 
 	public void save() {
 
-		SettingsManager.setText_size(textSizeSpinner.getSelectedItemPosition());
-		SettingsManager.setLecture_details_groupletter(groupletterCheckbox.isChecked());
-		SettingsManager.setLecture_details_lecturer(lecturerCheckbox.isChecked());
-		SettingsManager.setLecture_details_type(typeCheckbox.isChecked());
+		SettingsManager.setText_size(textSizeSpinner.getSelectedItemPosition(),getApplicationContext());
+		SettingsManager.setLecture_details_groupletter(groupletterCheckbox.isChecked(),getApplicationContext());
+		SettingsManager.setLecture_details_lecturer(lecturerCheckbox.isChecked(),getApplicationContext());
+		SettingsManager.setLecture_details_type(typeCheckbox.isChecked(),getApplicationContext());
 	}
 
 	public void restore() {

@@ -20,9 +20,11 @@ public class NormalListAdapter extends BaseAdapter {
 	private ArrayList<Veranstaltung> items;
 	String pattern = "HH:mm";
 	SimpleDateFormat sdf = new SimpleDateFormat();
-
+	Context ctx;
+	
 	public NormalListAdapter(Context ctx, ArrayList<Veranstaltung> items) {
 		mInflater = LayoutInflater.from(ctx);
+		this.ctx = ctx;
 		this.items = items;
 		sdf.applyPattern(pattern);
 	}
@@ -41,17 +43,17 @@ public class NormalListAdapter extends BaseAdapter {
 			LayoutParams paramsTop = holder.toptext.getLayoutParams();
 			LayoutParams paramsBottom = holder.bottomtext.getLayoutParams();
 
-			if (SettingsManager.getText_size() == 1) {
+			if (SettingsManager.getText_size(ctx) == 1) {
 				holder.bottomtext.setTextSize(15);
 				holder.toptext.setTextSize(15);
 				paramsBottom.height = 25;
 				paramsTop.height = 40;
-			} else if (SettingsManager.getText_size() == 2) {
+			} else if (SettingsManager.getText_size(ctx) == 2) {
 				holder.bottomtext.setTextSize(20);
 				holder.toptext.setTextSize(20);
 				paramsBottom.height = 30;
 				paramsTop.height = 50;
-			} else if (SettingsManager.getText_size() == 0) {
+			} else if (SettingsManager.getText_size(ctx) == 0) {
 				holder.bottomtext.setTextSize(10);
 				holder.toptext.setTextSize(10);
 				paramsBottom.height = 20;
@@ -69,15 +71,15 @@ public class NormalListAdapter extends BaseAdapter {
 		Veranstaltung ve = items.get(position);
 
 		String topText = ve.getName();
-		if (SettingsManager.isLecture_details_type())
+		if (SettingsManager.isLecture_details_type(ctx))
 			if (ve.getType().length() > 0)
 				topText += " [" + ve.getType() + "]";
 
 		String bottomText = sdf.format(ve.getStartTime()) + "-" + sdf.format(ve.getEndTime()) + " " + ve.getRaum();
 
-		if (SettingsManager.isLecture_details_groupletter())
+		if (SettingsManager.isLecture_details_groupletter(ctx))
 			bottomText += " (" + ve.getStudentSet() + ")";
-		if (SettingsManager.isLecture_details_lecturer())
+		if (SettingsManager.isLecture_details_lecturer(ctx))
 			bottomText += " " + ve.getDozent();
 		holder.bottomtext.setText(bottomText);
 		holder.toptext.setText(topText);

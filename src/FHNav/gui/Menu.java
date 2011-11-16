@@ -86,7 +86,7 @@ public class Menu extends Activity {
 		settings = new Intent(Menu.this, Settings.class);
 		wizard = new Intent(Menu.this, Wizard.class);
 
-		if (SettingsManager.isWizardDone()) {
+		if (SettingsManager.isWizardDone(getApplicationContext())) {
 			setContentView(R.layout.menu);
 			MainApplicationManager.setStundenplan(IOManager.loadStundenplan(getApplicationContext()));
 

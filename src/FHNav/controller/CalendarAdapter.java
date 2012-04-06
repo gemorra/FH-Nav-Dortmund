@@ -19,8 +19,15 @@ public class CalendarAdapter {
 
 	public CalendarAdapter(Context ctx) {
 		this.ctx = ctx;
-		Cursor cursor = this.ctx.getContentResolver().query(Uri.parse("content://com.android.calendar/calendars"), new String[] { "_id", "displayName" }, null,
-				null, null);
+		Cursor cursor;
+		if (android.os.Build.VERSION.SDK_INT > 14) {
+			cursor = this.ctx.getContentResolver().query(Uri.parse("content://com.android.calendar/calendars"), new String[] { "_id", "calendar_displayName" },
+					null, null, null);
+		} else {
+			cursor = this.ctx.getContentResolver().query(Uri.parse("content://com.android.calendar/calendars"), new String[] { "_id", "displayName" },
+					null, null, null);
+		}
+
 		cursor.moveToFirst();
 		// Get calendars name
 		calendarNames = new String[cursor.getCount()];
@@ -51,7 +58,7 @@ public class CalendarAdapter {
 		contentEvent.put("description", "bei " + ver.getDozent());
 		contentEvent.put("eventLocation", ver.getRaum());
 		contentEvent.put("eventTimezone", "Europe/Berlin");
-		
+
 		Calendar c1 = Calendar.getInstance();
 		c1.set(start.getYear() + 1900, start.getMonth(), start.getDate(), ver.getStartTime().getHours(), ver.getStartTime().getMinutes());
 		c1.setFirstDayOfWeek(Calendar.MONDAY);
@@ -98,30 +105,33 @@ public class CalendarAdapter {
 	public void setSelectedid(int selectedId) {
 		this.selectedId = selectedId;
 	}
-//	public void getEvent(Context ctx)
-//	{
-//		Uri.Builder builder = Uri.parse("content://com.android.calendar/instances/when").buildUpon();
-//		long now = new Date().getTime();
-//		ContentUris.appendId(builder, now - DateUtils.WEEK_IN_MILLIS);
-//		ContentUris.appendId(builder, now + DateUtils.WEEK_IN_MILLIS);
-//		 
-//		Cursor eventCursor = ctx.getContentResolver().query(builder.build(),
-//		        new String[] { "title", "begin", "end", "allDay", "rrule","duration","timezone"}, "Calendars._id=" + calendarId[selectedId],
-//		        null, "startDay ASC, startMinute ASC" );
-//		 
-//		while (eventCursor.moveToNext()) {
-//		    final String title = eventCursor.getString(0);
-//		    final Date begin = new Date(eventCursor.getLong(1));
-//		    final Date end = new Date(eventCursor.getLong(2));
-//		    final Boolean allDay = !eventCursor.getString(3).equals("0");
-//		    String rrule = eventCursor.getString(4);
-//		    String rdate = eventCursor.getString(5);
-//		    String tzone = eventCursor.getString(6);
-//		   
-//		    Log.e("asd: ","Title: " + title + " Zone: " + tzone );
-//		}
-//		
-//	}
+	// public void getEvent(Context ctx)
+	// {
+	// Uri.Builder builder =
+	// Uri.parse("content://com.android.calendar/instances/when").buildUpon();
+	// long now = new Date().getTime();
+	// ContentUris.appendId(builder, now - DateUtils.WEEK_IN_MILLIS);
+	// ContentUris.appendId(builder, now + DateUtils.WEEK_IN_MILLIS);
+	//
+	// Cursor eventCursor = ctx.getContentResolver().query(builder.build(),
+	// new String[] { "title", "begin", "end", "allDay",
+	// "rrule","duration","timezone"}, "Calendars._id=" +
+	// calendarId[selectedId],
+	// null, "startDay ASC, startMinute ASC" );
+	//
+	// while (eventCursor.moveToNext()) {
+	// final String title = eventCursor.getString(0);
+	// final Date begin = new Date(eventCursor.getLong(1));
+	// final Date end = new Date(eventCursor.getLong(2));
+	// final Boolean allDay = !eventCursor.getString(3).equals("0");
+	// String rrule = eventCursor.getString(4);
+	// String rdate = eventCursor.getString(5);
+	// String tzone = eventCursor.getString(6);
+	//
+	// Log.e("asd: ","Title: " + title + " Zone: " + tzone );
+	// }
+	//
+	// }
 	/*
 	 * erste Tests mit Kalender public void addEventToCalendar() {
 	 * 

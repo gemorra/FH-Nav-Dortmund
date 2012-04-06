@@ -23,13 +23,11 @@ public class NormalListAdapter extends BaseAdapter {
 	SimpleDateFormat sdf = new SimpleDateFormat();
 	Context ctx;
 	float res = MainApplicationManager.getDensity();
-	
-	private int t_size = normal;
-	
+
 	private final static int small = 10;
 	private final static int normal = 15;
 	private final static int big = 20;
-	
+
 	public NormalListAdapter(Context ctx, ArrayList<Veranstaltung> items) {
 		mInflater = LayoutInflater.from(ctx);
 		this.ctx = ctx;
@@ -48,31 +46,27 @@ public class NormalListAdapter extends BaseAdapter {
 
 			holder.toptext = (TextView) convertView.findViewById(R.id.normal_row_toptext);
 
-			LayoutParams paramsTop = holder.toptext.getLayoutParams();
-			LayoutParams paramsBottom = holder.bottomtext.getLayoutParams();
-			
+
 			if (SettingsManager.getText_size(ctx) == 1) {
 				holder.bottomtext.setTextSize(normal);
 				holder.toptext.setTextSize(normal);
-				t_size = normal;
-				
-//				paramsBottom.height = 25;
-//				paramsTop.height = 40;
+
+				// paramsBottom.height = 25;
+				// paramsTop.height = 40;
 			} else if (SettingsManager.getText_size(ctx) == 2) {
 				holder.bottomtext.setTextSize(big);
 				holder.toptext.setTextSize(big);
-//				paramsBottom.height = 30;
-//				paramsTop.height = 50;
-				t_size = big;
+				// paramsBottom.height = 30;
+				// paramsTop.height = 50;
+
 			} else if (SettingsManager.getText_size(ctx) == 0) {
 				holder.bottomtext.setTextSize(small);
 				holder.toptext.setTextSize(small);
-//				paramsBottom.height = 20;
-//				paramsTop.height = 30;
-				t_size = small;
+				// paramsBottom.height = 20;
+				// paramsTop.height = 30;
+
 			}
-//			holder.toptext.setHeight(800);
-			
+			// holder.toptext.setHeight(800);
 
 			convertView.setTag(holder);
 		} else {
@@ -95,19 +89,20 @@ public class NormalListAdapter extends BaseAdapter {
 			bottomText += " " + ve.getDozent();
 		holder.bottomtext.setText(bottomText);
 		holder.toptext.setText(topText);
-//		int tb = holder.toptext.getMeasuredHeight();
-		
-//		int i = tb;
-//		holder.bottomtext.invalidate();
-//		int linecount = holder.toptext.getLineCount();
-//		int height_in_pixel = (int)(holder.toptext.getLineCount()*holder.toptext.getLineHeight()*MainApplicationManager.getDensity());
-//		
-////		holder.bottomtext.setHeight(LayoutParams.WRAP_CONTENT);
+		// int tb = holder.toptext.getMeasuredHeight();
+
+		// int i = tb;
+		// holder.bottomtext.invalidate();
+		// int linecount = holder.toptext.getLineCount();
+		// int height_in_pixel =
+		// (int)(holder.toptext.getLineCount()*holder.toptext.getLineHeight()*MainApplicationManager.getDensity());
+		//
+		// // holder.bottomtext.setHeight(LayoutParams.WRAP_CONTENT);
 		LayoutParams paramsTop = holder.toptext.getLayoutParams();
-		paramsTop.height=0;
+		paramsTop.height = 0;
 		LayoutParams paramsBottom = holder.bottomtext.getLayoutParams();
-		paramsBottom.height=0;
-		
+		paramsBottom.height = 0;
+
 		holder.toptext.setLayoutParams(paramsTop);
 		holder.bottomtext.setLayoutParams(paramsBottom);
 		return convertView;

@@ -56,7 +56,7 @@ public class Wizard extends Activity implements Runnable {
 		Log.e("Wizard", "Create");
 
 		setContentView(R.layout.wizard);
-		getWindow().setBackgroundDrawableResource(R.drawable.b2obenunten);
+		getWindow().setBackgroundDrawableResource(R.drawable.bgunten);
 		AlertDialog.Builder adb = new AlertDialog.Builder(Wizard.this);
 		adb.setTitle(R.string.wizard_alert_title);
 		adb.setMessage(R.string.wizard_alert_message);

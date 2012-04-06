@@ -1,6 +1,5 @@
 package FHNav.gui;
 
-import java.nio.channels.FileChannel.MapMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,7 +19,6 @@ import FHNav.model.Veranstaltung;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -55,7 +53,6 @@ public class Menu extends Activity {
 	boolean agenda = false;
 	ListView lv1;
 	TextView header;
-	
 	
 	public void onResume() {
 		super.onResume();

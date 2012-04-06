@@ -62,8 +62,6 @@ public class ExtendedListAdapter extends BaseAdapter {
 			holder.bottomtext = (TextView) convertView.findViewById(R.id.extenden_row_bottomtext);
 			holder.toptext = (TextView) convertView.findViewById(R.id.extenden_row_toptext);
 			holder.checkbox = (CheckBox) convertView.findViewById(R.id.extenden_row_checkbox);
-			LayoutParams paramsTop = holder.toptext.getLayoutParams();
-			LayoutParams paramsBottom = holder.bottomtext.getLayoutParams();
 
 
 			if (SettingsManager.getText_size(ctx) == 1) {

@@ -14,27 +14,23 @@
         android:focusable = "false"/>
 
     <LinearLayout
-        android:orientation="vertical"
-    
+        android:orientation="vertical"   
         android:layout_width="0dip"
         android:layout_weight="1"
-        android:layout_height="fill_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="40dip"
             android:layout_weight="1"
-            android:id = "@+id/extenden_row_toptext"       
-            android:gravity="center_vertical" 
-            android:textColor = "#FF6000"
-            
+            android:id = "@+id/extenden_row_toptext"        
+            android:textColor = "#FF6000"          
             />
             
         <TextView  
             android:layout_width="fill_parent"
             android:layout_height="25dip"
             android:layout_weight="1" 
-            android:gravity="top"
              android:id = "@+id/extenden_row_bottomtext"   
             android:singleLine="true"/>
             

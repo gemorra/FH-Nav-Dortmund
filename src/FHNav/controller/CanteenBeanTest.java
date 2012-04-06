@@ -49,6 +49,7 @@ public class CanteenBeanTest {
 			System.out.println("Kostbar parsed");
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 		if (menus.size() == 0) {
 			// DUMMIES
@@ -117,6 +118,7 @@ public class CanteenBeanTest {
 			System.out.println("Mensa parsed");
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 		if (menus.size() == 0) {
 			// DUMMIES für Vortrag, da genau in der Woche keine Daten

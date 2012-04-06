@@ -28,6 +28,16 @@ public class MainApplicationManager {
 		fireDownloader();
 	}
 
+	private static float density;
+	
+	public static float getDensity() {
+		return density;
+	}
+
+	public static void setDensity(float density) {
+		MainApplicationManager.density = density;
+	}
+
 	private static ArrayList<I_Mensa_Downloader> listener = new ArrayList<I_Mensa_Downloader>();
 
 	private static void fireDownloader() {

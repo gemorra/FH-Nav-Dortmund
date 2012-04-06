@@ -1,5 +1,6 @@
 package FHNav.gui;
 
+import java.nio.channels.FileChannel.MapMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,6 +20,7 @@ import FHNav.model.Veranstaltung;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -53,7 +55,8 @@ public class Menu extends Activity {
 	boolean agenda = false;
 	ListView lv1;
 	TextView header;
-
+	
+	
 	public void onResume() {
 		super.onResume();
 		Log.e(this.getClass().toString(), "Resume");
@@ -65,9 +68,10 @@ public class Menu extends Activity {
 		Log.e(this.getClass().toString(), "Start");
 		if (MainApplicationManager.isFinish())
 			finish();
-		else
+		else{
 			refresListView(true);
-
+			MainApplicationManager.setDensity(getResources().getDisplayMetrics().density);
+		}
 		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
 	}
 
@@ -174,7 +178,26 @@ public class Menu extends Activity {
 					// System.exit(0);
 				}
 			});
+			
+			Button application_info;
+			application_info = (Button) findViewById(R.id.info_application);
+			application_info.setOnClickListener(new View.OnClickListener() {
 
+				public void onClick(View v) {
+					AlertDialog.Builder adb = new AlertDialog.Builder(Menu.this);
+					adb.setTitle("About");
+					adb.setMessage("FH Nav Dortmund \nMade by Moritz Wiechers\nmoritz.wiechers@googlemail.com");
+					adb.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+			
+						public void onClick(DialogInterface dialog2, int which) {
+							
+
+						}
+					});
+					adb.show();
+				}
+			});
+			
 		} else {
 			startActivity(wizard);
 		}

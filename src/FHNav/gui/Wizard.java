@@ -188,18 +188,13 @@ public class Wizard extends Activity implements Runnable {
 					SettingsManager.setWizardDone(true,getApplicationContext());
 					MainApplicationManager.setSelectedBranch(selectedBranch);
 					startActivity(new Intent(Wizard.this, Menu.class));
-
 				} else {
-					new_blank_plan();
+					Message msg = handler.obtainMessage();
+					handle1 = false;
+					handler.sendMessage(msg);
 				}
-			} catch (Exception e) {
-			} finally {
+			} catch (Exception e) {}
 
-				Message msg = handler.obtainMessage();
-				handle1 = false;
-				handler.sendMessage(msg);
-
-			}
 
 		} else {
 			// T1 Liste der Stundenpläne downloaden und bei => H1 in Spinner

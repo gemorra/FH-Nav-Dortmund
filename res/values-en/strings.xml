@@ -4,8 +4,7 @@
 	<string name="menu_edit_button">Edit</string>
 	<string name="menu_navigation_button">Navigation</string>
 	<string name="menu_settings_button">Settings</string>
-	<string name="menu_empty_list">No Event</string>
-	
+	<string name="menu_empty_list">No Event</string>	
 	<string name="wizard_study_course">Study Course</string>
 	<string name="wizard_ok_button">Load Timetable</string>
 	<string name="wizard_skip_button">Skip</string>
@@ -13,8 +12,7 @@
     <string name="wizard_alert_message">This Wizard will guide you through the installation.</string>
     <string name="wizard_alert_positiveButton">Start!</string>
     <string name="wizard_error_title">Connection_Problem!</string>
-    <string name="wizard_error_positiveButton">Sorry</string>
-    
+    <string name="wizard_error_positiveButton">Sorry</string> 
     <string name="progess_dialog_message">Downloading...</string>
     <string name="button_add_label">Add</string>
     <string name="button_select_all_label">Select All</string>
@@ -23,62 +21,51 @@
     <string name="button_back_label">Back</string>
     <string name="alert_dialog_connection_problem_title">Connection_Error!</string>
     <string name="alert_dialog_connection_problem_msg">Could not connect to the Server.</string>
-    <string name="alert_dialog_connection_problem_msg2">Enter an alternative Server-URL:</string>
-        
+    <string name="alert_dialog_connection_problem_msg2">Enter an alternative Server-URL:</string>        
     <string name="addvorlesung_spinner_text">Select Study Course</string>
     <string name="addveranstaltung_toast_text_0">The course already exists!</string>
     <string name="addveranstaltung_toast_text_1a"></string>
     <string name="addveranstaltung_toast_text_1b">lesson(s) added.</string>
-    <string name="calendar_transfer_toast_text_1b">lesson(s) transfered to the calendar.</string>
-        
+    <string name="calendar_transfer_toast_text_1b">lesson(s) transfered to the calendar.</string>        
     <string name="adaptstundenplan_toast_text_1a"></string>
-    <string name="adaptstundenplan_toast_text_1b">lesson(s) deleted.</string>
-    
+    <string name="adaptstundenplan_toast_text_1b">lesson(s) deleted.</string>   
   	<string name="editmenu_change_view">Change View</string>
 	<string name="editmenu_add">Add</string>
 	<string name="editmenu_delete">Delete</string>
-	<string name="editmenu_commit">Transfer To Calendar</string>
-	  
+	<string name="editmenu_commit">Transfer To Calendar</string>	  
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>
     <string name="thursday">Thursday</string>
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
-	<string name="sunday">Sunday</string>
-	
+	<string name="sunday">Sunday</string>	
     <string name="settings_restart_wizard">Restart Wizard</string>
 	<string name="settings_text_size">Textsize</string>
 	<string name="settings_test_size_0">Small</string>
 	<string name="settings_test_size_1">Medium</string>
 	<string name="settings_test_size_2">Large</string>
-
 	<string name="settings_lecture_details">Details of the lectures</string>
 	<string name="settings_lecture_details_groupletter">Show Groupletters</string>
 	<string name="settings_lecture_details_lecturer">Show Lecturer</string>
-	<string name="settings_lecture_details_type">Show Type</string>
-	
-	<string name="settings_pathToFile_label">Server URL</string>
-	
+	<string name="settings_lecture_details_type">Show Type</string>	
+	<string name="settings_pathToFile_label">Server URL</string>	
+	<string name="error">Error</string>
+	<string name="error_calendar">Transfer failed. (Maybe no calendar is installed?)</string>
 	<string name="add_hauptmenue_title">Main Menu</string>
 	<string name="normal_view">Timetable</string>
 	<string name="agenda_view">Agenda</string>
 	<string name="add_vorlesung_title">Add Lesson</string>
 	<string name="add_adaptstundenplan_title">Delete Lesson</string>
 	<string name="add_settings_title">Settings</string>
-	<string name="add_wizard_title">Wizard</string>
-	
-	<string name="error">Error</string>
-	<string name="error_calendar">Transfer failed. (Maybe no calendar is installed?)</string>
+	<string name="add_wizard_title">Wizard</string>	
 	<string name="menu_extras_button">Extras</string>
 	<string name="extras_title">Extras</string>
-	<string name="extras_button1a">Infos</string>
+	<string name="extras_button1a">Info\'s</string>
 	<string name="extras_button1b">Canteen</string>
 	<string name="extras_button2">Navigation</string>
 	<string name="extras_button3">Back</string>
-	<string name="canteenSpezialHeader">Specials of the Week</string>	
-	
-	
+	<string name="canteenSpezialHeader">Specials of the Week</string>			
 	<string name="page_select_header">Please select an option</string>
 	<string name="page_name_news">News</string>
 	<string name="page_name_mensa">Mensa Campus Nord </string>
@@ -90,23 +77,20 @@
 	<string name="page_name_splan">S1 Timetable</string>
 	<string name="page_name_bplan">Bus Timetable</string>
 	<string name="the"></string>
-	<string name="empty_list">No Data available</string>
-	
-		<string name="alert_dialog_connection_problem_retry_button">Try Again</string>
+	<string name="empty_list">No Data available</string>	
+	<string name="empty_list_downloading">Downloading...</string>
+	<string name="empty_list_downloading_no">There\'s nothing to eat this week. Try reloading.</string>	
+	<string name="alert_dialog_connection_problem_retry_button">Try Again</string>
 	<string name="alert_dialog_connection_problem_next_button">Skip</string>
 	<string name="alert_dialog_connection_problem_next_button2">Cancel</string>
-	<string name="addveranstaltung_toast_text_0b">Nothing has been selected!</string>
-	
+	<string name="addveranstaltung_toast_text_0b">Nothing has been selected!</string>	
 	<string name="settings_OK_button">Save</string>
 	<string name="settings_Back_button">Back</string>
-	<string name="settings_default_button">Default</string>
-	
-<string name="tomorrow">Tomorrow</string>
-<string name="timetable_menu">Customize Timetable</string>
-
-<string name="settings_alert_title">Warning</string>
+	<string name="settings_default_button">Default</string>	
+	<string name="tomorrow">Tomorrow</string>
+	<string name="timetable_menu">Customize Timetable</string>
+	<string name="settings_alert_title">Warning</string>
 	<string name="settings_alert_message">Restarting the Wizard will delete your current timetable!</string>
 	<string name="settings_alert_positiveButton">Continue</string>
 	<string name="settings_alert_negativeButton">Cancel</string>
-
 </resources>

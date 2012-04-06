@@ -65,27 +65,25 @@ public class ExtendedListAdapter extends BaseAdapter {
 			LayoutParams paramsTop = holder.toptext.getLayoutParams();
 			LayoutParams paramsBottom = holder.bottomtext.getLayoutParams();
 
+
 			if (SettingsManager.getText_size(ctx) == 1) {
 				Log.e("asd", "1");
 				holder.bottomtext.setTextSize(15);
 				holder.toptext.setTextSize(15);
-				paramsBottom.height = 25;
-				paramsTop.height = 40;
+//				paramsBottom.height = LayoutParams.WRAP_CONTENT;
+//				paramsTop.height = 40;
 			} else if (SettingsManager.getText_size(ctx) == 2) {
 				Log.e("asd", "2");
 				holder.bottomtext.setTextSize(20);
 				holder.toptext.setTextSize(20);
-				paramsBottom.height = 30;
-				paramsTop.height = 50;
+//				paramsBottom.height = 30;
+//				paramsTop.height = 50;
 			} else if (SettingsManager.getText_size(ctx) == 0) {
 				holder.bottomtext.setTextSize(10);
 				holder.toptext.setTextSize(10);
-				paramsBottom.height = 20;
-				paramsTop.height = 30;
+//				paramsBottom.height = 20;
+//				paramsTop.height = 30;
 			}
-			holder.toptext.setLayoutParams(paramsTop);
-			holder.bottomtext.setLayoutParams(paramsBottom);
-
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -129,7 +127,19 @@ public class ExtendedListAdapter extends BaseAdapter {
 				holder.checkbox.setChecked(!tmp);
 			}
 		});
+		LayoutParams paramsTop = holder.toptext.getLayoutParams();
+		paramsTop.height=0;
+		LayoutParams paramsBottom = holder.bottomtext.getLayoutParams();
+		paramsBottom.height=0;
+		
 
+		
+		holder.toptext.setLayoutParams(paramsTop);
+		holder.bottomtext.setLayoutParams(paramsBottom);
+		
+		LayoutParams paramsCheckbox = holder.checkbox.getLayoutParams();
+		paramsCheckbox.height = LayoutParams.FILL_PARENT;
+		holder.checkbox.setLayoutParams(paramsCheckbox);
 		return convertView;
 	}
 

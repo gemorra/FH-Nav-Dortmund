@@ -23,7 +23,7 @@
 		android:layout_weight="0" android:layout_gravity="bottom">
 
 		<Button android:id="@+id/Button01" android:text="@string/extras_button1b"
-			android:drawableTop="@drawable/ic_menu_emoticons" android:background="@drawable/android_button"
+			android:drawableTop="@android:drawable/ic_menu_today" android:background="@drawable/android_button"
 			android:layout_height="69dip" android:layout_width="50dip"
 			android:layout_weight="1" android:layout_gravity="bottom"></Button>
 		<Button android:id="@+id/Button02" android:text="@string/extras_button2"

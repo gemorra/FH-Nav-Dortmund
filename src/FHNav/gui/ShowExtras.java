@@ -64,6 +64,7 @@ public class ShowExtras extends Activity implements Runnable, I_Mensa_Downloader
 	Thread t1;
 
 	boolean load = false;
+	boolean loadfailed = false;
 	ArrayList<CanteenMenu> lastMenuMensa;
 	ArrayList<CanteenMenu> lastMenuKostbar;
 
@@ -72,12 +73,15 @@ public class ShowExtras extends Activity implements Runnable, I_Mensa_Downloader
 		ArrayList<CanteenMenu> menus;
 		if (chooseMensa.equals(getString(R.string.page_name_mensa))) {
 			if (load) {
+
 				MainApplicationManager.setDataMensa(CanteenBeanTest.getMenuMensa());
+				
 				load = false;
 			}
 			menus = MainApplicationManager.getDataMensa();
 		} else {
 			if (load) {
+				
 				MainApplicationManager.setDataKostBar(CanteenBeanTest.getMenuKostbar());
 				load = false;
 			}
@@ -87,6 +91,10 @@ public class ShowExtras extends Activity implements Runnable, I_Mensa_Downloader
 		}
 		if (menus == null) {
 			menus = new ArrayList<CanteenMenu>();
+			loadfailed = true;
+		}else
+		{
+			loadfailed = false;
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -203,8 +211,9 @@ public class ShowExtras extends Activity implements Runnable, I_Mensa_Downloader
 			mWebView = (WebView) findViewById(R.id.webView1);
 			// mWebView.setLayoutParams(params);
 
-			mWebView.getSettings().setJavaScriptEnabled(true);
+			
 			mWebView.setWebViewClient(new HelloWebViewClient());
+			mWebView.getSettings().setJavaScriptEnabled(true);
 			mWebView.setBackgroundColor(0);
 
 			sp = (Spinner) findViewById(R.id.spinner1);
@@ -265,10 +274,14 @@ public class ShowExtras extends Activity implements Runnable, I_Mensa_Downloader
 	public void run() {
 		if (mensa) {
 			try {
-				listAdapterMensa = build_normal();
+				listAdapterMensa = new SeparatedListAdapter(this);
 				Message msg = handler.obtainMessage();
 				handler.sendMessage(msg);
+				listAdapterMensa = build_normal();
+				msg = handler.obtainMessage();
+				handler.sendMessage(msg);
 			} catch (Exception e) {
+				e.printStackTrace();
 			} finally {
 				if (dialog != null)
 					dialog.dismiss();
@@ -354,10 +367,16 @@ public class ShowExtras extends Activity implements Runnable, I_Mensa_Downloader
 
 					lv1.setAdapter(listAdapterMensa);
 					if (listAdapterMensa.getCount() == 0) {
-						if (MainApplicationManager.isDownloading()) {
+						if (MainApplicationManager.isDownloading() || load) {
 							TextView tv = (TextView) lv1.getEmptyView();
 							tv.setText(R.string.empty_list_downloading);
-						} else {
+						} else if(loadfailed)
+						{
+							TextView tv = (TextView) lv1.getEmptyView();
+							tv.setText(R.string.alert_dialog_connection_problem_msg);
+						}
+						else
+						{
 							TextView tv = (TextView) lv1.getEmptyView();
 							tv.setText(R.string.empty_list_downloading_no);
 						}

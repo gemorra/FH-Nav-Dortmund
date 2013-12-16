@@ -41,13 +41,13 @@ public class Settings extends Activity {
 		if (MainApplicationManager.isFinish())
 			finish();
 
-		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
+//		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
 
 	}
 
 	public void onStop() {
 		super.onStop();
-		FlurryAgent.onEndSession(this);
+//		FlurryAgent.onEndSession(this);
 		Log.e(this.getClass().toString(), "Stop");
 	}
 

@@ -2,9 +2,14 @@ package FHNav.gui;
 
 import java.util.Date;
 
+import FHNav.controller.AktuellesParser;
 import FHNav.controller.MainApplicationManager;
 import FHNav.controller.SettingsManager;
+import FHNav.model.AktuellesItem;
+import FHNav.gui.receiver.AktuellesBroadcastReceiver;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,24 +24,44 @@ public class SplashScreen extends Activity {
 	long startTime;
 	protected int _splashTime = 2000;
 	int datarefresh = 12;
+	
+	PendingIntent pendingIntent;
+	AktuellesParser aktuelles;
 
 	public void onStart() {
 		super.onStart();
 		Log.e(this.getClass().toString(), "Start");
+		
 		if (MainApplicationManager.isFinish())
 			finish();
 		else{
-			FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
+//			FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
 			SettingsManager.loadSettings(getApplicationContext());
 		}
 	}
 
 	public void onStop() {
 		super.onStop();
-		FlurryAgent.onEndSession(this);
+//		FlurryAgent.onEndSession(this);
 		Log.e(this.getClass().toString(), "Stop");
 
 	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		initAlarm();
+	}
+	
+	private void initAlarm() {
+		Intent myIntent = new Intent("FHNav.aktuellesbroadcast");
+		pendingIntent = PendingIntent.getBroadcast(SplashScreen.this, 0, myIntent,0);
+		AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, 0, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+		Log.d(this.getClass().toString(), "Set alarm");
+	}
+	
 
 	TextView t1;
 
@@ -48,6 +73,8 @@ public class SplashScreen extends Activity {
 		t1 = (TextView) findViewById(R.id.textView1);
 		Date dt = new Date();
 		startTime = dt.getTime();
+		
+
 		
 		Thread splashTread = new Thread() {
 			@Override

@@ -144,13 +144,13 @@ public class ShowExtras extends Activity implements Runnable, I_Mensa_Downloader
 		MainApplicationManager.addListener(this);
 		if (MainApplicationManager.isFinish())
 			finish();
-		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
+//		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
 
 	}
 
 	public void onStop() {
 		super.onStop();
-		FlurryAgent.onEndSession(this);
+//		FlurryAgent.onEndSession(this);
 		MainApplicationManager.removeListener(this);
 		Log.e("Extras", "Stop");
 	}
@@ -324,12 +324,6 @@ public class ShowExtras extends Activity implements Runnable, I_Mensa_Downloader
 			view.loadUrl(url);
 			return true;
 		}
-		// @Override
-		// public void onPageFinished(WebView view, String url)
-		// {
-		// System.out.println("testtest");
-		// view.loadUrl("javascript:window.HTMLOUT.showHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
-		// }
 	}
 
 	public static String parseNewsW() {

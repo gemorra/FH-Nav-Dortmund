@@ -1,0 +1,6 @@
+/bin
+.project
+.project.properties
+*.log
+.settings/**
+.default.properties

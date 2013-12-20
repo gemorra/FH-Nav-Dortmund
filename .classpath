@@ -2,13 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry exported="true" kind="lib" path="kobjects-j2me-0.0-SNAPSHOT-20040926-2.jar"/>
-	<classpathentry exported="true" kind="lib" path="ksoap2-android-2.5.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="ksoap2-base-2.5.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="ksoap2-j2se-2.5.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="FlurryAgent.jar"/>
-	<classpathentry exported="true" kind="lib" path="kxml-2.2.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="jsoup-1.6.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="jsoup-1.7.3-javadoc.jar"/>
+	<classpathentry exported="true" kind="lib" path="jsoup-1.7.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="commons-lang-2.6.jar"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>

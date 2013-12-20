@@ -11,6 +11,8 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.TextNode;
+import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 
 import android.content.Context;
@@ -20,9 +22,8 @@ import FHNav.model.CanteenMenu;
 import FHNav.sqlite.AktuellesDAO;
 
 public class AktuellesParser {
-
-	//private static final String RSS_URL = "http://www.zielkeb.de/rss.txt";
 	private static final String RSS_URL = "http://www.inf.fh-dortmund.de/rss.php";
+	public static final String WEB_URL = "http://www.fh-dortmund.de/de/fb/4/isc/aktuelles/index.php";
 	
 	
 	private AktuellesDAO dao;
@@ -31,18 +32,48 @@ public class AktuellesParser {
 		dao = new AktuellesDAO(ctx);
 	}
 	
-	public static String replaceCDATA(String s) {
+	/**
+	 * @param s text with CDATA tags
+	 * @return text without CDATA tags
+	 */
+	private static String replaceCDATA(String s) {
 		return s.replace("<![CDATA[", "").replace("]]>", "").trim();
 	}
+	
+	/**
+	 * Removes any HTML tags from a list of JSoup text nodes. 
+	 * 
+	 * @param nodes list of text nodes
+	 * @return text without HTML tags
+	 */
+	private static String getTextWithoutTags(List<TextNode> nodes) {
+		StringBuilder sb = new StringBuilder();
+		
+		for (TextNode n : nodes) {
+			System.out.println("seeing node (wholeText): " + n.getWholeText());
+			System.out.println("seeing node (text): " + n.text());
+			sb.append(n.getWholeText().replaceAll("<(.*?)>","") );
+		}
+		return sb.toString();
+	}
 
+	/**
+	 * Gets all entries from Aktuelles which have not been seen yet.
+	 * 
+	 * @return 
+	 */
 	public List<AktuellesItem> getNewAktuellesEntries() {
 		return dao.getNewItemsFromList(getAktuelles());
 	}
 	
+	/**
+	 * Loads Aktuelles from the RSS Feed.
+	 * 
+	 * @return list of items
+	 */
 	public List<AktuellesItem> getAktuelles() {
 		Document doc;
 		List<AktuellesItem> items = new ArrayList<AktuellesItem>();
-		//SimpleDateFormat sdfToDate = new SimpleDateFormat("dd.MM.yyyy");
 		try {
 
 			doc = Jsoup.parse(new URL(RSS_URL).openStream(), "ISO-8859-1", RSS_URL);
@@ -53,10 +84,10 @@ public class AktuellesParser {
 			
 			for (Element i : entries) {
 				AktuellesItem aktuellesItem = new AktuellesItem();
-				aktuellesItem.setTitle(replaceCDATA(i.select("title").text()));
-				aktuellesItem.setDescription(replaceCDATA(i.select("description").text()));
-				aktuellesItem.setLink(replaceCDATA(i.select("link").text()));
-				aktuellesItem.setPubDate(replaceCDATA(i.select("pubDate").text()));
+				aktuellesItem.setTitle(replaceCDATA(i.select("title").get(0).text()));
+				aktuellesItem.setDescription(getTextWithoutTags(i.select("description").get(0).textNodes()));
+				aktuellesItem.setLink(replaceCDATA(i.select("link").get(0).text()));
+				aktuellesItem.setPubDate(replaceCDATA(i.select("pubDate").get(0).text()));
 				items.add(aktuellesItem);
 			}
 		} catch (Exception e) {

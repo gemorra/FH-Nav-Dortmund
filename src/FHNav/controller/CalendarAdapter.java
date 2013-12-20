@@ -21,11 +21,14 @@ public class CalendarAdapter {
 		this.ctx = ctx;
 		Cursor cursor;
 		if (android.os.Build.VERSION.SDK_INT > 14) {
-			cursor = this.ctx.getContentResolver().query(Uri.parse("content://com.android.calendar/calendars"), new String[] { "_id", "calendar_displayName" },
-					null, null, null);
+			cursor = this.ctx.getContentResolver().query(
+					Uri.parse("content://com.android.calendar/calendars"),
+					new String[] { "_id", "calendar_displayName" }, null, null,
+					null);
 		} else {
-			cursor = this.ctx.getContentResolver().query(Uri.parse("content://com.android.calendar/calendars"), new String[] { "_id", "displayName" },
-					null, null, null);
+			cursor = this.ctx.getContentResolver().query(
+					Uri.parse("content://com.android.calendar/calendars"),
+					new String[] { "_id", "displayName" }, null, null, null);
 		}
 
 		cursor.moveToFirst();
@@ -60,7 +63,8 @@ public class CalendarAdapter {
 		contentEvent.put("eventTimezone", "Europe/Berlin");
 
 		Calendar c1 = Calendar.getInstance();
-		c1.set(start.getYear() + 1900, start.getMonth(), start.getDate(), ver.getStartTime().getHours(), ver.getStartTime().getMinutes());
+		c1.set(start.getYear() + 1900, start.getMonth(), start.getDate(), ver
+				.getStartTime().getHours(), ver.getStartTime().getMinutes());
 		c1.setFirstDayOfWeek(Calendar.MONDAY);
 
 		while (c1.getTime().getDay() != ver.getWochentag()) {
@@ -69,10 +73,14 @@ public class CalendarAdapter {
 
 		contentEvent.put("dtstart", c1.getTime().getTime());
 		// Duration in Sekunden
-		long duration = (ver.getEndTime().getHours() - ver.getStartTime().getHours()) * 3600;
-		duration += (ver.getEndTime().getMinutes() - ver.getStartTime().getMinutes()) * 60;
+		long duration = (ver.getEndTime().getHours() - ver.getStartTime()
+				.getHours()) * 3600;
+		duration += (ver.getEndTime().getMinutes() - ver.getStartTime()
+				.getMinutes()) * 60;
 		contentEvent.put("duration", "P" + duration + "S");
-		String rrule = "FREQ=WEEKLY;BYDAY=" + Tools.getShortWeekday(c1.getTime().getDay()) + ";UNTIL=" + sdf.format(end) + "T130000Z";
+		String rrule = "FREQ=WEEKLY;BYDAY="
+				+ Tools.getShortWeekday(c1.getTime().getDay()) + ";UNTIL="
+				+ sdf.format(end) + "T130000Z";
 		contentEvent.put("rrule", rrule);
 
 		contentEvent.put("allDay", 0);
@@ -82,24 +90,24 @@ public class CalendarAdapter {
 		this.ctx.getContentResolver().insert(eventsUri, contentEvent);
 	}
 
+	public int[] getCalendarId() {
+		return calendarId;
+	}
+
 	public String[] getCalendarNames() {
 		return calendarNames;
 	}
 
-	public void setCalendarNames(String[] calendarNames) {
-		this.calendarNames = calendarNames;
-	}
-
-	public int[] getCalendarId() {
-		return calendarId;
+	public int getSelectedId() {
+		return selectedId;
 	}
 
 	public void setCalendarId(int[] calendarId) {
 		this.calendarId = calendarId;
 	}
 
-	public int getSelectedId() {
-		return selectedId;
+	public void setCalendarNames(String[] calendarNames) {
+		this.calendarNames = calendarNames;
 	}
 
 	public void setSelectedid(int selectedId) {

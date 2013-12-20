@@ -1,6 +1,8 @@
 package FHNav.controller;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import android.graphics.Bitmap;
 
@@ -21,14 +23,6 @@ public class BreadthFirstSearchTest {
 		String name;
 		float x;
 		float y;
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
 
 		public Node(String name) {
 			this.name = name;
@@ -55,7 +49,7 @@ public class BreadthFirstSearchTest {
 			n.neighbors.add(this);
 		}
 
-		public String toString() {
+		public String getName() {
 			return name;
 		}
 
@@ -63,16 +57,24 @@ public class BreadthFirstSearchTest {
 			return x;
 		}
 
-		public void setX(float x) {
-			this.x = x;
-		}
-
 		public float getY() {
 			return y;
 		}
 
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public void setX(float x) {
+			this.x = x;
+		}
+
 		public void setY(float y) {
 			this.y = y;
+		}
+
+		public String toString() {
+			return name;
 		}
 
 	}
@@ -88,36 +90,25 @@ public class BreadthFirstSearchTest {
 	Node from;
 	Node to;
 
-	public Node getFrom() {
-		return from;
-	}
+	private Bitmap bmp;
 
-	public void setFrom(Node from) {
-		this.from = from;
-	}
-
-	public Node getTo() {
-		return to;
-	}
-
-	public void setTo(Node to) {
-		this.to = to;
-	}
-
-	public List getNodes() {
-		return nodes;
-	}
-
-	public void setNodes(List nodes) {
-		this.nodes = nodes;
-	}
-
-	public List getPath() {
+	protected List constructPath(Node node) {
+		LinkedList path = new LinkedList();
+		while (node.pathParent != null) {
+			path.addFirst(node);
+			node = node.pathParent;
+		}
+		path.addFirst(node);
 		return path;
 	}
 
-	public void setPath(List path) {
-		this.path = path;
+	public Bitmap getBMP() {
+		// TODO Auto-generated method stub
+		return bmp;
+	}
+
+	public Node getFrom() {
+		return from;
 	}
 
 	public Node getNodeFromListByString(String s) {
@@ -125,11 +116,24 @@ public class BreadthFirstSearchTest {
 
 		for (int i = 0; i < nodes.size(); i++) {
 			Node ntmp = (Node) nodes.get(i);
-			if (ntmp.getName().equals(s))
+			if (ntmp.getName().equals(s)) {
 				n = ntmp;
+			}
 		}
 
 		return n;
+	}
+
+	public List getNodes() {
+		return nodes;
+	}
+
+	public List getPath() {
+		return path;
+	}
+
+	public Node getTo() {
+		return to;
 	}
 
 	public void initGraph() {
@@ -360,16 +364,6 @@ public class BreadthFirstSearchTest {
 
 	}
 
-	protected List constructPath(Node node) {
-		LinkedList path = new LinkedList();
-		while (node.pathParent != null) {
-			path.addFirst(node);
-			node = node.pathParent;
-		}
-		path.addFirst(node);
-		return path;
-	}
-
 	public List search(Node startNode, Node goalNode) {
 		// list of visited nodes
 		LinkedList closedList = new LinkedList();
@@ -390,7 +384,8 @@ public class BreadthFirstSearchTest {
 				Iterator i = node.neighbors.iterator();
 				while (i.hasNext()) {
 					Node neighborNode = (Node) i.next();
-					if (!closedList.contains(neighborNode) && !openList.contains(neighborNode)) {
+					if (!closedList.contains(neighborNode)
+							&& !openList.contains(neighborNode)) {
 						neighborNode.pathParent = node;
 						openList.add(neighborNode);
 					}
@@ -401,16 +396,25 @@ public class BreadthFirstSearchTest {
 		return null;
 	}
 
-	private Bitmap bmp;
-
-	public Bitmap getBMP() {
-		// TODO Auto-generated method stub
-		return bmp;
-	}
-
 	public void setBMP(Bitmap bmp) {
 		this.bmp = bmp;
 
+	}
+
+	public void setFrom(Node from) {
+		this.from = from;
+	}
+
+	public void setNodes(List nodes) {
+		this.nodes = nodes;
+	}
+
+	public void setPath(List path) {
+		this.path = path;
+	}
+
+	public void setTo(Node to) {
+		this.to = to;
 	}
 
 }

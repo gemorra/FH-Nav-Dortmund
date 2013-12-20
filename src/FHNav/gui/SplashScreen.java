@@ -5,8 +5,6 @@ import java.util.Date;
 import FHNav.controller.AktuellesParser;
 import FHNav.controller.MainApplicationManager;
 import FHNav.controller.SettingsManager;
-import FHNav.model.AktuellesItem;
-import FHNav.gui.receiver.AktuellesBroadcastReceiver;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -17,53 +15,43 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.flurry.android.FlurryAgent;
-
 public class SplashScreen extends Activity {
 
 	long startTime;
 	protected int _splashTime = 2000;
 	int datarefresh = 12;
-	
+
 	PendingIntent pendingIntent;
 	AktuellesParser aktuelles;
 
-	public void onStart() {
-		super.onStart();
-		Log.e(this.getClass().toString(), "Start");
-		
-		if (MainApplicationManager.isFinish())
-			finish();
-		else{
-//			FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
-			SettingsManager.loadSettings(getApplicationContext());
+	TextView t1;
+
+	final Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+			// System.out.println(msg.arg1);
+			int waited = msg.arg1;
+			if (t1 != null) {
+				if (waited <= 1000) {
+					t1.setText("Loading Data...");
+				} else if (waited <= 1500) {
+					t1.setText("Starting Daemons...");
+				} else if (waited <= 2000) {
+					t1.setText("Initialising GUI...");
+				}
+			}
+
 		}
-	}
+	};
 
-	public void onStop() {
-		super.onStop();
-//		FlurryAgent.onEndSession(this);
-		Log.e(this.getClass().toString(), "Stop");
-
-	}
-
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		initAlarm();
-	}
-	
 	private void initAlarm() {
 		Intent myIntent = new Intent("FHNav.aktuellesbroadcast");
-		pendingIntent = PendingIntent.getBroadcast(SplashScreen.this, 0, myIntent,0);
-		AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, 0, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+		pendingIntent = PendingIntent.getBroadcast(SplashScreen.this, 0,
+				myIntent, 0);
+		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, 0,
+				AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
 		Log.d(this.getClass().toString(), "Set alarm");
 	}
-	
-
-	TextView t1;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -73,9 +61,7 @@ public class SplashScreen extends Activity {
 		t1 = (TextView) findViewById(R.id.textView1);
 		Date dt = new Date();
 		startTime = dt.getTime();
-		
 
-		
 		Thread splashTread = new Thread() {
 			@Override
 			public void run() {
@@ -123,22 +109,31 @@ public class SplashScreen extends Activity {
 		splashTread2.start();
 	}
 
-	final Handler handler = new Handler() {
-		public void handleMessage(Message msg) {
-			// System.out.println(msg.arg1);
-			int waited = msg.arg1;
-			if (t1 != null) {
-				if (waited <= 1000) {
-					t1.setText("Loading Data...");
-				} else if (waited <= 1500) {
-					t1.setText("Starting Daemons...");
-				} else if (waited <= 2000) {
-					t1.setText("Initialising GUI...");
-				}
-			}
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		initAlarm();
+	}
 
+	public void onStart() {
+		super.onStart();
+		Log.e(this.getClass().toString(), "Start");
+
+		if (MainApplicationManager.isFinish()) {
+			finish();
+		} else {
+			// FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
+			SettingsManager.loadSettings(getApplicationContext());
 		}
-	};
+	}
+
+	public void onStop() {
+		super.onStop();
+		// FlurryAgent.onEndSession(this);
+		Log.e(this.getClass().toString(), "Stop");
+
+	}
 
 }
 

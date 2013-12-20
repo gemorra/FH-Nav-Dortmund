@@ -25,28 +25,28 @@ public class CanteenMenu {
 		this.date = date;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
+	public Date getDate() {
+		return date;
 	}
 
 	public String getDesc() {
 		return desc;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
-	public Date getDate() {
-		return date;
+	public String getTitle() {
+		return title;
 	}
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }

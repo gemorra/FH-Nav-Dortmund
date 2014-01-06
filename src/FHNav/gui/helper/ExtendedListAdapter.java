@@ -17,14 +17,21 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 public class ExtendedListAdapter extends BaseAdapter {
+	static class ViewHolder {
+		TextView bottomtext;
+		TextView toptext;
+		CheckBox checkbox;
+	}
+
 	private LayoutInflater mInflater;
 	ArrayList<Veranstaltung> items;
 	ArrayList<Boolean> checked;
 	String pattern = "HH:mm";
 	SimpleDateFormat sdf = new SimpleDateFormat();
 	ArrayList<Veranstaltung> itemsToManipulate = new ArrayList<Veranstaltung>();
+
 	Context ctx;
-	
+
 	public ExtendedListAdapter(Context context, ArrayList<Veranstaltung> items) {
 		mInflater = LayoutInflater.from(context);
 		ctx = context;
@@ -42,14 +49,24 @@ public class ExtendedListAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 
-	@SuppressWarnings("unused")
-	public void selectAll() {
-		checked.clear();
-		for (Veranstaltung v : items) {
-			checked.add(true);
-		}
+	public ArrayList<Boolean> getChecked() {
+		return checked;
+	}
 
-		notifyDataSetChanged();
+	public int getCount() {
+		return items.size();
+	}
+
+	public Object getItem(int position) {
+		return position;
+	}
+
+	public long getItemId(int position) {
+		return position;
+	}
+
+	public ArrayList<Veranstaltung> getItems() {
+		return items;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -59,28 +76,30 @@ public class ExtendedListAdapter extends BaseAdapter {
 			convertView = mInflater.inflate(R.layout.editagendarow, null);
 
 			holder = new ViewHolder();
-			holder.bottomtext = (TextView) convertView.findViewById(R.id.extenden_row_bottomtext);
-			holder.toptext = (TextView) convertView.findViewById(R.id.extenden_row_toptext);
-			holder.checkbox = (CheckBox) convertView.findViewById(R.id.extenden_row_checkbox);
-
+			holder.bottomtext = (TextView) convertView
+					.findViewById(R.id.extenden_row_bottomtext);
+			holder.toptext = (TextView) convertView
+					.findViewById(R.id.extenden_row_toptext);
+			holder.checkbox = (CheckBox) convertView
+					.findViewById(R.id.extenden_row_checkbox);
 
 			if (SettingsManager.getText_size(ctx) == 1) {
 				Log.e("asd", "1");
 				holder.bottomtext.setTextSize(15);
 				holder.toptext.setTextSize(15);
-//				paramsBottom.height = LayoutParams.WRAP_CONTENT;
-//				paramsTop.height = 40;
+				// paramsBottom.height = LayoutParams.WRAP_CONTENT;
+				// paramsTop.height = 40;
 			} else if (SettingsManager.getText_size(ctx) == 2) {
 				Log.e("asd", "2");
 				holder.bottomtext.setTextSize(20);
 				holder.toptext.setTextSize(20);
-//				paramsBottom.height = 30;
-//				paramsTop.height = 50;
+				// paramsBottom.height = 30;
+				// paramsTop.height = 50;
 			} else if (SettingsManager.getText_size(ctx) == 0) {
 				holder.bottomtext.setTextSize(10);
 				holder.toptext.setTextSize(10);
-//				paramsBottom.height = 20;
-//				paramsTop.height = 30;
+				// paramsBottom.height = 20;
+				// paramsTop.height = 30;
 			}
 			convertView.setTag(holder);
 		} else {
@@ -91,16 +110,21 @@ public class ExtendedListAdapter extends BaseAdapter {
 		Veranstaltung ve = items.get(position);
 
 		String topText = ve.getName();
-		if (SettingsManager.isLecture_details_type(ctx))
-			if (ve.getType().length() > 0)
+		if (SettingsManager.isLecture_details_type(ctx)) {
+			if (ve.getType().length() > 0) {
 				topText += " [" + ve.getType() + "]";
+			}
+		}
 
-		String bottomText = sdf.format(ve.getStartTime()) + "-" + sdf.format(ve.getEndTime()) + " " + ve.getRaum();
+		String bottomText = sdf.format(ve.getStartTime()) + "-"
+				+ sdf.format(ve.getEndTime()) + " " + ve.getRaum();
 
-		if (SettingsManager.isLecture_details_groupletter(ctx))
+		if (SettingsManager.isLecture_details_groupletter(ctx)) {
 			bottomText += " (" + ve.getStudentSet() + ")";
-		if (SettingsManager.isLecture_details_lecturer(ctx))
+		}
+		if (SettingsManager.isLecture_details_lecturer(ctx)) {
 			bottomText += " " + ve.getDozent();
+		}
 
 		holder.bottomtext.setText(bottomText);
 		holder.toptext.setText(topText);
@@ -126,53 +150,17 @@ public class ExtendedListAdapter extends BaseAdapter {
 			}
 		});
 		LayoutParams paramsTop = holder.toptext.getLayoutParams();
-		paramsTop.height=0;
+		paramsTop.height = 0;
 		LayoutParams paramsBottom = holder.bottomtext.getLayoutParams();
-		paramsBottom.height=0;
-		
+		paramsBottom.height = 0;
 
-		
 		holder.toptext.setLayoutParams(paramsTop);
 		holder.bottomtext.setLayoutParams(paramsBottom);
-		
+
 		LayoutParams paramsCheckbox = holder.checkbox.getLayoutParams();
 		paramsCheckbox.height = LayoutParams.FILL_PARENT;
 		holder.checkbox.setLayoutParams(paramsCheckbox);
 		return convertView;
-	}
-
-	public int getCount() {
-		return items.size();
-	}
-
-	public Object getItem(int position) {
-		return position;
-	}
-
-	public long getItemId(int position) {
-		return position;
-	}
-
-	public ArrayList<Veranstaltung> getItems() {
-		return items;
-	}
-
-	public void setItems(ArrayList<Veranstaltung> items) {
-		this.items = items;
-	}
-
-	public ArrayList<Boolean> getChecked() {
-		return checked;
-	}
-
-	public void setChecked(ArrayList<Boolean> checked) {
-		this.checked = checked;
-	}
-
-	static class ViewHolder {
-		TextView bottomtext;
-		TextView toptext;
-		CheckBox checkbox;
 	}
 
 	@SuppressWarnings("unused")
@@ -182,5 +170,23 @@ public class ExtendedListAdapter extends BaseAdapter {
 		for (Veranstaltung v : items) {
 			checked.add(false);
 		}
+	}
+
+	@SuppressWarnings("unused")
+	public void selectAll() {
+		checked.clear();
+		for (Veranstaltung v : items) {
+			checked.add(true);
+		}
+
+		notifyDataSetChanged();
+	}
+
+	public void setChecked(ArrayList<Boolean> checked) {
+		this.checked = checked;
+	}
+
+	public void setItems(ArrayList<Veranstaltung> items) {
+		this.items = items;
 	}
 }

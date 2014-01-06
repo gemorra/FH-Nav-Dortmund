@@ -2,6 +2,7 @@ package FHNav.gui.helper;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import FHNav.gui.R;
 import android.content.Context;
 import android.view.View;
@@ -25,16 +26,31 @@ public class SeparatedListAdapter extends BaseAdapter {
 		this.sections.put(section, adapter);
 	}
 
+	public boolean areAllItemsSelectable() {
+		return false;
+	}
+
+	public int getCount() {
+		// total together all sections, plus one for each section header
+		int total = 0;
+		for (Adapter adapter : this.sections.values()) {
+			total += adapter.getCount() + 1;
+		}
+		return total;
+	}
+
 	public Object getItem(int position) {
 		for (Object section : this.sections.keySet()) {
 			Adapter adapter = sections.get(section);
 			int size = adapter.getCount() + 1;
 
 			// check if position inside this section
-			if (position == 0)
+			if (position == 0) {
 				return section;
-			if (position < size)
+			}
+			if (position < size) {
 				return adapter.getItem(position - 1);
+			}
 
 			// otherwise jump into next section
 			position -= size;
@@ -42,20 +58,8 @@ public class SeparatedListAdapter extends BaseAdapter {
 		return null;
 	}
 
-	public int getCount() {
-		// total together all sections, plus one for each section header
-		int total = 0;
-		for (Adapter adapter : this.sections.values())
-			total += adapter.getCount() + 1;
-		return total;
-	}
-
-	public int getViewTypeCount() {
-		// assume that headers count as one, then total all sections
-		int total = 1;
-		for (Adapter adapter : this.sections.values())
-			total += adapter.getViewTypeCount();
-		return total;
+	public long getItemId(int position) {
+		return position;
 	}
 
 	public int getItemViewType(int position) {
@@ -65,24 +69,18 @@ public class SeparatedListAdapter extends BaseAdapter {
 			int size = adapter.getCount() + 1;
 
 			// check if position inside this section
-			if (position == 0)
+			if (position == 0) {
 				return TYPE_SECTION_HEADER;
-			if (position < size)
+			}
+			if (position < size) {
 				return type + adapter.getItemViewType(position - 1);
+			}
 
 			// otherwise jump into next section
 			position -= size;
 			type += adapter.getViewTypeCount();
 		}
 		return -1;
-	}
-
-	public boolean areAllItemsSelectable() {
-		return false;
-	}
-
-	public boolean isEnabled(int position) {
-		return (getItemViewType(position) != TYPE_SECTION_HEADER);
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -92,11 +90,13 @@ public class SeparatedListAdapter extends BaseAdapter {
 			int size = adapter.getCount() + 1;
 
 			// check if position inside this section
-			if (position == 0)
+			if (position == 0) {
 				return headers.getView(sectionnum, convertView, parent);
+			}
 
-			if (position < size)
+			if (position < size) {
 				return adapter.getView(position - 1, convertView, parent);
+			}
 
 			// otherwise jump into next section
 			position -= size;
@@ -105,8 +105,17 @@ public class SeparatedListAdapter extends BaseAdapter {
 		return null;
 	}
 
-	public long getItemId(int position) {
-		return position;
+	public int getViewTypeCount() {
+		// assume that headers count as one, then total all sections
+		int total = 1;
+		for (Adapter adapter : this.sections.values()) {
+			total += adapter.getViewTypeCount();
+		}
+		return total;
+	}
+
+	public boolean isEnabled(int position) {
+		return (getItemViewType(position) != TYPE_SECTION_HEADER);
 	}
 
 }

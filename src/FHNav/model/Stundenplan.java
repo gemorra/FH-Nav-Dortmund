@@ -25,25 +25,27 @@ public class Stundenplan implements Serializable {
 		veranstaltungen = new ArrayList<Veranstaltung>();
 	}
 
+	public void addVeranstaltung(Veranstaltung veranstaltung) {
+		if (!veranstaltungen.contains(veranstaltung)) {
+			veranstaltungen.add(veranstaltung);
+		}
+
+	}
+
+	public ArrayList<Veranstaltung> getVeranstaltungen() {
+		return veranstaltungen;
+	}
+
 	public void refresh() {
 		for (Veranstaltung ver : veranstaltungen) {
 			ver.refresh();
 		}
 	}
 
-	public void addVeranstaltung(Veranstaltung veranstaltung) {
-		if (!veranstaltungen.contains(veranstaltung))
-			veranstaltungen.add(veranstaltung);
-
-	}
-
 	public void removeVeranstaltung(Veranstaltung veranstaltung) {
-		if (veranstaltungen.contains(veranstaltung))
+		if (veranstaltungen.contains(veranstaltung)) {
 			veranstaltungen.remove(veranstaltung);
-	}
-
-	public ArrayList<Veranstaltung> getVeranstaltungen() {
-		return veranstaltungen;
+		}
 	}
 
 	public void setVeranstaltungen(ArrayList<Veranstaltung> veranstaltungen) {

@@ -21,8 +21,6 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Spinner;
 
-import com.flurry.android.FlurryAgent;
-
 public class Settings extends Activity {
 
 	Intent wizard;
@@ -34,22 +32,6 @@ public class Settings extends Activity {
 	CheckBox typeCheckbox;
 
 	// EditText pathToFileEditText;
-
-	public void onStart() {
-		super.onStart();
-		Log.e(this.getClass().toString(), "Start");
-		if (MainApplicationManager.isFinish())
-			finish();
-
-		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
-
-	}
-
-	public void onStop() {
-		super.onStop();
-		FlurryAgent.onEndSession(this);
-		Log.e(this.getClass().toString(), "Stop");
-	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,39 +47,54 @@ public class Settings extends Activity {
 				AlertDialog.Builder adb = new AlertDialog.Builder(Settings.this);
 				adb.setTitle(R.string.settings_alert_title);
 				adb.setMessage(R.string.settings_alert_message);
-				adb.setPositiveButton(R.string.settings_alert_positiveButton, new DialogInterface.OnClickListener() {
+				adb.setPositiveButton(R.string.settings_alert_positiveButton,
+						new DialogInterface.OnClickListener() {
 
-					// Nach ok, wird versucht die Stundenplanliste zu laden
-					// (siehe run()
-					// unten) => T1
-					public void onClick(DialogInterface dialog2, int which) {
-						SettingsManager.setWizardDone(false,getApplicationContext());
-						MainApplicationManager.setStundenplan(new Stundenplan());
-						IOManager.saveStundenplan(MainApplicationManager.getStundenplan(), getApplicationContext());
-						startActivity(wizard);
+							// Nach ok, wird versucht die Stundenplanliste zu
+							// laden
+							// (siehe run()
+							// unten) => T1
+							public void onClick(DialogInterface dialog2,
+									int which) {
+								SettingsManager.setWizardDone(false,
+										getApplicationContext());
+								MainApplicationManager
+										.setStundenplan(new Stundenplan());
+								IOManager.saveStundenplan(
+										MainApplicationManager.getStundenplan(),
+										getApplicationContext());
+								startActivity(wizard);
 
-					}
-				});
-				adb.setNegativeButton(R.string.settings_alert_negativeButton, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog2, int which) {
-					}
-				});
+							}
+						});
+				adb.setNegativeButton(R.string.settings_alert_negativeButton,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog2,
+									int which) {
+							}
+						});
 				adb.show();
 
 			}
 		});
 
-		textSizeSpinner = (Spinner) this.findViewById(R.id.settings_text_size_spinner);
+		textSizeSpinner = (Spinner) this
+				.findViewById(R.id.settings_text_size_spinner);
 
-		ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new String[] {
-				getString(R.string.settings_test_size_0), getString(R.string.settings_test_size_1), getString(R.string.settings_test_size_2) });
+		ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
+				android.R.layout.simple_dropdown_item_1line, new String[] {
+						getString(R.string.settings_test_size_0),
+						getString(R.string.settings_test_size_1),
+						getString(R.string.settings_test_size_2) });
 
 		textSizeSpinner.setPromptId(R.string.settings_text_size);
 		textSizeSpinner.setAdapter(adapter2);
-		textSizeSpinner.setSelection(SettingsManager.getText_size(getApplicationContext()));
+		textSizeSpinner.setSelection(SettingsManager
+				.getText_size(getApplicationContext()));
 		textSizeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
 
 			}
 
@@ -106,28 +103,36 @@ public class Settings extends Activity {
 		});
 
 		groupletterCheckbox = (CheckBox) findViewById(R.id.settings_lecture_details_groupletter_checkbox);
-		groupletterCheckbox.setChecked(SettingsManager.isLecture_details_groupletter(getApplicationContext()));
-		groupletterCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		groupletterCheckbox.setChecked(SettingsManager
+				.isLecture_details_groupletter(getApplicationContext()));
+		groupletterCheckbox
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					public void onCheckedChanged(CompoundButton buttonView,
+							boolean isChecked) {
 
-			}
-		});
+					}
+				});
 
 		lecturerCheckbox = (CheckBox) findViewById(R.id.settings_lecture_details_lecturer_checkbox);
-		lecturerCheckbox.setChecked(SettingsManager.isLecture_details_lecturer(getApplicationContext()));
-		lecturerCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		lecturerCheckbox.setChecked(SettingsManager
+				.isLecture_details_lecturer(getApplicationContext()));
+		lecturerCheckbox
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					public void onCheckedChanged(CompoundButton buttonView,
+							boolean isChecked) {
 
-			}
-		});
+					}
+				});
 
 		typeCheckbox = (CheckBox) findViewById(R.id.settings_lecture_details_type_checkbox);
-		typeCheckbox.setChecked(SettingsManager.isLecture_details_type(getApplicationContext()));
+		typeCheckbox.setChecked(SettingsManager
+				.isLecture_details_type(getApplicationContext()));
 		typeCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
 
 			}
 		});
@@ -168,12 +173,21 @@ public class Settings extends Activity {
 
 	}
 
-	public void save() {
+	public void onStart() {
+		super.onStart();
+		Log.e(this.getClass().toString(), "Start");
+		if (MainApplicationManager.isFinish()) {
+			finish();
+		}
 
-		SettingsManager.setText_size(textSizeSpinner.getSelectedItemPosition(),getApplicationContext());
-		SettingsManager.setLecture_details_groupletter(groupletterCheckbox.isChecked(),getApplicationContext());
-		SettingsManager.setLecture_details_lecturer(lecturerCheckbox.isChecked(),getApplicationContext());
-		SettingsManager.setLecture_details_type(typeCheckbox.isChecked(),getApplicationContext());
+		// FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
+
+	}
+
+	public void onStop() {
+		super.onStop();
+		// FlurryAgent.onEndSession(this);
+		Log.e(this.getClass().toString(), "Stop");
 	}
 
 	public void restore() {
@@ -182,5 +196,17 @@ public class Settings extends Activity {
 		lecturerCheckbox.setChecked(true);
 		typeCheckbox.setChecked(true);
 		save();
+	}
+
+	public void save() {
+
+		SettingsManager.setText_size(textSizeSpinner.getSelectedItemPosition(),
+				getApplicationContext());
+		SettingsManager.setLecture_details_groupletter(
+				groupletterCheckbox.isChecked(), getApplicationContext());
+		SettingsManager.setLecture_details_lecturer(
+				lecturerCheckbox.isChecked(), getApplicationContext());
+		SettingsManager.setLecture_details_type(typeCheckbox.isChecked(),
+				getApplicationContext());
 	}
 }

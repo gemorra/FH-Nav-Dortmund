@@ -1,7 +1,5 @@
 package FHNav.gui;
 
-import com.flurry.android.FlurryAgent;
-
 import FHNav.controller.BreadthFirstSearchTest;
 import FHNav.controller.BreadthFirstSearchTest.Node;
 import FHNav.controller.MainApplicationManager;
@@ -21,21 +19,6 @@ public class Navigation extends Activity {
 	BreadthFirstSearchTest bfst;
 	CView cv;
 
-	public void onStart() {
-		super.onStart();
-		Log.e(this.getClass().toString(), "Start");
-		if (MainApplicationManager.isFinish())
-			finish();
-		FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
-
-	}
-
-	public void onStop() {
-		super.onStop();
-		FlurryAgent.onEndSession(this);
-		Log.e(this.getClass().toString(), "Stop");
-	}
-
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.navigation);
@@ -46,30 +29,35 @@ public class Navigation extends Activity {
 		LinearLayout ll = (LinearLayout) findViewById(R.id.linearLayout1);
 
 		cv = new CView(getApplicationContext());
-		LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+		LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.FILL_PARENT);
 		ll.addView(cv, params);
 		cv.init();
 
 		Spinner sp_from = (Spinner) findViewById(R.id.spinnerFromRoom);
 		Spinner sp_to = (Spinner) findViewById(R.id.spinnerToRoom);
-		ArrayAdapter<String> aa = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
+		ArrayAdapter<String> aa = new ArrayAdapter<String>(this,
+				android.R.layout.simple_dropdown_item_1line);
 		int fr = 0;
 		int to2 = 0;
 		int count = 0;
 		for (Object o : bfst.getNodes()) {
 			Node n = (Node) o;
 			aa.add(n.getName());
-			if (n.equals(bfst.getFrom()))
+			if (n.equals(bfst.getFrom())) {
 				fr = count;
-			if (n.equals(bfst.getTo()))
+			}
+			if (n.equals(bfst.getTo())) {
 				to2 = count;
+			}
 			count++;
 		}
 		sp_from.setAdapter(aa);
 		sp_from.setSelection(fr);
 		sp_from.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
 
 				Node n = (Node) bfst.getNodes().get(arg2);
 				bfst.setFrom(n);
@@ -88,7 +76,8 @@ public class Navigation extends Activity {
 		sp_to.setSelection(to2);
 		sp_to.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
 
 				Node n = (Node) bfst.getNodes().get(arg2);
 				bfst.setTo(n);
@@ -103,6 +92,22 @@ public class Navigation extends Activity {
 			}
 		});
 		cv.invalidate();
+	}
+
+	public void onStart() {
+		super.onStart();
+		Log.e(this.getClass().toString(), "Start");
+		if (MainApplicationManager.isFinish()) {
+			finish();
+			// FlurryAgent.onStartSession(this, "I7RRJ22MKL64Q9JLNZW8");
+		}
+
+	}
+
+	public void onStop() {
+		super.onStop();
+		// FlurryAgent.onEndSession(this);
+		Log.e(this.getClass().toString(), "Stop");
 	}
 
 }

@@ -16,33 +16,20 @@ public class IOManager {
 	private static String stundenplanDatei = "plan.ser";
 	private static String save_dir = "private";
 
+	/**
+	 * gibt den lokalen Pfad zurück
+	 * 
+	 * @param ctx
+	 * @return
+	 */
+	public static File getLocalFileDir(Context ctx) {
+
+		return ctx.getDir(save_dir, 0);
+
+	}
+
 	public static String getStundenplanDatei() {
 		return stundenplanDatei;
-	}
-
-	public static void setStundenplanDatei(String stundenplanDatei) {
-		IOManager.stundenplanDatei = stundenplanDatei;
-	}
-
-	/**
-	 * Speichert den Stundenplan unter gegebenem Context ab
-	 * 
-	 * @param stundenplan
-	 * @param ctx
-	 *            immer der ApplicationContext
-	 */
-	public static void saveStundenplan(Stundenplan stundenplan, Context ctx) {
-		ObjectOutputStream objOut;
-		File file = new File(getLocalFileDir(ctx) + File.separator + stundenplanDatei);
-		try {
-			objOut = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
-			objOut.writeObject(stundenplan);
-			objOut.close();
-			System.out.println("Save Success");
-			System.out.println("Path: " + getLocalFileDir(ctx));
-		} catch (Exception e) {
-			System.out.println("Save Error");
-		}
 	}
 
 	/**
@@ -55,9 +42,11 @@ public class IOManager {
 	public static Stundenplan loadStundenplan(Context ctx) {
 		Stundenplan stundenplan = null;
 		ObjectInputStream objIn;
-		File file = new File(getLocalFileDir(ctx) + File.separator + stundenplanDatei);
+		File file = new File(getLocalFileDir(ctx) + File.separator
+				+ stundenplanDatei);
 		try {
-			objIn = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
+			objIn = new ObjectInputStream(new BufferedInputStream(
+					new FileInputStream(file)));
 			stundenplan = (Stundenplan) objIn.readObject();
 			objIn.close();
 			System.out.println("Load Success");
@@ -72,15 +61,30 @@ public class IOManager {
 	}
 
 	/**
-	 * gibt den lokalen Pfad zurück
+	 * Speichert den Stundenplan unter gegebenem Context ab
 	 * 
+	 * @param stundenplan
 	 * @param ctx
-	 * @return
+	 *            immer der ApplicationContext
 	 */
-	public static File getLocalFileDir(Context ctx) {
+	public static void saveStundenplan(Stundenplan stundenplan, Context ctx) {
+		ObjectOutputStream objOut;
+		File file = new File(getLocalFileDir(ctx) + File.separator
+				+ stundenplanDatei);
+		try {
+			objOut = new ObjectOutputStream(new BufferedOutputStream(
+					new FileOutputStream(file)));
+			objOut.writeObject(stundenplan);
+			objOut.close();
+			System.out.println("Save Success");
+			System.out.println("Path: " + getLocalFileDir(ctx));
+		} catch (Exception e) {
+			System.out.println("Save Error");
+		}
+	}
 
-		return ctx.getDir(save_dir, 0);
-
+	public static void setStundenplanDatei(String stundenplanDatei) {
+		IOManager.stundenplanDatei = stundenplanDatei;
 	}
 
 }

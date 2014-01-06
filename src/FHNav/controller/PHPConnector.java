@@ -25,6 +25,34 @@ import android.util.Log;
 public class PHPConnector {
 
 	/**
+	 * Generiert eine Liste mit allen Stundenplänen
+	 * 
+	 * @return Liste mit allen Stundenplänen
+	 */
+	public static ArrayList<String> getAllBranches(Context ctx) {
+
+		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+		nameValuePairs.add(new BasicNameValuePair("type", "getAllBranches"));
+
+		// http post
+		ArrayList<String> ret = new ArrayList<String>();
+
+		JSONArray jArray = getJSONArray(nameValuePairs, ctx);
+		try {
+			for (int i = 0; i < jArray.length(); i++) {
+
+				JSONObject json_data = jArray.getJSONObject(i);
+				ret.add(json_data.getString("pos"));
+			}
+		} catch (Exception e) {
+			Log.e("error", "Error while Parsing JSON");
+		}
+
+		return ret;
+	}
+
+	/**
 	 * Ruft die entsprechende php Datei auf dem Server mit den angegebenen
 	 * Parametern auf und parst die Rückgabe in ein JSONArray
 	 * 
@@ -34,7 +62,8 @@ public class PHPConnector {
 	 *            Variablen in der URL statt
 	 * @return
 	 */
-	public static JSONArray getJSONArray(ArrayList<NameValuePair> nvp, Context ctx) {
+	public static JSONArray getJSONArray(ArrayList<NameValuePair> nvp,
+			Context ctx) {
 		String result = "";
 
 		try {
@@ -51,7 +80,8 @@ public class PHPConnector {
 
 			InputStream is = entity.getContent();
 
-			BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					is, "UTF-8"), 8);
 
 			StringBuilder sb = new StringBuilder();
 
@@ -85,34 +115,6 @@ public class PHPConnector {
 
 		return null;
 
-	}
-
-	/**
-	 * Generiert eine Liste mit allen Stundenplänen
-	 * 
-	 * @return Liste mit allen Stundenplänen
-	 */
-	public static ArrayList<String> getAllBranches(Context ctx) {
-
-		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-
-		nameValuePairs.add(new BasicNameValuePair("type", "getAllBranches"));
-
-		// http post
-		ArrayList<String> ret = new ArrayList<String>();
-
-		JSONArray jArray = getJSONArray(nameValuePairs,ctx);
-		try {
-			for (int i = 0; i < jArray.length(); i++) {
-
-				JSONObject json_data = jArray.getJSONObject(i);
-				ret.add(json_data.getString("pos"));
-			}
-		} catch (Exception e) {
-			Log.e("error", "Error while Parsing JSON");
-		}
-
-		return ret;
 	}
 
 	/**
@@ -150,17 +152,23 @@ public class PHPConnector {
 				int start = json_data.getInt("start");
 				int dauer = json_data.getInt("duration");
 				String type = json_data.getString("type");
-				Veranstaltung veranstaltung = new Veranstaltung(dozent, name, wochentag, start, dauer, raum, studiengang, semester, type, studentSet);
+				Veranstaltung veranstaltung = new Veranstaltung(dozent, name,
+						wochentag, start, dauer, raum, studiengang, semester,
+						type, studentSet);
 
 				if (stundenplan.getVeranstaltungen().contains(veranstaltung)) {
-					int index = stundenplan.getVeranstaltungen().indexOf(veranstaltung);
-					Veranstaltung tmpVeranstaltung = stundenplan.getVeranstaltungen().get(index);
-					tmpVeranstaltung.setDauer(stundenplan.getVeranstaltungen().get(index).getDauer() + 1);
+					int index = stundenplan.getVeranstaltungen().indexOf(
+							veranstaltung);
+					Veranstaltung tmpVeranstaltung = stundenplan
+							.getVeranstaltungen().get(index);
+					tmpVeranstaltung.setDauer(stundenplan.getVeranstaltungen()
+							.get(index).getDauer() + 1);
 					if (tmpVeranstaltung.getStart() > veranstaltung.getStart()) {
 						tmpVeranstaltung.setStart(veranstaltung.getStart());
 					}
-				} else
+				} else {
 					stundenplan.addVeranstaltung(veranstaltung);
+				}
 
 			}
 		} catch (Exception e) {

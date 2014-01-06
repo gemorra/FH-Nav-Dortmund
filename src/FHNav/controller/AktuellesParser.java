@@ -30,8 +30,6 @@ public class AktuellesParser {
 		StringBuilder sb = new StringBuilder();
 
 		for (TextNode n : nodes) {
-			System.out.println("seeing node (wholeText): " + n.getWholeText());
-			System.out.println("seeing node (text): " + n.text());
 			sb.append(n.getWholeText().replaceAll("<(.*?)>", ""));
 		}
 		return sb.toString();

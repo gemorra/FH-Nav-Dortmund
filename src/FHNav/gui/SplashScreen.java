@@ -137,24 +137,3 @@ public class SplashScreen extends Activity {
 
 }
 
-// public void run() {
-// boolean isRunning = true;
-// while (isRunning) {
-// Date dt = new Date();
-// if (dt.getTime() - startTime > 3000) {
-// isRunning = false;
-// }
-// else
-// {
-// try {
-// Thread.sleep(100);
-// } catch (InterruptedException e) {
-// // TODO Auto-generated catch block
-//
-// }
-// }
-// }
-// finish();
-// startActivity(new Intent(SplashScreen.this, Menu.class));
-// }
-

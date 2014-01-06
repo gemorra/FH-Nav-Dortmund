@@ -28,7 +28,6 @@ public class AktuellesNotificationService extends Service
 		// generate notification as web link
 		Intent notificationIntent = new Intent(Intent.ACTION_VIEW);
 		notificationIntent.setData(Uri.parse(AktuellesParser.WEB_URL));
-		// Intent notificationIntent = new Intent(context, SplashScreen.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
 				notificationIntent, 0);
 

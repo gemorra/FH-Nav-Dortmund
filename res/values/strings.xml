@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">FH Nav</string>
+	<string name="app_version">1.3+Aktuelles</string>
 	<string name="menu_edit_button">Anpassen</string>
 	<string name="menu_navigation_button">Navigation</string>
 	<string name="menu_settings_button">Einstellungen</string>

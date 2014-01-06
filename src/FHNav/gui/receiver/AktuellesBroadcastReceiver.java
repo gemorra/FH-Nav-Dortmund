@@ -8,8 +8,6 @@ import android.content.Intent;
 /**
  * Receives a broadcast to check Aktuelles.
  * 
- * @author Admin
- * 
  */
 public class AktuellesBroadcastReceiver extends BroadcastReceiver {
 

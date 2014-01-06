@@ -15,9 +15,19 @@ import FHNav.model.AktuellesItem;
 import FHNav.sqlite.AktuellesDAO;
 import android.content.Context;
 
+/**
+ * Parser for Aktuelles RSS feed.
+ *
+ */
 public class AktuellesParser {
 	private static final String RSS_URL = "http://www.inf.fh-dortmund.de/rss.php";
 	public static final String WEB_URL = "http://www.fh-dortmund.de/de/fb/4/isc/aktuelles/index.php";
+	
+	private AktuellesDAO dao;
+	
+	public AktuellesParser(Context ctx) {
+		dao = new AktuellesDAO(ctx);
+	}
 
 	/**
 	 * Removes any HTML tags from a list of JSoup text nodes.
@@ -43,12 +53,7 @@ public class AktuellesParser {
 	private static String replaceCDATA(String s) {
 		return s.replace("<![CDATA[", "").replace("]]>", "").trim();
 	}
-
-	private AktuellesDAO dao;
-
-	public AktuellesParser(Context ctx) {
-		dao = new AktuellesDAO(ctx);
-	}
+	
 
 	/**
 	 * Loads Aktuelles from the RSS Feed.

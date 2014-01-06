@@ -1,7 +1,7 @@
 package FHNav.model;
 
 /**
- * @author Admin
+ * Item from the Aktuelles RSS feed.
  * 
  */
 public class AktuellesItem {

@@ -5,6 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * Helper class for SQLite queries.
+ *
+ */
 public class SQLiteHelper extends SQLiteOpenHelper {
 
 	public static final String TABLE = "aktuelles";

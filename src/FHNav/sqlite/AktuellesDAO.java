@@ -10,6 +10,10 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+/**
+ * Database access object for Aktuelles.
+ *
+ */
 public class AktuellesDAO {
 
 	// Database fields
@@ -20,15 +24,25 @@ public class AktuellesDAO {
 			SQLiteHelper.COLUMN_LINK, SQLiteHelper.COLUMN_PUBDATE,
 			SQLiteHelper.COLUMN_HASH };
 
+	
 	public AktuellesDAO(Context context) {
 		dbHelper = new SQLiteHelper(context);
 		open();
 	}
 
+	/**
+	 * Closes the database connection.
+	 */
 	public void close() {
 		dbHelper.close();
 	}
 
+	/**
+	 * Determines if a given hash is already present in the database.
+	 * 
+	 * @param hash input hash
+	 * @return true if found, false if not found in database.
+	 */
 	public boolean containsHash(String hash) {
 		boolean found = false;
 		Cursor cursor = database.query(SQLiteHelper.TABLE, allColumns,
@@ -42,6 +56,11 @@ public class AktuellesDAO {
 
 	}
 
+	/**
+	 * Writes an item to the database.
+	 * 
+	 * @param item
+	 */
 	public void createItem(AktuellesItem item) {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_TITLE, item.getTitle());
@@ -58,6 +77,12 @@ public class AktuellesDAO {
 		cursor.close();
 	}
 
+	/**
+	 * Compares items in the database to a given list of items. Items which are not in the DB yet are inserted and returned.
+	 * 
+	 * @param list input items to be checked
+	 * @return items which were not in the database before and were inserted by this function.
+	 */
 	public List<AktuellesItem> getNewItemsFromList(List<AktuellesItem> list) {
 		List<AktuellesItem> newItems = new ArrayList<AktuellesItem>();
 
@@ -71,38 +96,14 @@ public class AktuellesDAO {
 	}
 
 	// TODO delete old entries
-	// public void deleteItem(AktuellesItem item) {
-	// long id = item.getId();
-	// System.out.println("Comment deleted with id: " + id);
-	// database.delete(MySQLiteHelper.TABLE_COMMENTS, MySQLiteHelper.COLUMN_ID
-	// + " = " + id, null);
-	// }
 
-	// public List<Comment> getAllComments() {
-	// List<Comment> comments = new ArrayList<Comment>();
-	//
-	// Cursor cursor = database.query(SQLiteHelper.TABLE_COMMENTS,
-	// allColumns, null, null, null, null, null);
-	//
-	// cursor.moveToFirst();
-	// while (!cursor.isAfterLast()) {
-	// Comment comment = cursorToComment(cursor);
-	// comments.add(comment);
-	// cursor.moveToNext();
-	// }
-	// // make sure to close the cursor
-	// cursor.close();
-	// return comments;
-	// }
-
+	/**
+	 * Opens the database connection.
+	 * 
+	 * @throws SQLException
+	 */
 	public void open() throws SQLException {
 		database = dbHelper.getWritableDatabase();
 	}
-
-	// private Comment cursorToComment(Cursor cursor) {
-	// Comment comment = new Comment();
-	// comment.setId(cursor.getLong(0));
-	// comment.setComment(cursor.getString(1));
-	// return comment;
-	// }
+	
 }

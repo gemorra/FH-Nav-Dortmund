@@ -13,6 +13,10 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.util.Log;
 
+/**
+ * Service to notify new items from Aktuelles.
+ *
+ */
 public class AktuellesNotificationService extends Service
 
 {
